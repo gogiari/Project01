@@ -1,5 +1,5 @@
 package project.oracle;
-
+//
 public class memberVo {
 	
 	String kindP;
