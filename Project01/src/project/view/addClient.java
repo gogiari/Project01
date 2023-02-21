@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import project.oracle.newMember;
 
 
@@ -35,8 +38,10 @@ public class addClient extends JFrame implements ActionListener{
 	JLabel memoLbl = new JLabel("메모");
 	JTextField memoField = new JTextField(30);
 	
-	JLabel emailLbl = new JLabel("이메일");
-	JTextField emailField = new JTextField(30);
+	JLabel emailLbl = new JLabel("예약날짜");
+	UtilDateModel model = new UtilDateModel();
+	JDatePanelImpl datePanel = new JDatePanelImpl(model);
+	JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
 	
 	JLabel date = new JLabel("예약일자");
 	JButton datebtn = new JButton("일자 확인");
@@ -91,9 +96,9 @@ public class addClient extends JFrame implements ActionListener{
 		memoLbl.setFont(fnt);
 		memoField.setFont(fnt);
 		
-		add(emailLbl).setBounds(x,400,100,30); add(emailField).setBounds(x1,400,250,30);
+		add(emailLbl).setBounds(x,400,100,30); add(datePicker).setBounds(x1,400,250,30);
 		emailLbl.setFont(fnt);
-		emailField.setFont(fnt);
+		datePicker.setFont(fnt);
 		
 		add(timeLbl).setBounds(x,450,100,30); add(timeCombo).setBounds(x1,450,250,30);
 		timeLbl.setFont(fnt);
