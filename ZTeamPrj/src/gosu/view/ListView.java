@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,19 +42,55 @@ public class ListView extends JFrame{
 		lblCenterMsg    = new JLabel("메세지화면");
 		lblCenterMypage = new JLabel("마이페이지화면");
 		
-		btnList   = new JButton("리스트");
-		btnMsg    = new JButton("메시지");
-		btnMypage = new JButton("마이페이지");
+		btnList   = new JButton();
+		btnMsg    = new JButton();
+		btnMypage = new JButton();
 		
 		btnList.setBackground(Color.WHITE);
 		btnMsg.setBackground(Color.WHITE);
 		btnMypage.setBackground(Color.WHITE);
 		
 		//파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
-		LineBorder lb = new LineBorder(Color.black, 1, true);
-		btnList.setBorder(lb);
-		btnMsg.setBorder(lb);
-		btnMypage.setBorder(lb);
+	      btnList.setBorderPainted(false);
+	      btnMsg.setBorderPainted(false);
+	      btnMypage.setBorderPainted(false);
+	      
+	      //고정패널 아이콘 부분 시작
+	      ImageIcon icon = new ImageIcon("img/home.png");
+	      
+	      Image img = icon.getImage();
+	      
+	      Image ch = img.getScaledInstance(50,50,Image.SCALE_SMOOTH);
+	      ImageIcon changeIcon = new ImageIcon(ch);
+	      
+	      btnList.setIcon(changeIcon);
+	      
+	      btnList.setHorizontalAlignment(JLabel.CENTER);
+	      
+	      //btnMsg------------------------------------------------
+	      ImageIcon icon2 = new ImageIcon("img/comment.png");
+	      
+	      Image img2 = icon2.getImage();
+	      
+	      Image ch2 = img2.getScaledInstance(50,50,Image.SCALE_SMOOTH);
+	      ImageIcon changeIcon2 = new ImageIcon(ch2);
+	      
+	      btnMsg.setIcon(changeIcon2);
+	      
+	      btnMsg.setHorizontalAlignment(JLabel.CENTER);
+	      
+	      //btnMypage------------------------------------------------
+	      ImageIcon icon3 = new ImageIcon("img/user.png");
+	      
+	      Image img3 = icon3.getImage();
+	      
+	      Image ch3 = img3.getScaledInstance(50,50,Image.SCALE_SMOOTH);
+	      ImageIcon changeIcon3 = new ImageIcon(ch3);
+	      
+	      btnMypage.setIcon(changeIcon3);
+	      
+	      btnMypage.setHorizontalAlignment(JLabel.CENTER);
+	    //고정패널 아이콘 부분 끝
 		
 		
 		btnList.setPreferredSize(new Dimension(150, 100));
