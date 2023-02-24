@@ -102,6 +102,55 @@ public class gosuDao {
 		return null;
 	}
 	
+	// Gosu Jtable에 보여줄 data목록
+	public Vector<Vector> getGosuList() {
+		Vector<Vector> list = new Vector<Vector>();
+		
+		String sql = "";
+		sql		  += "SELECT W_NUM        W_NUM , ";
+		sql		  += "       MID_NUM      MID_NUM, ";
+		sql		  +="        U.U_ID       U_ID, ";
+		sql		  +="        PRICE        PRICE, ";
+		sql		  += "       WGUGUN       WGUGUN ";
+		sql		  += "  FROM GWORK GW LEFT JOIN GOSU G ";
+		sql		  += "  ON   GW.G_NUM = G.G_NUM LEFT JOIN USERLIST U ";
+		sql		  += "  ON   U.U_ID = G.U_ID ";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String w_num = rs.getString("W_NUM");
+				String mid_num = rs.getString("MID_NUM");
+				String u_id = rs.getString("U_ID");
+				String price = rs.getString("PRICE");
+				String wgugun = rs.getString("WGUGUN");
+				
+				Vector v = new Vector();
+				v.add(w_num);
+				v.add(mid_num);
+				v.add(u_id);
+				v.add(price);
+				v.add(wgugun);
+				list.add(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+			}
+
+		}
+		return list;
+
+	}
+	
 	
 	
 	
