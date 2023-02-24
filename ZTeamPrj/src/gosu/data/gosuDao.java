@@ -2,7 +2,9 @@ package gosu.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 public class gosuDao {
 	
@@ -63,6 +65,41 @@ public class gosuDao {
 		
 		int aftcnt = insertMember(id,pw,name,email,gender,phone,sido,gugun);
 		return aftcnt;
+	}
+	public Vector<Vector> getClientList() {
+		Vector<Vector>list = new Vector<Vector>();
+		
+		String sql = "SELECT "	; 
+		
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+		    rs = pstmt.executeQuery();
+		    while(rs.next()) {
+		    	String id = rs.getString("");
+		    	String pw = rs.getString("");
+		    	String name = rs.getString("");
+		    	String email = rs.getString("");
+		    	String gender = rs.getString("");
+		    	String phone = rs.getString("");
+		    	String sido = rs.getString("");
+		    	String gugun = rs.getString("");
+		    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if(pstmt != null)pstmt.close();
+			if(rs    != null )rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		return null;
 	}
 	
 	

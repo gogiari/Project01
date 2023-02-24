@@ -18,6 +18,7 @@ public class gosuVo {
 	String edate;          
 	String price;       
 	String wsido;
+	String wgugun;
 	String prmess;
 	//메세지리스트
 	String mread;
@@ -31,7 +32,7 @@ public class gosuVo {
 			String mid_num, String u_gender, String mid_name, String u_phone, String u_sido, String faq_code,
 			String u_gugun, String f_date, String f_head, String g_num, String f_body, String reply, String w_num,
 			String f_check, String sdate, String edate, String price, String wsido, String prmess, String mread,
-			String m_message, String g_message, String g_check, String g_date) {
+			String m_message, String g_message, String g_check, String g_date,String wgugun) {
 		super();
 		this.u_id = u_id;
 		this.bi_num = bi_num;
@@ -63,6 +64,7 @@ public class gosuVo {
 		this.g_message = g_message;
 		this.g_check = g_check;
 		this.g_date = g_date;
+		this.wgugun = wgugun;
 	}
 	public String getU_id() {
 		return u_id;
@@ -243,6 +245,12 @@ public class gosuVo {
 	}
 	public void setG_date(String g_date) {
 		this.g_date = g_date;
+	}
+	public String getWgugun() {
+		return wgugun;
+	}
+	public void setWgugun(String wgugun) {
+		this.wgugun = wgugun;
 	}
 	
 }

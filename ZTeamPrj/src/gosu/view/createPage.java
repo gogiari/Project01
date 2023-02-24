@@ -1,29 +1,29 @@
 package gosu.view;
 
+import java.awt.Button;
 import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Label;
 import java.awt.SystemColor;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
-import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JButton;
-
-import java.awt.BorderLayout;
-import java.awt.Button;
+import gosu.data.gosuDao;
+import gosu.data.gosuVo;
 
 public class createPage extends JFrame {
+	
+	
 	public createPage() {
 		getContentPane().setLayout(null);
 
@@ -64,7 +64,7 @@ public class createPage extends JFrame {
 		JLabel lblUserName_1_1 = new JLabel("Gender");
 		lblUserName_1_1.setForeground(SystemColor.textHighlight);
 		lblUserName_1_1.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
-		lblUserName_1_1.setBounds(24, 355, 81, 15);
+		lblUserName_1_1.setBounds(24, 402, 81, 15);
 		panel.add(lblUserName_1_1);
 
 		TextField idtxt = new TextField();
@@ -96,40 +96,40 @@ public class createPage extends JFrame {
 		phonetxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		phonetxt.setColumns(10);
 		phonetxt.setBackground(new Color(255, 255, 255));
-		phonetxt.setBounds(24, 315, 172, 23);
+		phonetxt.setBounds(24, 316, 172, 23);
 		panel.add(phonetxt);
 
 		Checkbox man = new Checkbox("Man");
 		man.setBackground(new Color(248, 248, 255));
 		man.setForeground(SystemColor.textHighlight);
 		man.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
-		man.setBounds(31, 376, 56, 23);
+		man.setBounds(24, 423, 56, 23);
 		panel.add(man);
 
 		Checkbox man_1 = new Checkbox("Woman");
 		man_1.setBackground(new Color(248, 248, 255));
 		man_1.setForeground(SystemColor.textHighlight);
 		man_1.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
-		man_1.setBounds(96, 376, 73, 23);
+		man_1.setBounds(100, 423, 73, 23);
 		panel.add(man_1);
 
 		JComboBox comboBox = new JComboBox();
 		comboBox.setForeground(new Color(255, 255, 255));
 		comboBox.setBackground(new Color(255, 255, 255));
-		comboBox.setBounds(24, 443, 93, 23);
+		comboBox.setBounds(24, 485, 93, 23);
 		panel.add(comboBox);
 
-		JLabel addr = new JLabel("Addr");
-		addr.setForeground(SystemColor.textHighlight);
-		addr.setFont(new Font("D2Coding", Font.ITALIC, 15));
-		addr.setBounds(24, 418, 81, 15);
-		panel.add(addr);
+		JLabel sido = new JLabel("Addr");
+		sido.setForeground(SystemColor.textHighlight);
+		sido.setFont(new Font("D2Coding", Font.ITALIC, 15));
+		sido.setBounds(24, 460, 81, 15);
+		panel.add(sido);
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setForeground(new Color(255, 255, 255));
-		comboBox_1.setBackground(new Color(255, 255, 255));
-		comboBox_1.setBounds(133, 443, 93, 23);
-		panel.add(comboBox_1);
+		JComboBox gugun = new JComboBox();
+		gugun.setForeground(new Color(255, 255, 255));
+		gugun.setBackground(new Color(255, 255, 255));
+		gugun.setBounds(152, 485, 93, 23);
+		panel.add(gugun);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(102, 204, 255));
@@ -156,7 +156,14 @@ public class createPage extends JFrame {
 		lblNewLabel_1.setBounds(224, 0, 24, 28);
 		panel_1.add(lblNewLabel_1);
 		
-		Button findBtn = new Button("찾기");
+		Button Cancel = new Button("Cancel");
+		Cancel.setBounds(88, 497, 61, 23);
+		panel_1.add(Cancel);
+		Cancel.setForeground(new Color(30, 144, 255));
+		Cancel.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+		Cancel.setBackground(new Color(240, 248, 255));
+		
+		Button findBtn = new Button("find");
 		findBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
 		findBtn.setForeground(new Color(30, 144, 255));
 		findBtn.setBackground(new Color(240, 248, 255));
@@ -172,18 +179,69 @@ public class createPage extends JFrame {
 				
 			}
 		});
-		Button alterBtn = new Button("수정");
-		findBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		findBtn.setForeground(new Color(30, 144, 255));
-		
-		
 				JLabel lblNewLabel = new JLabel("");
 				lblNewLabel.setBounds(133, -27, 187, 182);
 				panel.add(lblNewLabel);
 				lblNewLabel.setIcon(new ImageIcon("img/deal.png"));
+				
+				Button addBtn = new Button("Add");
+				addBtn.setForeground(new Color(30, 144, 255));
+				addBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+				addBtn.setBackground(new Color(240, 248, 255));
+				addBtn.setBounds(24, 546, 46, 23);
+				panel.add(addBtn);
+				addBtn.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+					addMember();
+						
+					}
+				});
+				
+				
+				
+				Button AlterBtn = new Button("Alter");
+				AlterBtn.setForeground(new Color(30, 144, 255));
+				AlterBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+				AlterBtn.setBackground(new Color(240, 248, 255));
+				AlterBtn.setBounds(121, 546, 56, 23);
+				panel.add(AlterBtn);
+				
+				Button deleteBtn = new Button("Delete");
+				deleteBtn.setForeground(new Color(30, 144, 255));
+				deleteBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+				deleteBtn.setBackground(new Color(240, 248, 255));
+				deleteBtn.setBounds(228, 546, 56, 23);
+				panel.add(deleteBtn);
+				
+				JLabel lblEail = new JLabel("Email");
+				lblEail.setForeground(SystemColor.textHighlight);
+				lblEail.setFont(new Font("D2Coding", Font.ITALIC, 15));
+				lblEail.setBounds(24, 345, 81, 15);
+				panel.add(lblEail);
+				
+				TextField emailtxt = new TextField();
+				emailtxt.setForeground(Color.BLACK);
+				emailtxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
+				emailtxt.setColumns(10);
+				emailtxt.setBackground(Color.WHITE);
+				emailtxt.setBounds(24, 366, 172, 23);
+				panel.add(emailtxt);
 		setLayeredPane(getLayeredPane());
 		setUndecorated(true);
 		setVisible(true);
 		setSize(562, 579);
+		
+	}
+
+	protected void addMember() {
+		gosuDao gDao = new gosuDao();
+		gosuVo  vo   = getViewData();
+	}
+
+	private gosuVo getViewData() {
+		gosuVo vo = new gosuVo(); 
+		return vo;
 	}
 }
