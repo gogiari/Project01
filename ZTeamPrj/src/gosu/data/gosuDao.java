@@ -116,6 +116,39 @@ public class gosuDao {
 
 	}
 	
+	// 대분류 목록 가져오기
+		public Vector<String> getBigList(){
+			Vector<String> list = new Vector<String>();
+			list.add("전체");
+
+			String sql = "";
+			sql       += "SELECT BI_NAME FROM BIGLIST";
+
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					String bigList = rs.getString("BI_NAME");
+					list.add(bigList);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if(rs!=null)rs.close();
+					if(pstmt!=null)pstmt.close();
+				} catch (SQLException e) {
+				}
+
+			}
+			return list;
+
+
+		}
+	
 	
 	
 	
