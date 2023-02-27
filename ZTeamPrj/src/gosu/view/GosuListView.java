@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,10 +18,13 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class GosuListView extends JFrame{
 	JPanel pList;
 	JLabel lblListname;
+	JComboBox cbxJobtype1;
+	JScrollPane scroll;
 	JButton btnOk;
 	JTable tabGosuList;
 	
@@ -43,12 +47,13 @@ public class GosuListView extends JFrame{
 		getContentPane().add(pList);
 		pList.setLayout(null);
 		
-		JComboBox cbxJobtype1 = new JComboBox();
+		cbxJobtype1 = new JComboBox(getBigList());
 		cbxJobtype1.setForeground(new Color(255, 255, 255));
 		cbxJobtype1.setToolTipText("\uB300\uBD84\uB958");
-		cbxJobtype1.setBounds(148, 52, 32, 23);
+		cbxJobtype1.setBounds(124, 52, 99, 23);
 		pList.add(cbxJobtype1);
 		
+				
 		lblListname = new JLabel("\uACE0\uC218 \uC5C5\uBB34 \uB9AC\uC2A4\uD2B8");
 		lblListname.setForeground(new Color(0, 128, 192));
 		lblListname.setFont(new Font("휴먼엑스포", Font.PLAIN, 60));
@@ -76,8 +81,12 @@ public class GosuListView extends JFrame{
 					 }
 
 				 });
-		 tabGosuList.setBounds(185, 168, 804, 387);
-		 pList.add(tabGosuList);
+//		 tabGosuList.setBounds(185, 168, 804, 387);
+//		 pList.add(tabGosuList);
+		 
+		 scroll = new JScrollPane(tabGosuList);
+		 scroll.setBounds(185, 168, 804, 387);
+		 pList.add(scroll);
 		
 		setSize(1200, 800);
 		setVisible(true);
@@ -101,6 +110,11 @@ public class GosuListView extends JFrame{
 		cols.add("금액");
 		cols.add("위치");
 		return cols;
+	}
+	private Vector<String> getBigList() {
+		gosuDao dao = new gosuDao();
+		Vector<String> blist = dao.getBigList();
+		return blist;
 	}
 
 	public static void main(String[] args) {
