@@ -19,12 +19,14 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import gosu.data.gosuDao;
 import gosu.data.gosuVo;
 
 public class loginPage extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	gosuVo vo;
+	private TextField idE,pwE;
 
 	public loginPage() {
 		setBackground(Color.WHITE);
@@ -140,9 +142,9 @@ public class loginPage extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.setVisible(false);
-		new ConstructorPage();
-	
 		
+		
+		new MainView();
 	}
 
 	public static void main(String[] args) {

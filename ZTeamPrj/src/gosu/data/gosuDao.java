@@ -8,13 +8,13 @@ import java.util.Vector;
 
 public class gosuDao {
 	
-		Connection conn = null;
+	private	Connection conn = null;
 	public gosuDao() {
 		 conn = dbConn.getInstace();
 	}
 	public void close() {
 		try {
-			conn.close();
+		if(conn != null)	conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -23,8 +23,10 @@ public class gosuDao {
 	// 회원가입
 	public int insertMember(String u_id, String u_pw, String u_name, String u_email,
 			         String u_gender, String u_phone, String u_sido, String u_gugun) {
-		String sql = "INSERT INTO MEMBER "
-				+ "   (?,?,?,?,?,?,?,?)   ";
+		String sql = "INSERT INTO USERLIST "
+				+ " (U_ID,USERPW,USERNAME,EMAIL,GENDER,PHONE,U_SIDO,U_GUGUN)"
+				+ " VALUES "
+				+ "  (?,?,?,?,?,?,?,?)   ";
 		
 		int aftcnt = 0;
 		
@@ -52,25 +54,26 @@ public class gosuDao {
 		return aftcnt;
 	}
 
-	public int insertMember(gosuVo vo) {
+	public int insertMember(userVo vo) {
 		
-		String id = vo.getU_id();
-		String pw = vo.getU_pw();
-		String name = vo.getU_name();
-		String email = vo.getU_email();
-		String gender = vo.getU_gender();
-		String phone = vo.getU_phone();
-		String sido = vo.getU_sido();
-		String gugun = vo.getU_gugun();
+		String id = vo.getId();
+		String pw = vo.getPw();
+		String name = vo.getName();
+		String email = vo.getPhone();
+		String gender = vo.getEmail();
+		String phone = vo.getGender();
+		String sido = vo.getSido();
+		String gugun = vo.getGugun();
 		
 		int aftcnt = insertMember(id,pw,name,email,gender,phone,sido,gugun);
 		return aftcnt;
 	}
-	public Vector<Vector> getClientList() {
+	public Vector<Vector> getUserList() {
 		Vector<Vector>list = new Vector<Vector>();
 		
-		String sql = "SELECT "	; 
-		
+		String sql = "SELECT U_ID,USERPW,USERNAME,EMAIL,"
+				+ " GENDER,PHONE,U_SIDO,U_GUGUN "
+				+ "     FROM USERLIST "	; 
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -78,14 +81,26 @@ public class gosuDao {
 			pstmt = conn.prepareStatement(sql);
 		    rs = pstmt.executeQuery();
 		    while(rs.next()) {
-		    	String id = rs.getString("");
-		    	String pw = rs.getString("");
-		    	String name = rs.getString("");
-		    	String email = rs.getString("");
-		    	String gender = rs.getString("");
-		    	String phone = rs.getString("");
-		    	String sido = rs.getString("");
-		    	String gugun = rs.getString("");
+		    	String id = rs.getString("U_ID");
+		    	String pw = rs.getString("USERPW");
+		    	String name = rs.getString("USERNAME");
+		    	String email = rs.getString("EMAIL");
+		    	String gender = rs.getString("GENDER");
+		    	String phone = rs.getString("PHONE");
+		    	String sido = rs.getString("U_SIDO");
+		    	String gugun = rs.getString("U_GUGUN");
+		    	
+		    	Vector v = new Vector();
+		    	v.add(id);
+		    	v.add(pw);
+		    	v.add(name);
+		    	v.add(email);
+		    	v.add(gender);
+		    	v.add(phone);
+		    	v.add(sido);
+		    	v.add(gugun);
+		    	
+		    	list.add(v);
 		    }
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,9 +112,7 @@ public class gosuDao {
 			e.printStackTrace();
 		}
 		
-		
-		
-		return null;
+		return list;
 	}
 	
 	// Gosu Jtable에 보여줄 data목록
@@ -149,6 +162,89 @@ public class gosuDao {
 		}
 		return list;
 
+	}
+	public Vector<Vector> getFAQList() {
+	Vector<Vector> list = new Vector<Vector>();
+		
+		String sql = "SELECT FAQ_CODE, U_ID, F_DATE, F_HEAD, F_BODY, REPLY, F_CHECK "
+				+ "     FROM FAQ ";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String faqcode = rs.getString("FAQ_CODE");
+				String u_id = rs.getString("U_ID");
+				String f_date = rs.getString("F_DATE");
+				String f_head = rs.getString("F_HEAD");
+				String f_body = rs.getString("F_BODY");
+				String reply = rs.getString("REPLY");
+				String check = rs.getString("F_CHECK");
+				
+				Vector v = new Vector();
+				v.add(faqcode);
+				v.add(u_id);
+				v.add(f_date);
+				v.add(f_head);
+				v.add(f_body);
+				v.add(reply);
+				v.add(check);
+				
+				list.add(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+			}
+
+		}
+		return list;
+	}
+	public userVo getUser(String id) {
+		
+		userVo vo = null;
+		String sql = "SELECT U_ID,USERPW,USERNAME,EMAIL,"
+				+ " GENDER,PHONE,U_SIDO,U_GUGUN "
+				+ "     FROM USERLIST "
+				+ "   WHERE U_ID = ?"	; 
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String uid = rs.getString("U_ID");
+		    	String pw = rs.getString("USERPW");
+		    	String name = rs.getString("USERNAME");
+		    	String email = rs.getString("EMAIL");
+		    	String gender = rs.getString("GENDER");
+		    	String phone = rs.getString("PHONE");
+		    	String sido = rs.getString("U_SIDO");
+		    	String gugun = rs.getString("U_GUGUN");
+				
+				
+				vo = new userVo(uid,pw,name,email,gender,phone,sido,gugun);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+			}
+
+		}
+		return vo;
 	}
 	
 	

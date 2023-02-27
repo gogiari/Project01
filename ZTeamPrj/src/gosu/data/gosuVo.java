@@ -10,7 +10,7 @@ public class gosuVo {
 	String u_phone;      //FAQ
 	String u_sido;      String faq_code;
 	String u_gugun;     String f_date;
-	/* 고소회원*/         String f_head;           
+	/* 고수회원*/         String f_head;           
 	String g_num;       String f_body;
 	/*고수업무리스트 */     String reply;
 	String w_num;       String f_check;            
@@ -21,8 +21,10 @@ public class gosuVo {
 	String wgugun;
 	String prmess;
 	//메세지리스트
+	String message_num;
 	String mread;
 	//거래리스트
+	String georae_code;
 	String m_message;
 	String g_message;
 	String g_check;
@@ -31,8 +33,9 @@ public class gosuVo {
 	public gosuVo(String u_id, String bi_num, String u_pw, String bi_name, String u_name, String u_email,
 			String mid_num, String u_gender, String mid_name, String u_phone, String u_sido, String faq_code,
 			String u_gugun, String f_date, String f_head, String g_num, String f_body, String reply, String w_num,
-			String f_check, String sdate, String edate, String price, String wsido, String prmess, String mread,
-			String m_message, String g_message, String g_check, String g_date,String wgugun) {
+			String f_check, String sdate, String edate, String price, String wsido, String wgugun, String prmess,
+			String message_num, String mread, String georae_code, String m_message, String g_message, String g_check,
+			String g_date) {
 		super();
 		this.u_id = u_id;
 		this.bi_num = bi_num;
@@ -58,13 +61,15 @@ public class gosuVo {
 		this.edate = edate;
 		this.price = price;
 		this.wsido = wsido;
+		this.wgugun = wgugun;
 		this.prmess = prmess;
+		this.message_num = message_num;
 		this.mread = mread;
+		this.georae_code = georae_code;
 		this.m_message = m_message;
 		this.g_message = g_message;
 		this.g_check = g_check;
 		this.g_date = g_date;
-		this.wgugun = wgugun;
 	}
 	public String getU_id() {
 		return u_id;
@@ -210,17 +215,35 @@ public class gosuVo {
 	public void setWsido(String wsido) {
 		this.wsido = wsido;
 	}
+	public String getWgugun() {
+		return wgugun;
+	}
+	public void setWgugun(String wgugun) {
+		this.wgugun = wgugun;
+	}
 	public String getPrmess() {
 		return prmess;
 	}
 	public void setPrmess(String prmess) {
 		this.prmess = prmess;
 	}
+	public String getMessage_num() {
+		return message_num;
+	}
+	public void setMessage_num(String message_num) {
+		this.message_num = message_num;
+	}
 	public String getMread() {
 		return mread;
 	}
 	public void setMread(String mread) {
 		this.mread = mread;
+	}
+	public String getGeorae_code() {
+		return georae_code;
+	}
+	public void setGeorae_code(String georae_code) {
+		this.georae_code = georae_code;
 	}
 	public String getM_message() {
 		return m_message;
@@ -246,11 +269,6 @@ public class gosuVo {
 	public void setG_date(String g_date) {
 		this.g_date = g_date;
 	}
-	public String getWgugun() {
-		return wgugun;
-	}
-	public void setWgugun(String wgugun) {
-		this.wgugun = wgugun;
-	}
+	
 	
 }

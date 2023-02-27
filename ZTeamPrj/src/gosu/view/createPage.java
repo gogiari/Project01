@@ -12,17 +12,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import gosu.data.gosuDao;
 import gosu.data.gosuVo;
+import gosu.data.userVo;
 
 public class createPage extends JFrame {
-	
+	TextField idtxt,pwtxt,nametxt,phonetxt,emailtxt;
+	JRadioButton man, woman;
+	JComboBox sido,gugun;
+	ButtonGroup group;
 	
 	public createPage() {
 		getContentPane().setLayout(null);
@@ -67,7 +76,7 @@ public class createPage extends JFrame {
 		lblUserName_1_1.setBounds(24, 402, 81, 15);
 		panel.add(lblUserName_1_1);
 
-		TextField idtxt = new TextField();
+		idtxt = new TextField();
 		idtxt.setForeground(Color.BLACK);
 		idtxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		idtxt.setColumns(10);
@@ -75,7 +84,7 @@ public class createPage extends JFrame {
 		idtxt.setBounds(24, 135, 169, 23);
 		panel.add(idtxt);
 
-		TextField pwtxt = new TextField();
+		pwtxt = new TextField();
 		pwtxt.setForeground(Color.BLACK);
 		pwtxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		pwtxt.setColumns(10);
@@ -83,7 +92,7 @@ public class createPage extends JFrame {
 		pwtxt.setBounds(24, 195, 172, 23);
 		panel.add(pwtxt);
 
-		TextField nametxt = new TextField();
+		nametxt = new TextField();
 		nametxt.setForeground(Color.BLACK);
 		nametxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		nametxt.setColumns(10);
@@ -91,7 +100,7 @@ public class createPage extends JFrame {
 		nametxt.setBounds(24, 255, 172, 23);
 		panel.add(nametxt);
 
-		TextField phonetxt = new TextField();
+		phonetxt = new TextField();
 		phonetxt.setForeground(Color.BLACK);
 		phonetxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		phonetxt.setColumns(10);
@@ -99,25 +108,31 @@ public class createPage extends JFrame {
 		phonetxt.setBounds(24, 316, 172, 23);
 		panel.add(phonetxt);
 
-		Checkbox man = new Checkbox("Man");
+		man = new JRadioButton("Man");
 		man.setBackground(new Color(248, 248, 255));
 		man.setForeground(SystemColor.textHighlight);
 		man.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
 		man.setBounds(24, 423, 56, 23);
+		
+
+		woman = new JRadioButton("Woman");
+		woman.setBackground(new Color(248, 248, 255));
+		woman.setForeground(SystemColor.textHighlight);
+		woman.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
+		woman.setBounds(100, 423, 73, 23);
+		group = new ButtonGroup();
+		group.add(man);
+		group.add(woman);
 		panel.add(man);
+		panel.add(woman);
+		
+		
 
-		Checkbox man_1 = new Checkbox("Woman");
-		man_1.setBackground(new Color(248, 248, 255));
-		man_1.setForeground(SystemColor.textHighlight);
-		man_1.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
-		man_1.setBounds(100, 423, 73, 23);
-		panel.add(man_1);
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setForeground(new Color(255, 255, 255));
-		comboBox.setBackground(new Color(255, 255, 255));
-		comboBox.setBounds(24, 485, 93, 23);
-		panel.add(comboBox);
+		sido = new JComboBox();
+		sido.setForeground(new Color(255, 255, 255));
+		sido.setBackground(new Color(255, 255, 255));
+		sido.setBounds(24, 485, 93, 23);
+		panel.add(sido);
 
 		JLabel sido = new JLabel("Addr");
 		sido.setForeground(SystemColor.textHighlight);
@@ -125,7 +140,7 @@ public class createPage extends JFrame {
 		sido.setBounds(24, 460, 81, 15);
 		panel.add(sido);
 
-		JComboBox gugun = new JComboBox();
+		gugun = new JComboBox();
 		gugun.setForeground(new Color(255, 255, 255));
 		gugun.setBackground(new Color(255, 255, 255));
 		gugun.setBounds(152, 485, 93, 23);
@@ -148,7 +163,7 @@ public class createPage extends JFrame {
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				System.exit(0);
 				
 			}
 		});
@@ -175,7 +190,7 @@ public class createPage extends JFrame {
 			// 찾기 버튼
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				findUser();
 				
 			}
 		});
@@ -194,9 +209,11 @@ public class createPage extends JFrame {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-					addMember();
-						
+						addMember();
+						clearViewData();
 					}
+
+				
 				});
 				
 				
@@ -221,7 +238,7 @@ public class createPage extends JFrame {
 				lblEail.setBounds(24, 345, 81, 15);
 				panel.add(lblEail);
 				
-				TextField emailtxt = new TextField();
+				emailtxt = new TextField();
 				emailtxt.setForeground(Color.BLACK);
 				emailtxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 				emailtxt.setColumns(10);
@@ -235,13 +252,85 @@ public class createPage extends JFrame {
 		
 	}
 
-	protected void addMember() {
-		gosuDao gDao = new gosuDao();
-		gosuVo  vo   = getViewData();
+	protected void clearViewData() {
+		this.idtxt.setText("");
+		this.pwtxt.setText("");
+		this.nametxt.setText("");
+		this.phonetxt.setText("");
+		this.emailtxt.setText("");
+		this.man.setSelected(false);
+		this.woman.setSelected(false);
+		//this.sido.getSelectedIndex(0);
+		//this.gugun.getSelectedIndex(0);
+		
+		
 	}
 
-	private gosuVo getViewData() {
-		gosuVo vo = new gosuVo(); 
+	protected void addMember() {
+		gosuDao gDao = new gosuDao();
+		userVo  vo   = getViewData();
+		int aftcnt = gDao.insertMember(vo);
+		
+		JOptionPane.showMessageDialog(null,aftcnt + "건 저장되었습니다","추가",JOptionPane.OK_OPTION);
+		
+	}
+	protected void findUser() {
+		String id = this.idtxt.getText();
+		if(id.trim().equals(""))
+			return;
+		
+		gosuDao dao = new gosuDao();
+		userVo vo = dao.getUser(id);
+		setViewData(vo);
+		
+	}
+	
+	
+	private void setViewData(userVo vo) {
+		String id = vo.getId();
+		String pw = vo.getPw();
+		String name = vo.getName();
+		String phone = vo.getPhone();
+		String email = vo.getEmail();
+		String gender = vo.getGender();
+		String sido = vo.getSido();
+		String gugun = vo.getGugun();
+		
+		this.idtxt.setText(id);
+		this.pwtxt.setText(pw);
+		this.nametxt.setText(name);
+		this.phonetxt.setText(phone);
+		this.emailtxt.setText(email);
+		switch(gender) {
+		case "남":
+			this.man.setSelected(true);
+			break;
+		case "여":
+			this.woman.setSelected(true);
+			break;
+		}
+		this.sido.setSelectedItem(sido);
+		this.gugun.setSelectedItem(gugun);
+		
+	}
+	//회원가입
+	private userVo getViewData() {
+		String id = this.idtxt.getText();
+		String pw = this.pwtxt.getText();
+		String name = this.nametxt.getText();
+		String phone = this.phonetxt.getText();
+		String email = this.emailtxt.getText();
+		String gender = "";
+		if( this.man.isSelected() ) gender = "남";
+		if( this.woman.isSelected() ) gender = "여";
+		String sido = (String)this.sido.getSelectedItem();
+		String gugun = (String)this.gugun.getSelectedItem();
+		
+		userVo vo = new userVo(id,pw,name,phone,email,gender,sido,gugun);
+		
 		return vo;
 	}
+	
+
+	
 }
