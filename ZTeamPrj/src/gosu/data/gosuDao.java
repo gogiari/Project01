@@ -171,6 +171,7 @@ public class gosuDao {
 
 	}
 
+
 	public Vector<Vector> getFAQList() {
 		Vector<Vector> list = new Vector<Vector>();
 
@@ -261,7 +262,7 @@ public class gosuDao {
 	// 대분류 목록 가져오기
 	public Vector<String> getBigList() {
 		Vector<String> list = new Vector<String>();
-		list.add("전체");
+		list.add("대분류");
 
 		String sql = "";
 		sql += "SELECT BI_NAME FROM BIGLIST";
