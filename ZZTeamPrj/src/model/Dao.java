@@ -171,7 +171,7 @@ public class Dao {
 			pstmt.setString(4, prMes);
 			
 			pstmt.setString(5, prMes);
-			pstmt.setString(6, prMes);0
+			pstmt.setString(6, prMes);
 			pstmt.setString(7, prMes);
 			
 			aftcnt = pstmt.executeUpdate();

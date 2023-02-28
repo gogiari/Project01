@@ -1,4 +1,4 @@
-package Team;
+package gosu.view;
 
 import java.awt.Color;
 import java.awt.Font;
