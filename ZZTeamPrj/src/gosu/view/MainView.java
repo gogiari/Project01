@@ -23,6 +23,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import gosu.data.gosuDao;
+import javax.swing.DefaultComboBoxModel;
 
 public class MainView extends JFrame implements ActionListener{
 	JPanel pCenterBack, pCenterList, pCenterMsg, pCenterMypage, pSouth;
@@ -34,19 +35,21 @@ public class MainView extends JFrame implements ActionListener{
 	// 고수리스트 변수
 	JLabel lblListname;
 	JComboBox cbxlist;
-	JScrollPane scroll;
+	JScrollPane scrGosu;
 	JButton btnOk, btnRefresh;
 	JTable tabGosuList;
 	
 	// 메시지 리스트 변수
 	JLabel lblMsgname;
-//	JComboBox cbxlist2;
-//	JScrollPane scroll;
-//	JButton btnOk;
-//	JTable tabGosuList;
+	JTable tabMsg;
+	JScrollPane scrMsg;
 	
 	// 마이 페이지 변수
 	JLabel lblMyname;
+	JComboBox cbxMypage;
+	JButton btnGosuCreate, bntUserSet;
+	JTable tabMypage;
+	JScrollPane scrMypage;
 	
 	//파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
 	LineBorder lb = new LineBorder(Color.black, 1, true);
@@ -206,6 +209,8 @@ public class MainView extends JFrame implements ActionListener{
 		this.setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2); // 화면 중앙
 
 	}
+	
+	// 마이페이지 화면
 	private Component mypage() {
 		
 		// 마이페이지 패널생성
@@ -213,12 +218,84 @@ public class MainView extends JFrame implements ActionListener{
 		pCenterMypage.setBounds(0, 5, 1184, 746);
 		pCenterMypage.setLayout(null);
 		
+		// 마이페이지 타이틀
 		lblMyname = new JLabel("마이 페이지");
 		lblMyname.setBounds(340, 0, 486, 70);
 		lblMyname.setForeground(new Color(0, 128, 192));
 		lblMyname.setFont(new Font("휴먼엑스포", Font.PLAIN, 60));
 		pCenterMypage.add(lblMyname);
 		
+		// 마이페이지 대분류
+		cbxMypage = new JComboBox();
+		cbxMypage.setModel(new DefaultComboBoxModel(new String[] {"고수", "회원"}));
+		cbxMypage.setBounds(59, 22, 82, 23);
+		cbxMypage.setForeground(new Color(0, 0, 0));
+		cbxMypage.setToolTipText("\uB300\uBD84\uB958");
+		pCenterMypage.add(cbxMypage);
+		
+		// 마이페이지 테이블
+		tabMypage = new JTable();
+		tabMypage.setModel(
+				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
+
+					@Override
+					public boolean isCellEditable(int row, int column) {
+						return false;
+					}
+
+				});
+		
+		
+		// 마에페이지 테이블 스크롤 생성
+		scrMypage = new JScrollPane(tabMypage);
+		scrMypage.setBounds(135, 70, 865, 614);
+		tabMypage.setBackground(Color.WHITE);
+		scrMypage.setBackground(Color.WHITE);
+		pCenterMypage.add(scrMypage);
+
+		
+		// 마이페이지 버튼
+		btnGosuCreate = new JButton("고수 업무 등록");
+		btnGosuCreate.setBounds(1030, 40, 142, 17);
+		btnGosuCreate.setBorder(lb);
+		btnGosuCreate.setBackground(new Color(255, 255, 255));
+		btnGosuCreate.setForeground(new Color(0, 128, 192));
+		pCenterMypage.add(btnGosuCreate);
+		
+		bntUserSet = new JButton("회원 정보 수정 / 삭제");
+		bntUserSet.setBounds(1030, 40, 142, 17);
+		bntUserSet.setBorder(lb);
+		bntUserSet.setBackground(new Color(255, 255, 255));
+		bntUserSet.setForeground(new Color(0, 128, 192));
+		pCenterMypage.add(bntUserSet);
+		
+		bntUserSet.setVisible(false);
+
+		
+		btnGosuCreate.addActionListener(this);
+		bntUserSet.addActionListener(this);
+		
+
+		cbxMypage.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 버튼 이벤트
+				switch ((cbxMypage.getSelectedItem().toString())) {
+				case "회원": 
+					btnGosuCreate.setVisible(false);
+					bntUserSet.setVisible(true);
+					break;
+				default: 
+					btnGosuCreate.setVisible(true);
+					bntUserSet.setVisible(false);
+					break;
+				}
+
+			}
+
+		});
+
 		return pCenterMypage;
 	}
 
@@ -230,13 +307,32 @@ public class MainView extends JFrame implements ActionListener{
 		pCenterMsg.setBounds(0, 5, 1184, 746);
 		pCenterMsg.setLayout(null);
 		
+		// 메시지 타이틀
 		lblMsgname = new JLabel("메시지 리스트");
 		lblMsgname.setBounds(340, 0, 486, 70);
 		lblMsgname.setForeground(new Color(0, 128, 192));
 		lblMsgname.setFont(new Font("휴먼엑스포", Font.PLAIN, 60));
 		pCenterMsg.add(lblMsgname);
 		
+		// 메시지 테이블 생성
+		tabMsg = new JTable();
+		tabMsg.setModel(
+				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
 
+					@Override
+					public boolean isCellEditable(int row, int column) {
+						return false;
+					}
+
+				});
+		
+		
+		// 메시지 테이블 스크롤 생성
+		scrMsg = new JScrollPane(tabMsg);
+		scrMsg.setBounds(135, 70, 865, 614);
+		tabMsg.setBackground(Color.WHITE);
+		scrMsg.setBackground(Color.WHITE);
+		pCenterMsg.add(scrMsg);
 		
 		return pCenterMsg;
 	}
@@ -275,7 +371,7 @@ public class MainView extends JFrame implements ActionListener{
 		pCenterList.add(btnOk);
 		btnOk.addActionListener(this);
 		
-		// 테이블
+		// 고수 테이블
 		tabGosuList = new JTable();
 		tabGosuList.setModel(
 				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
@@ -296,13 +392,15 @@ public class MainView extends JFrame implements ActionListener{
 		btnRefresh.setForeground(new Color(0, 128, 192));
 		pCenterList.add(btnRefresh);
 		
-
-		scroll = new JScrollPane(tabGosuList);
-		scroll.setBounds(135, 70, 865, 614);
-		tabGosuList.setBackground(Color.WHITE);
-		scroll.setBackground(Color.WHITE);
-		pCenterList.add(scroll);
 		
+		// 고수 테이블 스크롤 생성
+		scrGosu = new JScrollPane(tabGosuList);
+		scrGosu.setBounds(135, 70, 865, 614);
+		tabGosuList.setBackground(Color.WHITE);
+		scrGosu.setBackground(Color.WHITE);
+		pCenterList.add(scrGosu);
+		
+		// 새로고침 액션
 		btnRefresh.addActionListener(this);
 
 //		setSize(1200, 800);
@@ -349,9 +447,16 @@ public class MainView extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) { // 눌러진 버튼의 글자
 		case "새로고침" :
-			System.out.println("고수리스트 새로고침클릭");
+			System.out.println("새로고침클릭");
 			gosuRefresh();
 			break;
+		case "고수 업무 등록" :
+			System.out.println("고수 업무 등록");
+			break;
+		case "회원 정보 수정 / 삭제" :
+			System.out.println("회원 정보 수정 / 삭제");
+			break;
+
 		}
 	}
 
