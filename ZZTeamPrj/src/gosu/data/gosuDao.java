@@ -4,333 +4,430 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class gosuDao {
 
-   private Connection conn = null;
+	private Connection conn = null;
 
-   public gosuDao() {
-      conn = dbConn.getInstace();
-   }
+	public gosuDao() {
+		conn = dbConn.getInstace();
+	}
 
-   public void close() {
-      try {
-         if (conn != null)
-            conn.close();
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
-   }
+	public void close() {
+		try {
+			if (conn != null)
+				conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-   // 회원가입
-   public int insertMember(String u_id, String u_pw, String u_name, String u_phone, String u_email, String u_gender,
-         String u_sido, String u_gugun) {
-      String sql = "INSERT INTO USERLIST " + " (U_ID,USERPW,USERNAME,PHONE,EMAIL,GENDER,U_SIDO,U_GUGUN)" + " VALUES "
-            + "  (?,?,?,?,?,?,?,?)   ";
+	// 회원가입
+	public int insertMember(String u_id, String u_pw, String u_name, String u_phone, String u_email, String u_gender,
+			String u_sido, String u_gugun) {
+		String sql = "INSERT INTO USERLIST " + " (U_ID,USERPW,USERNAME,PHONE,EMAIL,GENDER,U_SIDO,U_GUGUN)" + " VALUES "
+				+ "  (?,?,?,?,?,?,?,?)   ";
 
-      int aftcnt = 0;
+		int aftcnt = 0;
 
-      PreparedStatement pstmt = null;
-      try {
-         pstmt = conn.prepareStatement(sql);
-         pstmt.setString(1, u_id);
-         pstmt.setString(2, u_pw);
-         pstmt.setString(3, u_name);
-         pstmt.setString(4, u_phone);
-         pstmt.setString(5, u_email);
-         pstmt.setString(6, u_gender);
-         pstmt.setString(7, u_sido);
-         pstmt.setString(8, u_gugun);
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, u_id);
+			pstmt.setString(2, u_pw);
+			pstmt.setString(3, u_name);
+			pstmt.setString(4, u_phone);
+			pstmt.setString(5, u_email);
+			pstmt.setString(6, u_gender);
+			pstmt.setString(7, u_sido);
+			pstmt.setString(8, u_gugun);
 
-         aftcnt = pstmt.executeUpdate();
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
-      try {
-         if (pstmt != null)
-            pstmt.close();
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
-      return aftcnt;
-   }
+			aftcnt = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (pstmt != null)
+				pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return aftcnt;
+	}
 
-   public int insertMember(userVo vo) {
+	public int insertMember(userVo vo) {
 
-      String id = vo.getId();
-      String pw = vo.getPw();
-      String name = vo.getName();
-      String phone = vo.getPhone();
-      String email = vo.getEmail();
-      String gender = vo.getGender();
-      String sido = vo.getSido();
-      String gugun = vo.getGugun();
+		String id = vo.getId();
+		String pw = vo.getPw();
+		String name = vo.getName();
+		String phone = vo.getPhone();
+		String email = vo.getEmail();
+		String gender = vo.getGender();
+		String sido = vo.getSido();
+		String gugun = vo.getGugun();
 
-      int aftcnt = insertMember(id, pw, name, phone, email, gender, sido, gugun);
-      return aftcnt;
-   }
+		int aftcnt = insertMember(id, pw, name, phone, email, gender, sido, gugun);
+		return aftcnt;
+	}
 
-   public Vector<Vector> getUserList() {
-      Vector<Vector> list = new Vector<Vector>();
+	public Vector<Vector> getUserList() {
+		Vector<Vector> list = new Vector<Vector>();
 
-      String sql = "SELECT U_ID,USERPW,USERNAME,EMAIL," + " GENDER,PHONE,U_SIDO,U_GUGUN " + "     FROM USERLIST ";
+		String sql = "SELECT U_ID,USERPW,USERNAME,EMAIL," + " GENDER,PHONE,U_SIDO,U_GUGUN " + "     FROM USERLIST ";
 
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      try {
-         pstmt = conn.prepareStatement(sql);
-         rs = pstmt.executeQuery();
-         while (rs.next()) {
-            String id = rs.getString("U_ID");
-            String pw = rs.getString("USERPW");
-            String name = rs.getString("USERNAME");
-            String email = rs.getString("EMAIL");
-            String gender = rs.getString("GENDER");
-            String phone = rs.getString("PHONE");
-            String sido = rs.getString("U_SIDO");
-            String gugun = rs.getString("U_GUGUN");
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("U_ID");
+				String pw = rs.getString("USERPW");
+				String name = rs.getString("USERNAME");
+				String email = rs.getString("EMAIL");
+				String gender = rs.getString("GENDER");
+				String phone = rs.getString("PHONE");
+				String sido = rs.getString("U_SIDO");
+				String gugun = rs.getString("U_GUGUN");
 
-            Vector v = new Vector();
-            v.add(id);
-            v.add(pw);
-            v.add(name);
-            v.add(email);
-            v.add(gender);
-            v.add(phone);
-            v.add(sido);
-            v.add(gugun);
+				Vector v = new Vector();
+				v.add(id);
+				v.add(pw);
+				v.add(name);
+				v.add(email);
+				v.add(gender);
+				v.add(phone);
+				v.add(sido);
+				v.add(gugun);
 
-            list.add(v);
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
-      try {
-         if (pstmt != null)
-            pstmt.close();
-         if (rs != null)
-            rs.close();
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
+				list.add(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (pstmt != null)
+				pstmt.close();
+			if (rs != null)
+				rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-      return list;
-   }
+		return list;
+	}
 
-   // Gosu Jtable에 보여줄 data목록
-   public Vector<Vector> getGosuList() {
-      Vector<Vector> list = new Vector<Vector>();
+	// Gosu Jtable에 보여줄 data목록
+	public Vector<Vector> getGosuList() {
+		Vector<Vector> list = new Vector<Vector>();
 
-      String sql = "";
-      sql += "SELECT W_NUM        W_NUM , ";
-      sql += "       MID_NUM      MID_NUM, ";
-      sql += "        U.U_ID       U_ID, ";
-      sql += "        PRICE        PRICE, ";
-      sql += "       WGUGUN       WGUGUN ";
-      sql += "  FROM GWORK GW LEFT JOIN GOSU G ";
-      sql += "  ON   GW.G_NUM = G.G_NUM LEFT JOIN USERLIST U ";
-      sql += "  ON   U.U_ID = G.U_ID ";
+		String sql = "";
+		sql += "SELECT W_NUM        W_NUM , ";
+		sql += "       MID_NUM      MID_NUM, ";
+		sql += "        U.U_ID       U_ID, ";
+		sql += "        PRICE        PRICE, ";
+		sql += "       WGUGUN       WGUGUN ";
+		sql += "  FROM GWORK GW LEFT JOIN GOSU G ";
+		sql += "  ON   GW.G_NUM = G.G_NUM LEFT JOIN USERLIST U ";
+		sql += "  ON   U.U_ID = G.U_ID ";
 
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      try {
-         pstmt = conn.prepareStatement(sql);
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
 
-         rs = pstmt.executeQuery();
-         while (rs.next()) {
-            String w_num = rs.getString("W_NUM");
-            String mid_num = rs.getString("MID_NUM");
-            String u_id = rs.getString("U_ID");
-            String price = rs.getString("PRICE");
-            String wgugun = rs.getString("WGUGUN");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String w_num = rs.getString("W_NUM");
+				String mid_num = rs.getString("MID_NUM");
+				String u_id = rs.getString("U_ID");
+				String price = rs.getString("PRICE");
+				String wgugun = rs.getString("WGUGUN");
 
-            Vector v = new Vector();
-            v.add(w_num);
-            v.add(mid_num);
-            v.add(u_id);
-            v.add(price);
-            v.add(wgugun);
-            list.add(v);
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         try {
-            if (rs != null)
-               rs.close();
-            if (pstmt != null)
-               pstmt.close();
-         } catch (SQLException e) {
-         }
+				Vector v = new Vector();
+				v.add(w_num);
+				v.add(mid_num);
+				v.add(u_id);
+				v.add(price);
+				v.add(wgugun);
+				list.add(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
 
-      }
-      return list;
+		}
+		return list;
 
-   }
+	}
 
+	public Vector<Vector> getFAQList() {
+		Vector<Vector> list = new Vector<Vector>();
 
-   public Vector<Vector> getFAQList() {
-      Vector<Vector> list = new Vector<Vector>();
+		String sql = "SELECT FAQ_CODE, U_ID, F_DATE, F_HEAD, F_BODY, REPLY, F_CHECK " + "     FROM FAQ ";
 
-      String sql = "SELECT FAQ_CODE, U_ID, F_DATE, F_HEAD, F_BODY, REPLY, F_CHECK " + "     FROM FAQ ";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
 
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      try {
-         pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String faqcode = rs.getString("FAQ_CODE");
+				String u_id = rs.getString("U_ID");
+				String f_date = rs.getString("F_DATE");
+				String f_head = rs.getString("F_HEAD");
+				String f_body = rs.getString("F_BODY");
+				String reply = rs.getString("REPLY");
+				String check = rs.getString("F_CHECK");
 
-         rs = pstmt.executeQuery();
-         while (rs.next()) {
-            String faqcode = rs.getString("FAQ_CODE");
-            String u_id = rs.getString("U_ID");
-            String f_date = rs.getString("F_DATE");
-            String f_head = rs.getString("F_HEAD");
-            String f_body = rs.getString("F_BODY");
-            String reply = rs.getString("REPLY");
-            String check = rs.getString("F_CHECK");
+				Vector v = new Vector();
+				v.add(faqcode);
+				v.add(u_id);
+				v.add(f_date);
+				v.add(f_head);
+				v.add(f_body);
+				v.add(reply);
+				v.add(check);
 
-            Vector v = new Vector();
-            v.add(faqcode);
-            v.add(u_id);
-            v.add(f_date);
-            v.add(f_head);
-            v.add(f_body);
-            v.add(reply);
-            v.add(check);
+				list.add(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
 
-            list.add(v);
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         try {
-            if (rs != null)
-               rs.close();
-            if (pstmt != null)
-               pstmt.close();
-         } catch (SQLException e) {
-         }
+		}
+		return list;
+	}
 
-      }
-      return list;
-   }
+	public userVo getUser(String id) {
 
-   public userVo getUser(String id) {
+		userVo vo = null;
+		String sql = "SELECT U_ID,USERPW,USERNAME,EMAIL," + " GENDER,PHONE,U_SIDO,U_GUGUN " + "     FROM USERLIST "
+				+ "   WHERE U_ID = ?";
 
-      userVo vo = null;
-      String sql = "SELECT U_ID,USERPW,USERNAME,EMAIL," + " GENDER,PHONE,U_SIDO,U_GUGUN " + "     FROM USERLIST "
-            + "   WHERE U_ID = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				
+				String uid = rs.getString("U_ID");
+				String pw = rs.getString("USERPW");
+				String pw2= rs.getString("USERPW");
+				String name = rs.getString("USERNAME");
+				String email = rs.getString("EMAIL");
+				String gender = rs.getString("GENDER");
+				String phone = rs.getString("PHONE");
+				String sido = rs.getString("U_SIDO");
+				String gugun = rs.getString("U_GUGUN");
 
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      try {
-         pstmt = conn.prepareStatement(sql);
-         pstmt.setString(1, id);
-         rs = pstmt.executeQuery();
+				vo = new userVo(uid, pw, pw2 ,name, email, gender, phone, sido, gugun);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
 
-         if (rs.next()) {
+		}
+		return vo;
+	}
 
-            String uid = rs.getString("U_ID");
-            String pw = rs.getString("USERPW");
-            String name = rs.getString("USERNAME");
-            String email = rs.getString("EMAIL");
-            String gender = rs.getString("GENDER");
-            String phone = rs.getString("PHONE");
-            String sido = rs.getString("U_SIDO");
-            String gugun = rs.getString("U_GUGUN");
+	// 대분류 목록 가져오기
+	public Vector<String> getBigList() {
+		Vector<String> list = new Vector<String>();
+		list.add("전체");
 
-            vo = new userVo(uid, pw, name, email, gender, phone, sido, gugun);
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         try {
-            if (rs != null)
-               rs.close();
-            if (pstmt != null)
-               pstmt.close();
-         } catch (SQLException e) {
-         }
+		String sql = "";
+		sql += "SELECT BI_NAME FROM BIGLIST";
 
-      }
-      return vo;
-   }
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
 
-   // 대분류 목록 가져오기
-   public Vector<String> getBigList() {
-      Vector<String> list = new Vector<String>();
-      list.add("대분류");
+			while (rs.next()) {
+				String bigList = rs.getString("BI_NAME");
+				list.add(bigList);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
 
-      String sql = "";
-      sql += "SELECT BI_NAME FROM BIGLIST";
+		}
+		return list;
+	}
 
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      try {
-         pstmt = conn.prepareStatement(sql);
-         rs = pstmt.executeQuery();
+	public boolean loginCheck(String Uid, String Upw) {
+		boolean flag = false;
 
-         while (rs.next()) {
-            String bigList = rs.getString("BI_NAME");
-            list.add(bigList);
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         try {
-            if (rs != null)
-               rs.close();
-            if (pstmt != null)
-               pstmt.close();
-         } catch (SQLException e) {
-         }
+		
+		String sql = "SELECT USERPW "
+				+ "    FROM USERLIST "
+				+ "    WHERE U_ID   = ?  ";
 
-      }
-      return list;
-   }
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, Uid);
+			rs = pstmt.executeQuery();
+			System.out.println("아이디를 확인하세요");
+			while (rs.next()) {
+				if (Upw.equals(rs.getString("USERPW"))) {
+					flag = true;
+					System.out.println("비밀번호 일치");
+				} else {
+					flag = false;
+					System.out.println("비밀번호 불일치");
+				}
 
-   public boolean loginCheck(String Uid, String Upw) {
-      boolean flag = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
 
-      
-      String sql = "SELECT USERPW "
-            + "    FROM USERLIST "
-            + "    WHERE U_ID   = ?  ";
+		}
+		return flag;
+	}
+	public  ArrayList<String> allSido(){
+		ArrayList<String> sidoData = new ArrayList<String>();
+		
+		String sql = "SELECT DISTINCT SIDO  FROM POST";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+		    rs= pstmt.executeQuery();
+		    
+		    while(rs.next()) {
+		    	sidoData.add(rs.getString("SIDO"));
+		    }
+		    
+		    
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if(conn != null)conn.close();
+			if(rs != null)rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return sidoData;
+	}
+	public ArrayList<String> allGugun(String sido){
+		ArrayList<String> gugunData = new ArrayList<String>();
+		
+		String sql = "SELECT DISTINCT GUGUN  FROM POST WHERE SIDO = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+		    pstmt =	conn.prepareStatement(sql);
+			pstmt.setString(1, sido);
+		    rs= pstmt.executeQuery();
+		    
+		    while(rs.next()) {
+		    	gugunData.add(rs.getString("GUGUN"));
+		    }
+		    
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if(conn != null)conn.close();
+			if(rs != null)rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return gugunData;
+	}
 
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      try {
-         pstmt = conn.prepareStatement(sql);
-         pstmt.setString(1, Uid);
-         rs = pstmt.executeQuery();
-         System.out.println("아이디를 확인하세요");
-         while (rs.next()) {
-            if (Upw.equals(rs.getString("USERPW"))) {
-               flag = true;
-               System.out.println("비밀번호 일치");
-            } else {
-               flag = false;
-               System.out.println("비밀번호 불일치");
-            }
+	public class GugunComboBoxModel extends DefaultComboBoxModel<String> {
+		ArrayList<String> datas = new ArrayList<String>();
+		
 
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         try {
-            if (rs != null)
-               rs.close();
-            if (pstmt != null)
-               pstmt.close();
-         } catch (SQLException e) {
-         }
+		public GugunComboBoxModel(String sido) {
+			gosuDao dao = new gosuDao();
+			datas = dao.allGugun(sido);
+		}
+		
+		@Override
+		public int getSize() {
+			
+			return datas.size();
+		}
 
-      }
-      return flag;
-   }
+		@Override
+		public String getElementAt(int index) {
+			return datas.get(index);
+		}
+	public class sidoComboBoxModel extends DefaultComboBoxModel<String> {
+			ArrayList<String> datas1= new ArrayList<String>();
+			
+			public sidoComboBoxModel() {
+				gosuDao dao = new gosuDao();
+				datas1 = dao.allSido();
+			}
+			
+			@Override
+			public int getSize() {
+				
+				return datas1.size() ;
+			}
 
-   
+			@Override
+			public String getElementAt(int index) {
+				return datas1.get(index);
+			}
+
+	}
+  }
 }
