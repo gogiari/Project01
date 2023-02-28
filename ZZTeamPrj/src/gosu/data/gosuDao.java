@@ -128,11 +128,11 @@ public class gosuDao {
 		Vector<Vector> list = new Vector<Vector>();
 
 		String sql = "";
-		sql += "SELECT W_NUM        W_NUM , ";
-		sql += "       ML.MID_NAME  MID_NAME, ";
-		sql += "       U.U_ID       U_ID, ";
-		sql += "       PRICE        PRICE, ";
-		sql += "       WGUGUN       WGUGUN ";
+		sql += "SELECT W_NUM                             W_NUM , ";
+		sql += "       ML.MID_NAME                       MID_NAME, ";
+		sql += "       USERNAME                          USERNAME, ";
+		sql += "       PRICE                             PRICE, ";
+		sql += "       U.U_SIDO || ' ' ||  U. U_GUGUN    ADDR  ";
 		sql += "  FROM GWORK GW LEFT JOIN GOSU G ";
 		sql += "  ON   GW.G_NUM = G.G_NUM LEFT JOIN USERLIST U ";
 		sql += "  ON   U.U_ID = G.U_ID LEFT JOIN MIDLIST ML ";
@@ -147,16 +147,16 @@ public class gosuDao {
 			while (rs.next()) {
 				String w_num = rs.getString("W_NUM");
 				String mid_name = rs.getString("MID_NAME");
-				String u_id = rs.getString("U_ID");
+				String username = rs.getString("USERNAME");
 				String price = rs.getString("PRICE");
-				String wgugun = rs.getString("WGUGUN");
+				String addr = rs.getString("ADDR");
 
 				Vector v = new Vector();
 				v.add(w_num);
 				v.add(mid_name);
-				v.add(u_id);
+				v.add(username);
 				v.add(price);
-				v.add(wgugun);
+				v.add(addr);
 				list.add(v);
 			}
 		} catch (SQLException e) {
