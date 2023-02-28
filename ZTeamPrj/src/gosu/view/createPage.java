@@ -1,7 +1,6 @@
 package gosu.view;
 
 import java.awt.Button;
-import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Label;
@@ -9,30 +8,33 @@ import java.awt.SystemColor;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 
 import gosu.data.gosuDao;
-import gosu.data.gosuVo;
 import gosu.data.userVo;
 
 public class createPage extends JFrame {
-	TextField idtxt,pwtxt,nametxt,phonetxt,emailtxt;
+	TextField idtxt, nametxt, phonetxt, emailtxt;
 	JRadioButton man, woman;
-	JComboBox sido,gugun;
+	JComboBox sido, gugun;
 	ButtonGroup group;
-	
+	JPasswordField pwtxt, pwcheck;
+	Button cancelBtn,findBtn,alterBtn,addBtn,deleteBtn;
+	gosuDao dao;
+
 	public createPage() {
 		getContentPane().setLayout(null);
 
@@ -42,20 +44,18 @@ public class createPage extends JFrame {
 		panel.setBounds(0, 0, 562, 579);
 		getContentPane().add(panel);
 		panel.setLayout(null);
-		
-		
 
 		JLabel lblId = new JLabel("ID ");
 		lblId.setBackground(new Color(255, 255, 255));
 		lblId.setForeground(SystemColor.textHighlight);
 		lblId.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
-		lblId.setBounds(24, 115, 81, 15);
+		lblId.setBounds(24, 81, 81, 15);
 		panel.add(lblId);
 
 		JLabel lblUserPassword = new JLabel("PassWord");
 		lblUserPassword.setForeground(SystemColor.textHighlight);
 		lblUserPassword.setFont(new Font("D2Coding", Font.ITALIC, 15));
-		lblUserPassword.setBounds(24, 175, 115, 15);
+		lblUserPassword.setBounds(24, 129, 115, 15);
 		panel.add(lblUserPassword);
 
 		JLabel lblUserName = new JLabel("Name");
@@ -76,23 +76,31 @@ public class createPage extends JFrame {
 		lblUserName_1_1.setBounds(24, 402, 81, 15);
 		panel.add(lblUserName_1_1);
 
-		idtxt = new TextField();
+		idtxt = new TextField("아이디");
 		idtxt.setForeground(Color.BLACK);
 		idtxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		idtxt.setColumns(10);
 		idtxt.setBackground(new Color(255, 255, 255));
-		idtxt.setBounds(24, 135, 169, 23);
+		idtxt.setBounds(24, 100, 169, 23);
 		panel.add(idtxt);
 
-		pwtxt = new TextField();
+		pwtxt = new JPasswordField("비밀번호");
 		pwtxt.setForeground(Color.BLACK);
 		pwtxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		pwtxt.setColumns(10);
 		pwtxt.setBackground(new Color(255, 255, 255));
-		pwtxt.setBounds(24, 195, 172, 23);
+		pwtxt.setBounds(24, 150, 172, 23);
 		panel.add(pwtxt);
 
-		nametxt = new TextField();
+		pwcheck = new JPasswordField("비밀번호");
+		pwcheck.setForeground(Color.BLACK);
+		pwcheck.setFont(new Font("Sitka Text", Font.ITALIC, 13));
+		pwcheck.setColumns(10);
+		pwcheck.setBackground(Color.WHITE);
+		pwcheck.setBounds(24, 200, 172, 23);
+		panel.add(pwcheck);
+
+		nametxt = new TextField("이름");
 		nametxt.setForeground(Color.BLACK);
 		nametxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		nametxt.setColumns(10);
@@ -100,7 +108,7 @@ public class createPage extends JFrame {
 		nametxt.setBounds(24, 255, 172, 23);
 		panel.add(nametxt);
 
-		phonetxt = new TextField();
+		phonetxt = new TextField("전화번호");
 		phonetxt.setForeground(Color.BLACK);
 		phonetxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		phonetxt.setColumns(10);
@@ -113,7 +121,6 @@ public class createPage extends JFrame {
 		man.setForeground(SystemColor.textHighlight);
 		man.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
 		man.setBounds(24, 423, 56, 23);
-		
 
 		woman = new JRadioButton("Woman");
 		woman.setBackground(new Color(248, 248, 255));
@@ -125,8 +132,6 @@ public class createPage extends JFrame {
 		group.add(woman);
 		panel.add(man);
 		panel.add(woman);
-		
-		
 
 		sido = new JComboBox();
 		sido.setForeground(new Color(255, 255, 255));
@@ -164,128 +169,283 @@ public class createPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
-				
+
 			}
 		});
 		lblNewLabel_1.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 18));
 		lblNewLabel_1.setBounds(224, 0, 24, 28);
 		panel_1.add(lblNewLabel_1);
+
+		cancelBtn = new Button("Cancel");
+		cancelBtn.setBounds(80, 497, 83, 23);
+		panel_1.add(cancelBtn);
+		cancelBtn.setForeground(new Color(30, 144, 255));
+		cancelBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+		cancelBtn.setBackground(new Color(240, 248, 255));
 		
-		Button Cancel = new Button("Cancel");
-		Cancel.setBounds(88, 497, 61, 23);
-		panel_1.add(Cancel);
-		Cancel.setForeground(new Color(30, 144, 255));
-		Cancel.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		Cancel.setBackground(new Color(240, 248, 255));
-		
-		Button findBtn = new Button("find");
+		cancelBtn.addActionListener(new ActionListener() {
+			// 취소 버튼
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int result = JOptionPane.showConfirmDialog(null,"로그인창으로 이동합니다.","Cancel",JOptionPane.YES_NO_OPTION);
+				if(result == JOptionPane.YES_OPTION) {
+					setVisible(false);
+				}else {
+					return;
+				}
+					
+			}
+		});
+
+		findBtn = new Button("find");
 		findBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
 		findBtn.setForeground(new Color(30, 144, 255));
 		findBtn.setBackground(new Color(240, 248, 255));
-		findBtn.setBounds(199, 135, 46, 23);
+		findBtn.setBounds(199, 100, 46, 23);
 		panel.add(findBtn);
-		
+
 		findBtn.addActionListener(new ActionListener() {
-		
+
 			// 찾기 버튼
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				findUser();
+			}
+		});
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(133, -27, 187, 182);
+		panel.add(lblNewLabel);
+		lblNewLabel.setIcon(new ImageIcon("img/deal.png"));
+
+		addBtn = new Button("Add");
+		addBtn.setForeground(new Color(30, 144, 255));
+		addBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+		addBtn.setBackground(new Color(240, 248, 255));
+		addBtn.setBounds(24, 546, 46, 23);
+		panel.add(addBtn);
+		addBtn.addActionListener(new ActionListener() {
+			
+			gosuDao dao = new gosuDao();
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (idtxt.getText().length() == 0 || idtxt.getText().trim().equals("아이디")) {
+					JOptionPane.showMessageDialog(null, "아이디를 입력해 주세요.", "아이디 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (pwtxt.getText().trim().length() == 0 || pwtxt.getText().trim().equals("비밀번호")) {
+					JOptionPane.showMessageDialog(null, "비밀번호를 입력해 주세요.", "비밀번호 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (pwcheck.getText().trim().length() == 0 || pwcheck.getText().trim().equals("비밀번호 확인")) {
+					JOptionPane.showMessageDialog(null, "비밀번호 확인을 입력해 주세요.", "비밀번호 확인 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (!(pwtxt.getText().trim().equals(pwcheck.getText().trim()))) {
+					JOptionPane.showMessageDialog(null, "비밀번호가 같지 않습니다.!!", "비밀번호 확인", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (nametxt.getText().trim().length() == 0 || nametxt.getText().trim().equals("이름")) {
+					JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "이름 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (phonetxt.getText().trim().length() == 0 || phonetxt.getText().trim().equals("전화번호")) {
+					JOptionPane.showMessageDialog(null, "전화번호를 입력해 주세요.", "전화번호 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (emailtxt.getText().trim().length() == 0 || emailtxt.getText().trim().equals("이메일")) {
+					JOptionPane.showMessageDialog(null, "이메일을 입력해 주세요.", "이메일 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				 String id = idtxt.getText();
+				 if(dao.getUser(id) != null) {
+					 JOptionPane.showMessageDialog(null, "중복된 아이디입니다.", "중복된 아이디", JOptionPane.WARNING_MESSAGE);
+					 return;
+				 }
+				 addMember();				 
+				clearViewData();
+
+			}
+		});
+
+		alterBtn = new Button("Alter");
+		alterBtn.setForeground(new Color(30, 144, 255));
+		alterBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+		alterBtn.setBackground(new Color(240, 248, 255));
+		alterBtn.setBounds(121, 546, 56, 23);
+		panel.add(alterBtn);
+		alterBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
 				
 			}
 		});
-				JLabel lblNewLabel = new JLabel("");
-				lblNewLabel.setBounds(133, -27, 187, 182);
-				panel.add(lblNewLabel);
-				lblNewLabel.setIcon(new ImageIcon("img/deal.png"));
-				
-				Button addBtn = new Button("Add");
-				addBtn.setForeground(new Color(30, 144, 255));
-				addBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-				addBtn.setBackground(new Color(240, 248, 255));
-				addBtn.setBounds(24, 546, 46, 23);
-				panel.add(addBtn);
-				addBtn.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						addMember();
-						clearViewData();
-					}
 
-				
-				});
-				
-				
-				
-				Button AlterBtn = new Button("Alter");
-				AlterBtn.setForeground(new Color(30, 144, 255));
-				AlterBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-				AlterBtn.setBackground(new Color(240, 248, 255));
-				AlterBtn.setBounds(121, 546, 56, 23);
-				panel.add(AlterBtn);
-				
-				Button deleteBtn = new Button("Delete");
-				deleteBtn.setForeground(new Color(30, 144, 255));
-				deleteBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-				deleteBtn.setBackground(new Color(240, 248, 255));
-				deleteBtn.setBounds(228, 546, 56, 23);
-				panel.add(deleteBtn);
-				
-				JLabel lblEail = new JLabel("Email");
-				lblEail.setForeground(SystemColor.textHighlight);
-				lblEail.setFont(new Font("D2Coding", Font.ITALIC, 15));
-				lblEail.setBounds(24, 345, 81, 15);
-				panel.add(lblEail);
-				
-				emailtxt = new TextField();
-				emailtxt.setForeground(Color.BLACK);
-				emailtxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
-				emailtxt.setColumns(10);
-				emailtxt.setBackground(Color.WHITE);
-				emailtxt.setBounds(24, 366, 172, 23);
-				panel.add(emailtxt);
+		deleteBtn = new Button("Delete");
+		deleteBtn.setForeground(new Color(30, 144, 255));
+		deleteBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+		deleteBtn.setBackground(new Color(240, 248, 255));
+		deleteBtn.setBounds(228, 546, 56, 23);
+		panel.add(deleteBtn);
+
+		JLabel lblEail = new JLabel("Email");
+		lblEail.setForeground(SystemColor.textHighlight);
+		lblEail.setFont(new Font("D2Coding", Font.ITALIC, 15));
+		lblEail.setBounds(24, 345, 81, 15);
+		panel.add(lblEail);
+
+		emailtxt = new TextField("이메일");
+		emailtxt.setForeground(Color.BLACK);
+		emailtxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
+		emailtxt.setColumns(10);
+		emailtxt.setBackground(Color.WHITE);
+		emailtxt.setBounds(24, 366, 172, 23);
+		panel.add(emailtxt);
+		//
+		JLabel lblPasswordcheck = new JLabel("PassWord Check");
+		lblPasswordcheck.setForeground(SystemColor.textHighlight);
+		lblPasswordcheck.setFont(new Font("D2Coding", Font.ITALIC, 15));
+		lblPasswordcheck.setBounds(24, 179, 115, 15);
+		panel.add(lblPasswordcheck);
+		//
+
 		setLayeredPane(getLayeredPane());
 		setUndecorated(true);
 		setVisible(true);
 		setSize(562, 579);
-		
+
+		FocusEvent();
+
+	}
+
+	private void FocusEvent() {
+		idtxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (idtxt.getText().trim().length() == 0) {
+					idtxt.setText("아이디");
+				}
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (idtxt.getText().trim().equals("아이디")) {
+					idtxt.setText("");
+				}
+			}
+		});
+		pwtxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (pwtxt.getText().trim().length() == 0) {
+					pwtxt.setText("비밀번호");
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (pwtxt.getText().trim().equals("비밀번호")) {
+					pwtxt.setText("");
+				}
+			}
+		});
+		pwcheck.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (pwcheck.getText().trim().length() == 0) {
+					pwcheck.setText("비밀번호");
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (pwcheck.getText().trim().equals("비밀번호")) {
+					pwcheck.setText("");
+				}
+			}
+		});
+		nametxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (nametxt.getText().trim().length() == 0) {
+					nametxt.setText("이름");
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (nametxt.getText().trim().equals("이름")) {
+					nametxt.setText("");
+				}
+			}
+		});
+		phonetxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (phonetxt.getText().trim().length() == 0) {
+					phonetxt.setText("전화번호");
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (phonetxt.getText().trim().equals("전화번호")) {
+					phonetxt.setText("");
+				}
+			}
+		});
+		emailtxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (emailtxt.getText().trim().length() == 0) {
+					emailtxt.setText("이메일");
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (emailtxt.getText().trim().equals("이메일")) {
+					emailtxt.setText("");
+				}
+			}
+		});
 	}
 
 	protected void clearViewData() {
-		this.idtxt.setText("");
-		this.pwtxt.setText("");
-		this.nametxt.setText("");
-		this.phonetxt.setText("");
-		this.emailtxt.setText("");
+		this.idtxt.setText("아이디");
+		this.pwtxt.setText("비밀번호");
+		this.nametxt.setText("이름");
+		this.phonetxt.setText("전화번호");
+		this.emailtxt.setText("이메일");
 		this.man.setSelected(false);
 		this.woman.setSelected(false);
-		//this.sido.getSelectedIndex(0);
-		//this.gugun.getSelectedIndex(0);
-		
-		
+		// this.sido.getSelectedIndex(0);
+		// this.gugun.getSelectedIndex(0);
 	}
 
 	protected void addMember() {
 		gosuDao gDao = new gosuDao();
-		userVo  vo   = getViewData();
+		userVo vo = getViewData();
 		int aftcnt = gDao.insertMember(vo);
-		
-		JOptionPane.showMessageDialog(null,aftcnt + "건 저장되었습니다","추가",JOptionPane.OK_OPTION);
-		
+		JOptionPane.showMessageDialog(null, "회원 가입이 완료 되었습니다.", "회원 가입 완료.", JOptionPane.WARNING_MESSAGE);
+		setVisible(false);
 	}
+
 	protected void findUser() {
 		String id = this.idtxt.getText();
-		if(id.trim().equals(""))
+	
+		if (id.trim().equals(""))
 			return;
 		
 		gosuDao dao = new gosuDao();
 		userVo vo = dao.getUser(id);
 		setViewData(vo);
-		
+	
 	}
-	
-	
+
 	private void setViewData(userVo vo) {
 		String id = vo.getId();
 		String pw = vo.getPw();
@@ -295,13 +455,13 @@ public class createPage extends JFrame {
 		String gender = vo.getGender();
 		String sido = vo.getSido();
 		String gugun = vo.getGugun();
-		
+
 		this.idtxt.setText(id);
 		this.pwtxt.setText(pw);
 		this.nametxt.setText(name);
 		this.phonetxt.setText(phone);
 		this.emailtxt.setText(email);
-		switch(gender) {
+		switch (gender) {
 		case "남":
 			this.man.setSelected(true);
 			break;
@@ -311,9 +471,10 @@ public class createPage extends JFrame {
 		}
 		this.sido.setSelectedItem(sido);
 		this.gugun.setSelectedItem(gugun);
-		
+
 	}
-	//회원가입
+
+	// 회원가입
 	private userVo getViewData() {
 		String id = this.idtxt.getText();
 		String pw = this.pwtxt.getText();
@@ -321,16 +482,15 @@ public class createPage extends JFrame {
 		String phone = this.phonetxt.getText();
 		String email = this.emailtxt.getText();
 		String gender = "";
-		if( this.man.isSelected() ) gender = "남";
-		if( this.woman.isSelected() ) gender = "여";
-		String sido = (String)this.sido.getSelectedItem();
-		String gugun = (String)this.gugun.getSelectedItem();
-		
-		userVo vo = new userVo(id,pw,name,phone,email,gender,sido,gugun);
-		
+		if (this.man.isSelected())
+			gender = "남";
+		if (this.woman.isSelected())
+			gender = "여";
+		String sido = (String) this.sido.getSelectedItem();
+		String gugun = (String) this.gugun.getSelectedItem();
+
+		userVo vo = new userVo(id, pw, name, phone, email, gender, sido, gugun);
+
 		return vo;
 	}
-	
-
-	
 }

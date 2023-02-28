@@ -14,19 +14,21 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import gosu.data.gosuDao;
-import gosu.data.gosuVo;
 
 public class loginPage extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	gosuVo vo;
-	private TextField idE,pwE;
+	gosuDao dao;
+	TextField idU;
+	JPasswordField pwU;
 
 	public loginPage() {
 		setBackground(Color.WHITE);
@@ -83,21 +85,21 @@ public class loginPage extends JFrame implements ActionListener {
 		lblPw.setBounds(400, 189, 92, 23);
 		contentPane.add(lblPw);
 
-		TextField idE = new TextField();
-		idE.setForeground(Color.BLACK);
-		idE.setFont(new Font("Sitka Text", Font.ITALIC, 13));
-		idE.setColumns(10);
-		idE.setBackground(new Color(176, 224, 230));
-		idE.setBounds(400, 149, 248, 23);
-		contentPane.add(idE);
+		idU = new TextField();
+		idU.setForeground(Color.BLACK);
+		idU.setFont(new Font("Sitka Text", Font.ITALIC, 13));
+		idU.setColumns(10);
+		idU.setBackground(new Color(176, 224, 230));
+		idU.setBounds(400, 149, 248, 23);
+		contentPane.add(idU);
 
-		TextField pwE = new TextField();
-		pwE.setForeground(Color.BLACK);
-		pwE.setFont(new Font("Sitka Text", Font.ITALIC, 13));
-		pwE.setColumns(10);
-		pwE.setBackground(new Color(176, 224, 230));
-		pwE.setBounds(400, 215, 248, 23);
-		contentPane.add(pwE);
+		pwU = new JPasswordField();
+		pwU.setForeground(Color.BLACK);
+		pwU.setFont(new Font("Sitka Text", Font.ITALIC, 13));
+		pwU.setColumns(10);
+		pwU.setBackground(new Color(176, 224, 230));
+		pwU.setBounds(400, 215, 248, 23);
+		contentPane.add(pwU);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.WHITE);
@@ -141,10 +143,33 @@ public class loginPage extends JFrame implements ActionListener {
 	// 로그인 버튼
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		this.dao = new gosuDao();
 		this.setVisible(false);
-		
-		
-		new MainView();
+		String id = this.idU.getText();
+		String pw = "";
+		for (int i = 0; i < pwU.getPassword().length; i++) {
+			pw = pw + pwU.getPassword()[i];
+
+		}
+
+		if (id.length() == 0 || pw.length() == 0) {
+			JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 입력 하셔야 됩니다.", "아이디나 비번을 입력!", JOptionPane.DEFAULT_OPTION);
+			this.setVisible(true);
+			return;
+		} else if (id.equals("admin") && pw.equals("1234")) {
+			JOptionPane.showMessageDialog(null, "관리자 로그인 성공", "로그인 확인!", JOptionPane.DEFAULT_OPTION);
+			new ConstructorPage();
+			this.setVisible(false);
+			return;
+		} else if (id != null && pw != null) {
+			if (dao.loginCheck(id, pw)) {
+				new MainView();
+				JOptionPane.showMessageDialog(null, "로그인 성공", "로그인 확인!", JOptionPane.DEFAULT_OPTION);
+			} else {
+				JOptionPane.showMessageDialog(null, "아이디/비밀번호를 확인하세요", "로그인 실패", JOptionPane.DEFAULT_OPTION);
+				this.setVisible(true);
+			}
+		}
 	}
 
 	public static void main(String[] args) {

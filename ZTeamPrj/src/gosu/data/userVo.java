@@ -4,6 +4,7 @@ public class userVo {
 
 	String id,pw,name,phone,email,gender,sido,gugun;
 	
+
 	public userVo() {}
 	public userVo(String id, String pw, String name, String phone, String email, String gender, String sido,
 			String gugun) {
@@ -16,6 +17,11 @@ public class userVo {
 		this.gender = gender;
 		this.sido = sido;
 		this.gugun = gugun;
+	}
+	
+	
+	public userVo(String Uid, String Upw) {
+		// TODO Auto-generated constructor stub
 	}
 	public String getId() {
 		return id;
