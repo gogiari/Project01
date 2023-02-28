@@ -29,6 +29,8 @@ public class loginPage extends JFrame implements ActionListener {
 	gosuDao dao;
 	TextField idU;
 	JPasswordField pwU;
+	
+	MainView mianview = null;
 
 	public loginPage() {
 		setBackground(Color.WHITE);
@@ -170,6 +172,7 @@ public class loginPage extends JFrame implements ActionListener {
 				this.setVisible(true);
 			}
 		}
+		mianview.gosuRefresh();
 	}
 
 	public static void main(String[] args) {

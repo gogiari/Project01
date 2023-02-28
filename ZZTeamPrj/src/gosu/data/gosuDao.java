@@ -129,13 +129,14 @@ public class gosuDao {
 
 		String sql = "";
 		sql += "SELECT W_NUM        W_NUM , ";
-		sql += "       MID_NUM      MID_NUM, ";
-		sql += "        U.U_ID       U_ID, ";
-		sql += "        PRICE        PRICE, ";
+		sql += "       ML.MID_NAME  MID_NAME, ";
+		sql += "       U.U_ID       U_ID, ";
+		sql += "       PRICE        PRICE, ";
 		sql += "       WGUGUN       WGUGUN ";
 		sql += "  FROM GWORK GW LEFT JOIN GOSU G ";
 		sql += "  ON   GW.G_NUM = G.G_NUM LEFT JOIN USERLIST U ";
-		sql += "  ON   U.U_ID = G.U_ID ";
+		sql += "  ON   U.U_ID = G.U_ID LEFT JOIN MIDLIST ML ";
+		sql += "  ON GW.MID_NUM = ML.MID_NUM";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -145,14 +146,14 @@ public class gosuDao {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				String w_num = rs.getString("W_NUM");
-				String mid_num = rs.getString("MID_NUM");
+				String mid_name = rs.getString("MID_NAME");
 				String u_id = rs.getString("U_ID");
 				String price = rs.getString("PRICE");
 				String wgugun = rs.getString("WGUGUN");
 
 				Vector v = new Vector();
 				v.add(w_num);
-				v.add(mid_num);
+				v.add(mid_name);
 				v.add(u_id);
 				v.add(price);
 				v.add(wgugun);

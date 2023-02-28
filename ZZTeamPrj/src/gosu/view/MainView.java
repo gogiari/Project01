@@ -29,11 +29,13 @@ public class MainView extends JFrame implements ActionListener{
 	JLabel lblCenterMsg, lblCenterList, lblCenterMypage, lblList, lblMsg, lblMypage;
 	JButton  btnList, btnMsg, btnMypage;
 	
+	MainView mianview = null;
+	
 	// 고수리스트 변수
 	JLabel lblListname;
 	JComboBox cbxlist;
 	JScrollPane scroll;
-	JButton btnOk;
+	JButton btnOk, btnRefresh;
 	JTable tabGosuList;
 	
 	// 메시지 리스트 변수
@@ -45,6 +47,9 @@ public class MainView extends JFrame implements ActionListener{
 	
 	// 마이 페이지 변수
 	JLabel lblMyname;
+	
+	//파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
+	LineBorder lb = new LineBorder(Color.black, 1, true);
 	
 	public MainView() {
 		setBackground(new Color(255, 255, 255));
@@ -261,10 +266,8 @@ public class MainView extends JFrame implements ActionListener{
 		
 		
 		// 확인 버튼
-		//파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
-		LineBorder lb = new LineBorder(Color.black, 1, true);
 		btnOk = new JButton("\uD655\uC778\uD558\uAE30");
-		btnOk.setBounds(1082, 729, 102, 17);
+		btnOk.setBounds(1049, 703, 102, 17);
 		
 		btnOk.setBorder(lb);
 		btnOk.setBackground(new Color(255, 255, 255));
@@ -272,6 +275,7 @@ public class MainView extends JFrame implements ActionListener{
 		pCenterList.add(btnOk);
 		btnOk.addActionListener(this);
 		
+		// 테이블
 		tabGosuList = new JTable();
 		tabGosuList.setModel(
 				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
@@ -282,12 +286,24 @@ public class MainView extends JFrame implements ActionListener{
 					}
 
 				});
+		
+		// 새로고침 버튼
+		btnRefresh = new JButton("새로고침");
+		btnRefresh.setBounds(935, 703, 102, 17);
+		
+		btnRefresh.setBorder(lb);
+		btnRefresh.setBackground(new Color(255, 255, 255));
+		btnRefresh.setForeground(new Color(0, 128, 192));
+		pCenterList.add(btnRefresh);
+		
 
 		scroll = new JScrollPane(tabGosuList);
 		scroll.setBounds(135, 70, 865, 614);
 		tabGosuList.setBackground(Color.WHITE);
 		scroll.setBackground(Color.WHITE);
 		pCenterList.add(scroll);
+		
+		btnRefresh.addActionListener(this);
 
 //		setSize(1200, 800);
 //		setVisible(true);
@@ -326,11 +342,30 @@ public class MainView extends JFrame implements ActionListener{
 		new MainView();
 	}
 
-	// 고수리스트 확인 버튼 액션
+	
+	
+	// 고수리스트 버튼 액션
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		switch(e.getActionCommand()) { // 눌러진 버튼의 글자
+		case "새로고침" :
+			System.out.println("고수리스트 새로고침클릭");
+			gosuRefresh();
+			break;
+		}
+	}
+
+	public void gosuRefresh() {
+		tabGosuList.setModel(
+				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
+
+					@Override
+					public boolean isCellEditable(int row, int column) {
+						return false;
+					}
+
+				});
+		tabGosuList.repaint();
 	}
 
 }
