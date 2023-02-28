@@ -99,7 +99,7 @@ public class gosuDao {
             v.add(name);
             v.add(email);
             v.add(gender);
-            v.add(콜);
+            v.add(phone);
             v.add(sido);
             v.add(gugun);
 
