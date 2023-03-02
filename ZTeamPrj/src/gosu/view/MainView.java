@@ -33,7 +33,7 @@ public class MainView extends JFrame implements ActionListener{
 	JLabel lblListname;
 	JComboBox cbxlist;
 	JScrollPane scroll;
-	JButton btnOk;
+	JButton btnOk, btnRefresh;
 	JTable tabGosuList;
 	
 	// 메시지 리스트 변수
@@ -325,7 +325,9 @@ public class MainView extends JFrame implements ActionListener{
 	public static void main(String[] args) {
 		new MainView();
 	}
-
+	
+	
+	// 버튼 이벤트
 	// 고수리스트 확인 버튼 액션
 	@Override
 	public void actionPerformed(ActionEvent e) {
