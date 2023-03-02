@@ -52,7 +52,16 @@ public class georaeVo  {
 	public georaeVo(String g_code5, String g_message5, String g_check5) {
 		
 	}
-	
+
+
+	public georaeVo(String g_code2) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public georaeVo(String g_code2, String m_message2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getU_name() {
 		return u_name;
 	}
