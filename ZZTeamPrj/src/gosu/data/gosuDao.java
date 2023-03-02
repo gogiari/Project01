@@ -704,7 +704,7 @@ public class gosuDao {
 					 sql       += " SELECT ME.GEORAE_CODE GEORAE_CODE, ";
 					 sql       += "        GR.M_MESSAGE   M_MESSAGE, ";
 					 sql       += "        UL.USERNAME    USERNAME, ";
-					 sql       += "        GR.G_DATE      G_DATE ";
+					 sql       += "        ME.M_DATE      M_DATE ";
 					 sql       += "  FROM  MESSAGE ME LEFT JOIN GEORAE GR ";
 					 sql       += "  ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN USERLIST UL ";
 					 sql       += "  ON    ME.U_ID = UL.U_ID ";
@@ -719,13 +719,13 @@ public class gosuDao {
 							 String georae_code = rs.getString("GEORAE_CODE");
 							 String m_message = rs.getString("M_MESSAGE");
 							 String username = rs.getString("USERNAME");
-							 String g_date = rs.getString("G_DATE");
+							 String m_date = rs.getString("M_DATE");
 
 							 Vector v = new Vector();
 							 v.add(georae_code);
 							 v.add(m_message);
 							 v.add(username);
-							 v.add(g_date);
+							 v.add(m_date);
 
 							 list.add(v);
 						 }
@@ -744,4 +744,65 @@ public class gosuDao {
 				 public static void main(String[] args) {
 					System.out.println();
 				}
+				 
+				 // 마이페이지 테이블 데이터
+				 public Vector<Vector> getmylist() {
+					 Vector<Vector> list = new Vector<Vector>();
+					 String sql = "";
+					 sql       += "SELECT GR.GEORAE_CODE GEORAE_CODE, ";
+					 sql       += "       BL.BI_NAME     BI_NAME, ";
+					 sql       += "       ML.MID_NAME    MID_NAME, ";
+					 sql       += "       UL.USERNAME    USERNAME, ";
+					 sql       += "       GR.G_START     G_START, ";
+					 sql       += "       GW.PRICE       PRICE, ";
+					 sql       += "       GR.G_CHECK     G_CHECK, ";
+					 sql       += "       EV.G_SCORE     G_SCORE" ;
+					 sql       += " FROM  GEORAE GR LEFT JOIN GWORK GW ";
+					 sql       += " ON    GR.W_NUM = GW.W_NUM LEFT JOIN GOSU GS ";
+					 sql       += " ON    GW.G_NUM = GS.G_NUM LEFT JOIN USERLIST UL ";
+					 sql       += " ON    GS.U_ID = UL.U_ID LEFT JOIN MIDLIST ML ";
+					 sql       += " ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
+					 sql       += " ON    ML.BI_NUM = BL.BI_NUM LEFT JOIN EVALUATION EV ";
+					 sql       += " ON    GS.G_NUM = EV.G_NUM ";
+
+					 PreparedStatement psmt = null;
+					 ResultSet rs = null;
+					 try {
+						 psmt = conn.prepareStatement(sql);
+
+						 rs = psmt.executeQuery();
+						 while(rs.next()) {
+							 String georae_code = rs.getString("GEORAE_CODE");
+							 String bi_name = rs.getString("BI_NAME");
+							 String mid_name = rs.getString("MID_NAME");
+							 String username = rs.getString("USERNAME");
+							 String g_start = rs.getString("G_START");
+							 String price = rs.getString("PRICE");
+							 String g_check = rs.getString("G_CHECK");
+							 String g_score = rs.getString("G_SCORE");
+
+							 Vector v = new Vector();
+							 v.add(georae_code);
+							 v.add(bi_name);
+							 v.add(mid_name);
+							 v.add(username);
+							 v.add(g_start);
+							 v.add(price);
+							 v.add(g_check);
+							 v.add(g_score);
+
+							 list.add(v);
+						 }
+					 } catch (SQLException e) {
+						 e.printStackTrace();
+					 } finally {
+						 try {
+							 if(psmt!=null)psmt.close();
+						 } catch (SQLException e) {
+							 e.printStackTrace();
+						 }
+					 }
+
+					 return list;
+				 }
 }

@@ -240,7 +240,7 @@ public class MainView extends JFrame implements ActionListener{
 		// 마이페이지 테이블
 		tabMypage = new JTable();
 		tabMypage.setModel(
-				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
+				new DefaultTableModel(getMyDataList(), getMyCoulumnList()  ) {
 
 					@Override
 					public boolean isCellEditable(int row, int column) {
@@ -289,6 +289,7 @@ public class MainView extends JFrame implements ActionListener{
 				case "회원": 
 					btnGosuCreate.setVisible(false);
 					bntUserSet.setVisible(true);
+					
 					break;
 				default: 
 					btnGosuCreate.setVisible(true);
@@ -301,6 +302,8 @@ public class MainView extends JFrame implements ActionListener{
 
 		return pCenterMypage;
 	}
+
+
 
 	// 메시지리스트 화면
 	private Component msglist() {
@@ -500,6 +503,26 @@ public class MainView extends JFrame implements ActionListener{
 	private Vector<Vector> getMsgDataList() {
 		gosuDao dao = new gosuDao();
 		Vector<Vector> list = dao.getMsgList();
+		return list;
+	}
+	
+	// 마이페이지 테이블
+	private Vector<String> getMyCoulumnList() {
+		Vector<String> cols = new Vector<String>();
+		cols.add("거래번호");
+		cols.add("대분류");
+		cols.add("중분류");
+		cols.add("회원이름");
+		cols.add("날짜");
+		cols.add("금액");
+		cols.add("거래현황");
+		cols.add("평점");
+		return cols;
+	}
+
+	private Vector<Vector> getMyDataList() {
+		gosuDao dao = new gosuDao();
+		Vector<Vector> list = dao.getmylist();
 		return list;
 	}
 
