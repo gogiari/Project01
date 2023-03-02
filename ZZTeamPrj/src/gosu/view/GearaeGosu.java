@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import gosu.data.georaeVo;
 import gosu.data.gosuDao;
+import gosu.data.updateVo;
 
 
 public class GearaeGosu extends JFrame {
@@ -61,7 +62,7 @@ public class GearaeGosu extends JFrame {
 		
 		getContentPane().setLayout(new BorderLayout());
 	    Pane  = new JPanel();
-	    Pane.setBackground(new Color(102, 204, 255));;
+	    Pane.setBackground(new Color(135, 206, 250));
 	    
 		setContentPane(Pane);		
 		Pane.setLayout(null);		
@@ -81,7 +82,7 @@ public class GearaeGosu extends JFrame {
 		lblgnum.setBounds(30, 100, 200, 20);
 		Pane.add(lblgnum);
 		txtgcode = new JTextField("거래번호불러오기");
-		txtgcode.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtgcode.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtgcode.setBounds(200, 95, 560, 30);
 		Pane.add(txtgcode);
 		
@@ -94,7 +95,7 @@ public class GearaeGosu extends JFrame {
 		lblusername.setBounds(30, 145, 200, 20);
 		Pane.add(lblusername);
 		txtuname = new JTextField("이름불러오기");
-		txtuname.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtuname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtuname.setBounds(200, 140, 200, 30);
 		Pane.add(txtuname);
 		
@@ -106,7 +107,7 @@ public class GearaeGosu extends JFrame {
 		lblwork.setBackground(SystemColor.text);
 		Pane.add(lblwork);
 		txtwo = new JTextField("업무내용불러오기");
-		txtwo.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtwo.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtwo.setBounds(200, 190, 200, 30);
 		Pane.add(txtwo);
 				
@@ -119,7 +120,7 @@ public class GearaeGosu extends JFrame {
 		Pane.add(lbldate);
 		txtda = new JTextField("업무날짜불러오기");
 		txtda.setBounds(200, 250, 200, 30);
-		txtda.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtda.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtda);
 		
 		
@@ -156,11 +157,11 @@ public class GearaeGosu extends JFrame {
 		Pane.add(lbllocation);
 		txtlsido = new JTextField("시도");
 		txtlsido.setBounds(200, 370, 90, 30);
-		txtlsido.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtlsido.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtlsido);
 		txtlgugun = new JTextField("구군");
 		txtlgugun.setBounds(310, 370, 90, 30);
-		txtlgugun.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtlgugun.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtlgugun);
 		
 		// 고수이름
@@ -172,7 +173,7 @@ public class GearaeGosu extends JFrame {
 		Pane.add(lblgosuname);
 		txtgname = new JTextField("이름불러오기");
 		txtgname.setBounds(560, 140, 200, 30);
-		txtgname.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtgname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtgname);
 				
 		// 추가 메시지
@@ -184,7 +185,7 @@ public class GearaeGosu extends JFrame {
 		Pane.add(lblmessage);
 		txtm_message = new JTextField("거래요청 메시지 불러오기");
 		txtm_message.setBounds(450, 225, 310, 65);
-		txtm_message.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtm_message.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtm_message);
 		
         // 답장
@@ -196,7 +197,7 @@ public class GearaeGosu extends JFrame {
         Pane.add(lblreply);
         txtg_message = new JTextField();
         txtg_message.setBounds(450, 345, 310, 65);
-        txtg_message.setFont(new Font("D2Coding", Font.PLAIN, 20));
+        txtg_message.setFont(new Font("D2Coding", Font.PLAIN, 17));
         Pane.add(txtg_message);
 		
 		// 버튼
@@ -247,20 +248,9 @@ public class GearaeGosu extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				txtgcode.setText("");
-				gosuDao     gDao    =  new gosuDao();
-				
+				System.out.println("수락하기 클릭");				    				
 				surakgeorae();
-				
-				String g_code    = txtgcode.getText();
-				String g_message = txtg_message.getText();
-				
-				gDao.surakgeorae(new georaeVo(g_code, g_message));
-				
-				System.out.println("수락하기 클릭");	
-				txtgcode.setText("");
-				txtg_message.setText("");
-			    
+								
 
 			}
 
@@ -308,13 +298,14 @@ public class GearaeGosu extends JFrame {
 	}
 	
 	protected void surakgeorae() {
-		String      g_code    =  this.txtgcode.getText();
-		gosuDao     gDao      =  new gosuDao();
-		georaeVo  vo      =  getViewData();
-		int       aftcnt  =  gDao.delete( vo );
 		
-		if( g_code.trim().equals("") )
-			return;
+		System.out.println("1:" + getViewData1());		
+		String      g_code3    =  this.txtgcode.getText();		
+    	gosuDao     gDao       =  new gosuDao();
+		updateVo    vo         =  getViewData1();
+		int       aftcnt       =  gDao.surakgeorae( vo );
+		
+
 	
 		// 마이페이지 새로고침
 		
@@ -365,7 +356,25 @@ public class GearaeGosu extends JFrame {
 		
 		return vo;
 	}
+	
 
+	private void setViewData1(updateVo vo) {
+		String g_code3  = vo.getG_code();
+		String g_message3 = vo.getG_message();
+		
+		this.txtgcode.setText(g_code3);
+		this.txtg_message.setText(g_message3);
+	}
+	
+	public updateVo getViewData1() {
+		String   g_code3    =  this.txtgcode.getText(); 
+		String   g_message3 =  this.txtg_message.getText();
+		
+		updateVo   vo       = new updateVo(
+				g_code3, g_message3);
+		
+		return vo;
+	}
 
 	public static void main(String[] args) {
 		new GearaeGosu();

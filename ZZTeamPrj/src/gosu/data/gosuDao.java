@@ -668,8 +668,9 @@ public class gosuDao {
 		}
 
 		// 고수 거래요청서 답장에서 거래리스트에 저장(수정)
-		public int surakgeorae(georaeVo vo) {
-				
+		public int surakgeorae(updateVo vo) {
+			System.out.println("수정전:" + vo);	
+			
 			String   sql    = "UPDATE GEORAE SET "
 			                + " G_MESSAGE          = ?, "
 		                    + " G_CHECK            = '거래중' "
@@ -753,7 +754,7 @@ public class gosuDao {
 					 sql       += "       BL.BI_NAME     BI_NAME, ";
 					 sql       += "       ML.MID_NAME    MID_NAME, ";
 					 sql       += "       UL.USERNAME    USERNAME, ";
-					 sql       += "       GR.G_START     G_START, ";
+					 sql       += "       GW.GDATE       GDATE, ";
 					 sql       += "       GW.PRICE       PRICE, ";
 					 sql       += "       GR.G_CHECK     G_CHECK, ";
 					 sql       += "       EV.G_SCORE     G_SCORE" ;
@@ -776,7 +777,7 @@ public class gosuDao {
 							 String bi_name = rs.getString("BI_NAME");
 							 String mid_name = rs.getString("MID_NAME");
 							 String username = rs.getString("USERNAME");
-							 String g_start = rs.getString("G_START");
+							 String gdate = rs.getString("GDATE");
 							 String price = rs.getString("PRICE");
 							 String g_check = rs.getString("G_CHECK");
 							 String g_score = rs.getString("G_SCORE");
@@ -786,7 +787,7 @@ public class gosuDao {
 							 v.add(bi_name);
 							 v.add(mid_name);
 							 v.add(username);
-							 v.add(g_start);
+							 v.add(gdate);
 							 v.add(price);
 							 v.add(g_check);
 							 v.add(g_score);

@@ -50,7 +50,7 @@ public class Gearae extends JFrame {
 		
 		getContentPane().setLayout(new BorderLayout());
 	    Pane  = new JPanel();
-	    Pane.setBackground(new Color(102, 204, 255));
+	    Pane.setBackground(new Color(135, 206, 250));
 	    //Pane.setBackground(SystemColor.inactiveCaptionBorder);
 	    
 		setContentPane(Pane);		
@@ -73,7 +73,7 @@ public class Gearae extends JFrame {
 		Pane.add(lblusername);
 		txtuname = new JTextField("이름불러오기");
 		txtuname.setColumns(10);
-		txtuname.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtuname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtuname.setBounds(200, 85, 200, 30);
 		Pane.add(txtuname);
 		
@@ -85,7 +85,7 @@ public class Gearae extends JFrame {
 		lblwork.setBounds(30, 150, 200, 20);
 		Pane.add(lblwork);
 		txtwo = new JTextField("업무내용불러오기");
-		txtwo.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtwo.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtwo.setBounds(200, 145, 200, 30);
 		Pane.add(txtwo);
 				
@@ -98,7 +98,7 @@ public class Gearae extends JFrame {
 		Pane.add(lbldate);
 		txtda = new JTextField("업무날짜불러오기");
 		txtda.setBounds(200, 205, 200, 30);
-		txtda.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtda.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtda);
 		
 		
@@ -111,6 +111,7 @@ public class Gearae extends JFrame {
 		Pane.add(lblstarttime);
 		String [] starttime = { "선택","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"};
 		startcb = new JComboBox(starttime);
+		startcb.setFont(new Font("D2Coding", Font.PLAIN, 15));
 		startcb.setBackground(SystemColor.text);
 		startcb.setBounds(120, 265, 80, 30);
 		Pane.add(startcb);
@@ -124,6 +125,7 @@ public class Gearae extends JFrame {
 		Pane.add(lblendtime);
 		String [] endtime = { "선택", "7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"};
 		endcb = new JComboBox(endtime);
+		endcb.setFont(new Font("D2Coding", Font.PLAIN, 15));	
 		endcb.setBackground(SystemColor.text);
 		endcb.setBounds(320, 265, 80, 30);
 		Pane.add(endcb);
@@ -137,11 +139,11 @@ public class Gearae extends JFrame {
 		Pane.add(lbllocation);
 		txtlsido = new JTextField("시도");
 		txtlsido.setBounds(200, 325, 90, 30);
-		txtlsido.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtlsido.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtlsido);
 		txtlgugun = new JTextField("구군");
 		txtlgugun.setBounds(310, 325, 90, 30);
-		txtlgugun.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtlgugun.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtlgugun);
 		
 		
@@ -154,7 +156,7 @@ public class Gearae extends JFrame {
 		Pane.add(lblgosuname);
 		txtgname = new JTextField("이름불러오기");
 		txtgname.setBounds(560, 85, 200, 30);
-		txtgname.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtgname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtgname);
 				
 		// 추가 메시지
@@ -166,7 +168,7 @@ public class Gearae extends JFrame {
 		Pane.add(lblmessage);
 		txtm_message = new JTextField();
 		txtm_message.setBounds(450, 180, 310, 175);
-		txtm_message.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		txtm_message.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtm_message);
 
 		
@@ -191,10 +193,15 @@ public class Gearae extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("거래요청 클릭");				
+				System.out.println("거래요청 클릭");
+				
+				if (startcb.getSelectedItem() == "선택" || endcb.getSelectedItem() == "선택") {
+					JOptionPane.showMessageDialog(null, "시간을 선택해주세요", "시간 선택하기", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+	
 				addgeorae();
 			    new message();
-				
 			}
 	
 		
@@ -225,7 +232,7 @@ public class Gearae extends JFrame {
 
 
 		protected void addgeorae() {
-			gosuDao  gDao    =  new gosuDao();
+			gosuDao  gDao     =  new gosuDao();
 			georaeVo    vo    =  getViewData();
 			int       aftcnt  =  gDao.addgeorae( vo );					
 		}
