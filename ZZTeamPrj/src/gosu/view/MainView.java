@@ -277,7 +277,7 @@ public class MainView extends JFrame implements ActionListener{
 
 		
 		btnGosuCreate.addActionListener(this);
-		bntUserSet.addActionListener(this);
+		bntUserSet.addActionListener(this); 
 		
 
 		cbxMypage.addActionListener(new ActionListener() {

@@ -206,7 +206,7 @@ public class gosuDao {
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,  bigSelect);
+			pstmt.setString(1,  bigSelect); 
 			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
