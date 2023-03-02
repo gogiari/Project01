@@ -1,10 +1,13 @@
 package gosu.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -15,14 +18,15 @@ import javax.swing.JTextField;
 
 import gosu.data.georaeVo;
 import gosu.data.gosuDao;
-
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 
 public class Gearae extends JFrame {
 	JPanel Pane;
 	JLabel lblusername, lblgosuname, lblwork, lbldate, lblstarttime, lblendtime, lblprice, lbllocation, lblmessage;
 	
-	JButton btnsend, btncancel, btnget;
+	JButton btnsend, btncancel, btnmess;
 	JTextField  txtm_message, txtuname, txtwo, txtda, txtlsido, txtlgugun, txtme, txtgname;
 	JComboBox  startcb, endcb;
 	
@@ -33,6 +37,7 @@ public class Gearae extends JFrame {
 		init();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("거래요청서");
+		//setUndecorated(true);
 		setVisible(true);
 		setSize(800,500);
 		setLocation(600, 200);		
@@ -41,31 +46,43 @@ public class Gearae extends JFrame {
 	
 	private void init () {
 		
+		setBackground(Color.WHITE);
+		
 		getContentPane().setLayout(new BorderLayout());
 	    Pane  = new JPanel();
+	    Pane.setBackground(new Color(102, 204, 255));
+	    //Pane.setBackground(SystemColor.inactiveCaptionBorder);
+	    
 		setContentPane(Pane);		
 		Pane.setLayout(null);		
 
 		// 제목
 		lbltitle = new JLabel("거래요청서");
-		lbltitle.setFont(new Font("D2Coding", Font.PLAIN, 30));
-		lbltitle.setBounds(330, 10, 200, 34);
+		//lbltitle.setForeground(SystemColor.textHighlight);
+		lbltitle.setForeground(Color.WHITE);
+		lbltitle.setFont(new Font("D2Coding", Font.PLAIN, 35));
+		lbltitle.setBounds(325, 10, 200, 34);
 		Pane.add(lbltitle);
 		
 		// 거래요청자 이름
 		lblusername = new JLabel("거래요청자 이름");
+		lblusername.setForeground(SystemColor.textHighlight);
+		lblusername.setBackground(SystemColor.text);
 		lblusername.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		lblusername.setBounds(30, 90, 200, 20);
 		Pane.add(lblusername);
 		txtuname = new JTextField("이름불러오기");
+		txtuname.setColumns(10);
 		txtuname.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		txtuname.setBounds(200, 85, 200, 30);
 		Pane.add(txtuname);
 		
 		// 업무내용(중분류)
 		lblwork = new JLabel("업무 내용");
-		lblwork.setBounds(30, 150, 200, 20);
+		lblwork.setForeground(SystemColor.textHighlight);
+		lblwork.setBackground(SystemColor.text);
 		lblwork.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		lblwork.setBounds(30, 150, 200, 20);
 		Pane.add(lblwork);
 		txtwo = new JTextField("업무내용불러오기");
 		txtwo.setFont(new Font("D2Coding", Font.PLAIN, 20));
@@ -74,6 +91,8 @@ public class Gearae extends JFrame {
 				
 		// 날짜
 		lbldate = new JLabel("날짜");
+		lbldate.setForeground(SystemColor.textHighlight);
+		lbldate.setBackground(SystemColor.text);
 		lbldate.setBounds(30, 210, 200, 20);
 		lbldate.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lbldate);
@@ -85,26 +104,34 @@ public class Gearae extends JFrame {
 		
 		// 업무가능 시작시간 
 		lblstarttime = new JLabel("시작시간");
-		lblstarttime.setBounds(30, 270, 200, 20);
+		lblstarttime.setForeground(SystemColor.textHighlight);
+		lblstarttime.setBackground(SystemColor.text);
+		lblstarttime.setBounds(30, 270, 80, 20);
 		lblstarttime.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblstarttime);
-		String [] starttime = { "6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"};
+		String [] starttime = { "선택","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"};
 		startcb = new JComboBox(starttime);
-		startcb.setBounds(120, 265, 60, 30);
+		startcb.setBackground(SystemColor.text);
+		startcb.setBounds(120, 265, 80, 30);
 		Pane.add(startcb);
-
+	
 		// 업무가능 종료시간
 		lblendtime = new JLabel("종료시간");
-		lblendtime.setBounds(200, 270, 200, 20);
+		lblendtime.setForeground(SystemColor.textHighlight);
+		lblendtime.setBackground(SystemColor.text);
+		lblendtime.setBounds(230, 270, 200, 20);
 		lblendtime.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblendtime);
-		String [] endtime = { "7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"};
+		String [] endtime = { "선택", "7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"};
 		endcb = new JComboBox(endtime);
-		endcb.setBounds(290, 265, 60, 30);
+		endcb.setBackground(SystemColor.text);
+		endcb.setBounds(320, 265, 80, 30);
 		Pane.add(endcb);
 		
 		// 업무 가능 위치
-		lbllocation = new JLabel("위치");
+		lbllocation = new JLabel("위치");		
+		lbllocation.setForeground(SystemColor.textHighlight);
+		lbllocation.setBackground(SystemColor.text);
 		lbllocation.setBounds(30, 330, 200, 20);
 		lbllocation.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lbllocation);
@@ -120,6 +147,8 @@ public class Gearae extends JFrame {
 		
 		// 고수이름
 		lblgosuname = new JLabel("고수 이름");
+		lblgosuname.setForeground(SystemColor.textHighlight);
+		lblgosuname.setBackground(SystemColor.text);
 		lblgosuname.setBounds(450, 90, 200, 20);
 		lblgosuname.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblgosuname);
@@ -130,30 +159,42 @@ public class Gearae extends JFrame {
 				
 		// 추가 메시지
 		lblmessage = new JLabel("거래요청 메시지");
+		lblmessage.setForeground(SystemColor.textHighlight);
+		lblmessage.setBackground(SystemColor.text);
 		lblmessage.setBounds(450, 150, 200, 20);
 		lblmessage.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblmessage);
 		txtm_message = new JTextField();
 		txtm_message.setBounds(450, 180, 310, 175);
+		txtm_message.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(txtm_message);
 
 		
 		// 버튼
 		btnsend              = new JButton("거래요청");
-		btnsend.setBounds(250, 380, 100, 50);
+		btnsend.setForeground(new Color(30, 144, 255));
+		btnsend.setBackground(new Color(240, 248, 255));
+		btnsend.setBounds(250, 400, 100, 40);
+		btnsend.setFont(new Font("D2Coding", Font.PLAIN, 15));
+		btnsend.setBackground(new Color(255, 255, 255));
+		
 		btncancel            = new JButton("취소");
-		btncancel.setBounds(450, 380, 100, 50);
+		btncancel.setForeground(SystemColor.textHighlight);
+		btncancel.setBackground(SystemColor.text);
+		btncancel.setBounds(450, 400, 100, 40);
+		btncancel.setFont(new Font("D2Coding", Font.PLAIN, 15));
+		btncancel.setBackground(new Color(255, 255, 255));
 
 		
 		// btnsend(거래요청) 버튼에 기능 추가
-
 		btnsend.addActionListener( new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("거래요청 클릭");				
 				addgeorae();
-
+			    new message();
+				
 			}
 	
 		
@@ -166,36 +207,29 @@ public class Gearae extends JFrame {
 				System.out.println("취소 클릭");				
 				dispose();
 				
-			}
-	
-		
+			}	
      	});		
+				
 		
 		Pane.add( btnsend );
 		Pane.add( btncancel );
+		
+		JPanel panel = new JPanel();
+	    panel.setBackground(SystemColor.inactiveCaptionBorder);
+		//panel.setBackground(new Color(102, 204, 255));
+		panel.setBounds(12, 55, 760, 329);
+		Pane.add(panel);
 
 	   }
 
+
+
 		protected void addgeorae() {
-			gosuDao   gDao    =  new gosuDao();
+			gosuDao  gDao    =  new gosuDao();
 			georaeVo    vo    =  getViewData();
-			int       aftcnt  =  gDao.addgeorae( vo );
-			
-			addmessage();
-
-			JOptionPane.showMessageDialog(null, 
-					aftcnt + "거래요청서가 전송되었습니다",
-					"확인",
-					JOptionPane.OK_OPTION);
-			 // 현재 창닫기
-			this.dispose();	
+			int       aftcnt  =  gDao.addgeorae( vo );					
 		}
 
-		protected void addmessage() {
-			gosuDao   gDao    =  new gosuDao();
-			georaeVo  vo      =  getViewData();
-			int       aftcnt  =  gDao.addmessage( vo );
-		}
 
 		private void setViewData(georaeVo vo) {
 			String   u_name    =  vo.getU_name(); 
