@@ -23,6 +23,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import gosu.data.gosuDao;
+import gosu.data.userVo;
+
 import javax.swing.DefaultComboBoxModel;
 
 public class MainView extends JFrame implements ActionListener{
@@ -53,6 +55,8 @@ public class MainView extends JFrame implements ActionListener{
 	
 	//파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
 	LineBorder lb = new LineBorder(Color.black, 1, true);
+	
+	String bigSelect;
 	
 	public MainView() {
 		setBackground(new Color(255, 255, 255));
@@ -291,9 +295,8 @@ public class MainView extends JFrame implements ActionListener{
 					bntUserSet.setVisible(false);
 					break;
 				}
-
+				pCenterMypage.repaint();
 			}
-
 		});
 
 		return pCenterMypage;
@@ -317,7 +320,7 @@ public class MainView extends JFrame implements ActionListener{
 		// 메시지 테이블 생성
 		tabMsg = new JTable();
 		tabMsg.setModel(
-				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
+				new DefaultTableModel(getMsgDataList(), getMsgCoulumnList()  ) {
 
 					@Override
 					public boolean isCellEditable(int row, int column) {
@@ -336,6 +339,8 @@ public class MainView extends JFrame implements ActionListener{
 		
 		return pCenterMsg;
 	}
+
+	
 
 	// 고수리스트 화면
 	private Component gosulist() {
@@ -373,6 +378,11 @@ public class MainView extends JFrame implements ActionListener{
 		
 		// 고수 테이블
 		tabGosuList = new JTable();
+		
+		userVo vo = new userVo();
+		vo.setBigSelect("전체");
+		
+		System.out.println(vo.getBigSelect());
 		tabGosuList.setModel(
 				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
 
@@ -402,22 +412,49 @@ public class MainView extends JFrame implements ActionListener{
 		
 		// 새로고침 액션
 		btnRefresh.addActionListener(this);
+		
+		// 대분류 선택 액션
+		cbxlist.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-//		setSize(1200, 800);
-//		setVisible(true);
-//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				bigSelect = (String) cbxlist.getSelectedItem();
+				vo.setBigSelect(bigSelect);
+				if(vo.getBigSelect() != "전체") { // 전체 선택 돌아갈때 필요
+					System.out.println(bigSelect);
+					
+					tabGosuList.setModel(
+							new DefaultTableModel(getSelGosuDataList(), getGosuCoulumnList()  ) {
+
+								@Override
+								public boolean isCellEditable(int row, int column) {
+									return false;
+								}
+
+							});
+				} else { // 그외 선택
+					tabGosuList.setModel(
+							new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
+
+								@Override
+								public boolean isCellEditable(int row, int column) {
+									return false;
+								}
+
+							});
+				}
+				pCenterList.repaint();
+			}
+
+			
+		});
+
 		
 		
 		
 		
 		return pCenterList;
-	}
-
-	// 고수 리스트 테이블 데이터
-	private Vector<Vector> getGosuDataList() {
-		gosuDao dao = new gosuDao();
-		Vector<Vector> list = dao.getGosuList();
-		return list;
 	}
 
 	// 고수 리스트 테이블 제목줄
@@ -430,10 +467,40 @@ public class MainView extends JFrame implements ActionListener{
 		cols.add("위치");
 		return cols;
 	}
+	
+	// 고수 리스트 테이블 데이터
+	private Vector<Vector> getGosuDataList() {
+		gosuDao dao = new gosuDao();
+		Vector<Vector> list = dao.getGosuList();
+		return list;
+	}
+	// 고수 리스트 선택 테이블 데이터 (이벤트)
+	private Vector<Vector> getSelGosuDataList() {
+		gosuDao dao = new gosuDao();
+		Vector<Vector> list = dao.getSelGosuList(bigSelect);
+		return list;
+	}
+
 	private Vector<String> getBigList() {
 		gosuDao dao = new gosuDao();
 		Vector<String> blist = dao.getBigList();
 		return blist;
+	}
+	
+	// 메시지 테이블 제목줄
+	private Vector<String> getMsgCoulumnList() {
+		Vector<String> cols = new Vector<>();
+		cols.add("거래번호");
+		cols.add("보낸사람");
+		cols.add("제목");
+		cols.add("보낸날짜");
+		return cols;
+	}
+
+	private Vector<Vector> getMsgDataList() {
+		gosuDao dao = new gosuDao();
+		Vector<Vector> list = dao.getMsgList();
+		return list;
 	}
 
 	public static void main(String[] args) {
@@ -442,7 +509,7 @@ public class MainView extends JFrame implements ActionListener{
 
 	
 	
-	// 고수리스트 버튼 액션
+	// 버튼 액션
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) { // 눌러진 버튼의 글자
@@ -452,6 +519,7 @@ public class MainView extends JFrame implements ActionListener{
 			break;
 		case "고수 업무 등록" :
 			System.out.println("고수 업무 등록");
+			new res();
 			break;
 		case "회원 정보 수정 / 삭제" :
 			System.out.println("회원 정보 수정 / 삭제");

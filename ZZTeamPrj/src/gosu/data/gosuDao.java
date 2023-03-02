@@ -11,9 +11,14 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
+import gosu.view.MainView;
+
 public class gosuDao {
 
 	private Connection conn = null;
+	MainView mainview = null;
+	
+	
 
 	public gosuDao() {
 		conn = dbConn.getInstace();
@@ -27,6 +32,7 @@ public class gosuDao {
 			e.printStackTrace();
 		}
 	}
+	
 
 	// 회원가입
 	public int insertMember(String u_id, String u_pw, String u_name, String u_phone, String u_email, String u_gender,
@@ -123,9 +129,10 @@ public class gosuDao {
 		return list;
 	}
 
-	// Gosu Jtable에 보여줄 data목록
+	// 고수리스트 테이블 데이터
 	public Vector<Vector> getGosuList() {
 		Vector<Vector> list = new Vector<Vector>();
+		userVo vo = new userVo();
 
 		String sql = "";
 		sql += "SELECT W_NUM                             W_NUM , ";
@@ -136,13 +143,14 @@ public class gosuDao {
 		sql += "  FROM GWORK GW LEFT JOIN GOSU G ";
 		sql += "  ON   GW.G_NUM = G.G_NUM LEFT JOIN USERLIST U ";
 		sql += "  ON   U.U_ID = G.U_ID LEFT JOIN MIDLIST ML ";
-		sql += "  ON GW.MID_NUM = ML.MID_NUM";
+		sql += "  ON GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
+		sql += "  ON ML.BI_NUM = BL.BI_NUM ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-
+//			}
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				String w_num = rs.getString("W_NUM");
@@ -174,6 +182,64 @@ public class gosuDao {
 		return list;
 
 	}
+
+	
+	
+	public Vector<Vector> getSelGosuList(String bigSelect) {
+		Vector<Vector> list = new Vector<Vector>();
+		
+		String sql = "";
+		sql += "SELECT W_NUM                             W_NUM , ";
+		sql += "       ML.MID_NAME                       MID_NAME, ";
+		sql += "       USERNAME                          USERNAME, ";
+		sql += "       PRICE                             PRICE, ";
+		sql += "       U.U_SIDO || ' ' ||  U. U_GUGUN    ADDR  ";
+		sql += "  FROM GWORK GW LEFT JOIN GOSU G ";
+		sql += "  ON   GW.G_NUM = G.G_NUM LEFT JOIN USERLIST U ";
+		sql += "  ON   U.U_ID = G.U_ID LEFT JOIN MIDLIST ML ";
+		sql += "  ON GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
+		sql += "  ON ML.BI_NUM = BL.BI_NUM ";
+		sql += "  WHERE BL.BI_NAME = ? ";
+		
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,  bigSelect);
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String w_num = rs.getString("W_NUM");
+				String mid_name = rs.getString("MID_NAME");
+				String username = rs.getString("USERNAME");
+				String price = rs.getString("PRICE");
+				String addr = rs.getString("ADDR");
+				
+				Vector v = new Vector();
+				v.add(w_num);
+				v.add(mid_name);
+				v.add(username);
+				v.add(price);
+				v.add(addr);
+				list.add(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+			
+		}
+		return list;
+		
+	}
+	
 
 	public Vector<Vector> getFAQList() {
 		Vector<Vector> list = new Vector<Vector>();
@@ -246,7 +312,8 @@ public class gosuDao {
 				String sido = rs.getString("U_SIDO");
 				String gugun = rs.getString("U_GUGUN");
 
-				vo = new userVo(uid, pw, pw2 ,name, email, gender, phone, sido, gugun);
+//				vo = new userVo(uid, pw, pw2 ,name, email, gender, phone, sido, gugun);
+				vo = new userVo();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -604,4 +671,51 @@ public class gosuDao {
 					 return aftcnt;
 				 }
 
+				 // 메시지 테이블 데이터
+				 public Vector<Vector> getMsgList() {
+					 Vector<Vector> list = new Vector<Vector>();
+					 String sql = "";
+					 sql       += " SELECT ME.GEORAE_CODE GEORAE_CODE, ";
+					 sql       += "        GR.M_MESSAGE   M_MESSAGE, ";
+					 sql       += "        UL.USERNAME    USERNAME, ";
+					 sql       += "        GR.G_DATE      G_DATE ";
+					 sql       += "  FROM  MESSAGE ME LEFT JOIN GEORAE GR ";
+					 sql       += "  ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN USERLIST UL ";
+					 sql       += "  ON    ME.U_ID = UL.U_ID ";
+
+					 PreparedStatement psmt = null;
+					 ResultSet rs = null;
+					 try {
+						 psmt = conn.prepareStatement(sql);
+
+						 rs = psmt.executeQuery();
+						 while(rs.next()) {
+							 String georae_code = rs.getString("GEORAE_CODE");
+							 String m_message = rs.getString("M_MESSAGE");
+							 String username = rs.getString("USERNAME");
+							 String g_date = rs.getString("G_DATE");
+
+							 Vector v = new Vector();
+							 v.add(georae_code);
+							 v.add(m_message);
+							 v.add(username);
+							 v.add(g_date);
+
+							 list.add(v);
+						 }
+					 } catch (SQLException e) {
+						 e.printStackTrace();
+					 } finally {
+						 try {
+							 if(psmt!=null)psmt.close();
+						 } catch (SQLException e) {
+							 e.printStackTrace();
+						 }
+					 }
+
+					 return list;
+				 }
+				 public static void main(String[] args) {
+					System.out.println();
+				}
 }
