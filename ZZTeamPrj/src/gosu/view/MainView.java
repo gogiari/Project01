@@ -296,6 +296,15 @@ public class MainView extends JFrame implements ActionListener{
 					bntUserSet.setVisible(false);
 					break;
 				}
+				tabMypage.setModel(
+						new DefaultTableModel(getMyDataList(), getMyCoulumnList()  ) {
+
+							@Override
+							public boolean isCellEditable(int row, int column) {
+								return false;
+							}
+
+						});
 				pCenterMypage.repaint();
 			}
 		});
@@ -512,7 +521,11 @@ public class MainView extends JFrame implements ActionListener{
 		cols.add("거래번호");
 		cols.add("대분류");
 		cols.add("중분류");
+		if(cbxMypage.getSelectedItem().toString() == "회원") {
+			cols.add("고수이름");
+			} else {
 		cols.add("회원이름");
+			}
 		cols.add("날짜");
 		cols.add("금액");
 		cols.add("거래현황");
@@ -522,7 +535,7 @@ public class MainView extends JFrame implements ActionListener{
 
 	private Vector<Vector> getMyDataList() {
 		gosuDao dao = new gosuDao();
-		Vector<Vector> list = dao.getmylist();
+		Vector<Vector> list = dao.getmylist(cbxMypage.getSelectedItem().toString());
 		return list;
 	}
 

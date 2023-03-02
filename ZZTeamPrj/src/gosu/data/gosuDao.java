@@ -747,8 +747,8 @@ public class gosuDao {
 				}
 				 
 				 // 마이페이지 테이블 데이터
-				 public Vector<Vector> getmylist() {
-					 Vector<Vector> list = new Vector<Vector>();
+				 public Vector<Vector> getmylist(String select) {
+					 Vector<Vector> list = new Vector<Vector>( );
 					 String sql = "";
 					 sql       += "SELECT GR.GEORAE_CODE GEORAE_CODE, ";
 					 sql       += "       BL.BI_NAME     BI_NAME, ";
@@ -765,11 +765,21 @@ public class gosuDao {
 					 sql       += " ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
 					 sql       += " ON    ML.BI_NUM = BL.BI_NUM LEFT JOIN EVALUATION EV ";
 					 sql       += " ON    GS.G_NUM = EV.G_NUM ";
+					 if(select == "회원") {
+						 sql       += " WHERE GS.U_ID = ? ";////////////////////// 뭘 넣어야함?
+					 } else {
+						 sql       += " WHERE UL.U_ID = ? ";////////////////////// 뭘 넣어야함?
+					 }
 
 					 PreparedStatement psmt = null;
 					 ResultSet rs = null;
 					 try {
 						 psmt = conn.prepareStatement(sql);
+						 if(select == "회원") {
+							 psmt.setString(1, "123");
+						 } else {
+							 psmt.setString(1, "123");
+						 }
 
 						 rs = psmt.executeQuery();
 						 while(rs.next()) {
