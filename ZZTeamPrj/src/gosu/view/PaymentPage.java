@@ -23,7 +23,7 @@ import gosu.data.gosuVo2;
 public class PaymentPage extends JFrame{
 
 	private JFrame frame;
-	private JTextField textField;
+	private JTextField txtGr;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JButton btnFind;
@@ -37,7 +37,7 @@ public class PaymentPage extends JFrame{
 	PaymentCompletePage   pay        = null;
 	AcceptPage            acceptpage = null;
 	static PaymentPage    acc        = null;
-	private JTextField textField_3;
+	private JTextField txtHong;
 	
 	/**
 	 * Launch the application.
@@ -67,7 +67,7 @@ public class PaymentPage extends JFrame{
 		this.acceptpage = acceptpage;
 		
 		// 넘어온 아이디를 txtId 에 넣고 find 버튼 클릭하면
-		textField.setText( id );
+		txtGr.setText( id );
 		btnFind.doClick();
 	}
 	
@@ -135,20 +135,22 @@ public class PaymentPage extends JFrame{
 		btnNewButton_2.setBounds(358, 385, 109, 44);
 		frame.getContentPane().add(btnNewButton_2);
 		
-		textField = new JTextField();
-		textField.setText( "1" );
-		textField.setEditable(false);
-		textField.setBounds(133, 89, 167, 28);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtGr = new JTextField();
+		txtGr.setText( "GR0030" );
+		txtGr.setEditable(false);
+		txtGr.setBounds(133, 89, 167, 28);
+		frame.getContentPane().add(txtGr);
+		txtGr.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setText("\uBE14\uB799\uBC15\uC2A4 \uC124\uCE58");
 		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		textField_1.setBounds(133, 141, 167, 28);
 		frame.getContentPane().add(textField_1);
 		
 		textField_2 = new JTextField();
+		textField_2.setText("3000");
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBounds(133, 196, 167, 28);
@@ -193,11 +195,12 @@ public class PaymentPage extends JFrame{
 		btnFind.setBounds(569, 20, 97, 36);
 		frame.getContentPane().add(btnFind);
 		
-		textField_3 = new JTextField();
-		textField_3.setEditable(false);
-		textField_3.setColumns(10);
-		textField_3.setBounds(133, 300, 167, 28);
-		frame.getContentPane().add(textField_3);
+		txtHong = new JTextField();
+		txtHong.setText("HONG");
+		txtHong.setEditable(false);
+		txtHong.setColumns(10);
+		txtHong.setBounds(133, 300, 167, 28);
+		frame.getContentPane().add(txtHong);
 		
 		//조회기능
 		btnFind.addActionListener(new ActionListener() {
@@ -262,7 +265,7 @@ public class PaymentPage extends JFrame{
 	private gosuVo2 getViewData() {
 		
 		String   review      =  this.textArea.getText();
-		String   u_id        =  this.textField_3.getText();
+		String   u_id        =  this.txtHong.getText();
 		
 		String   score       =  "";
 		if( this.rb1.isSelected() )    score = "1";
@@ -278,7 +281,7 @@ public class PaymentPage extends JFrame{
 	protected void findGereo() {
 	
 	    	
-		String      georae_code  =  this.textField.getText();
+		String      georae_code  =  this.txtGr.getText();
 		if( georae_code.trim().equals("") )
 			return;
 		
@@ -297,10 +300,10 @@ public class PaymentPage extends JFrame{
 		String   price          =  vo2.getPrice();
 		String   u_id           =  vo2.getU_id();
 		
-		this.textField.setText( georae_code );		
+		this.txtGr.setText( georae_code );		
 		this.textField_1.setText( midname );	
 		this.textField_2.setText( price );
-		this.textField_3.setText(u_id);
+		this.txtHong.setText(u_id);
 			
 		
 	}

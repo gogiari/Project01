@@ -914,9 +914,9 @@ public class gosuDao {
 				String sdate = rs.getString("SDATE");
 				String g_check = rs.getString("G_CHECK");
 				String price = rs.getString("PRICE");
-				String u_id = rs.getString("U_ID");
+				
 
-				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price, u_id);
+				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -935,9 +935,14 @@ public class gosuDao {
 	// 거래 리뷰,스코어
 	public int insertGereo(String review, String score, String u_id) {
 
-		String sql = " INSERT INTO EVALUATION(REVIEW_CODE,GEORAE_CODE, REVIEW, SCORE,U_ID) VALUES (\r\n"
-				+ "REVIEW_CODE.NEXTVAL,(SELECT GEORAE_CODE FROM GEORAE)   ,?,?,(SELECT G.U_ID FROM GOSU G WHERE G.U_ID = ?)\r\n"
-				+ ") ";
+		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE\r\n"
+				+ "FROM   GEORAE GE ,  GOSU GO, MIDLIST M, GWORK GW, USERLIST U\r\n"
+				+ "WHERE  U.U_ID = GO.U_ID\r\n"
+				+ "AND    GO.G_NUM = GW.G_NUM\r\n"
+				+ "AND    GW.MID_NUM = M.MID_NUM\r\n"
+				+ "AND    GW.W_NUM  = GE.W_NUM\r\n"
+				+ "AND    GE.GEORAE_CODE = 'GR0030'";
+				
 
 		PreparedStatement pstmt = null;
 		int aftcnt = 0;

@@ -27,7 +27,6 @@ public class AcceptPage extends JFrame{
 	
 	PaymentPage          pay   = null;  // 회원가입창 전역변수
 	static AcceptPage    acc = null;
-	private JTextField textField;
 
 	// 조회한 결과를 vo로 돌려받는다
 	
@@ -68,7 +67,7 @@ public class AcceptPage extends JFrame{
 		frame.setBounds(100, 100, 450, 544);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setVisible(true);
+		//frame.setVisible(true);
 		
 		JLabel lblNewLabel = new JLabel("\uAC70\uB798\uB97C \uC218\uB77D\uD569\uB2C8\uB2E4.");
 		lblNewLabel.setFont(new Font("궁서", Font.BOLD | Font.ITALIC, 35));
@@ -131,7 +130,7 @@ public class AcceptPage extends JFrame{
 		txtDd.setBackground(new Color(255, 255, 255));
 		txtDd.setEditable(false);
 		txtDd.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
-		txtDd.setText( "1" );
+		txtDd.setText( "GR0030" );
 		txtDd.setBounds(131, 100, 268, 31);
 		frame.getContentPane().add(txtDd);
 		txtDd.setColumns(10);
@@ -192,18 +191,6 @@ public class AcceptPage extends JFrame{
 		btnFind.setBackground(Color.CYAN);
 		btnFind.setBounds(20, 450, 108, 45);
 		frame.getContentPane().add(btnFind);
-		
-		JLabel lblNewLabel_2 = new JLabel("\uACE0\uC218ID");
-		lblNewLabel_2.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
-		lblNewLabel_2.setBounds(105, 65, 57, 15);
-		frame.getContentPane().add(lblNewLabel_2);
-		
-		textField = new JTextField();
-		textField.setBackground(new Color(255, 255, 255));
-		textField.setEditable(false);
-		textField.setColumns(10);
-		textField.setBounds(170, 57, 94, 31);
-		frame.getContentPane().add(textField);
 		
 		
 		
@@ -282,13 +269,13 @@ public class AcceptPage extends JFrame{
 		String   sdate  =  this.textField_4.getText();
 		String   gcheck  =  this.textField_5.getText();
 		String   price  =  this.textField_6.getText();
-		String   u_id   = this.textField.getText();
+		
 		
 		
 		
 		
 		gosuVo2 vo        =  new gosuVo2(georae_code, uname, midname, gdate, 
-				sdate, gcheck, price,u_id);
+				sdate, gcheck, price);
 		return   vo;
 	}
 
@@ -296,15 +283,13 @@ public class AcceptPage extends JFrame{
 
 	private void setViewData(gosuVo2 vo2) {
 		String   georae_code    =  vo2.getGeorae_code();
-		String   uname     =  vo2.getU_name();
-		String   midname   =  vo2.getMid_name();
-		String   gdate     =  vo2.getG_date();     // "회사원", ...
-		String   sdate     =  vo2.getSdate();  // "남", "여", ""  
-		String   gcheck    =  vo2.getG_check();
-		String   price     =  vo2.getPrice();
-		String   u_id      =   vo2.getU_id();
-		
-		this.textField.setText(u_id);		
+		String   uname          =  vo2.getU_name();
+		String   midname        =  vo2.getMid_name();
+		String   gdate          =  vo2.getG_date();     // "회사원", ...
+		String   sdate          =  vo2.getSdate();  // "남", "여", ""  
+		String   gcheck         =  vo2.getG_check();
+		String   price          =  vo2.getPrice();
+				
 		this.txtDd.setText( georae_code );
 		this.textField_1.setText( uname );
 		this.textField_2.setText( midname );
