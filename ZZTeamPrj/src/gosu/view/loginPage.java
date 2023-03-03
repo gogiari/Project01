@@ -30,6 +30,7 @@ public class loginPage extends JFrame implements ActionListener {
 	TextField idU;
 	JPasswordField pwU;
 	Button findBtn;
+	MainView mainview;
 
 	public loginPage() {
 		setBackground(Color.WHITE);
@@ -112,7 +113,8 @@ public class loginPage extends JFrame implements ActionListener {
 		lbl_Close.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+//				System.exit(0);
+				dispose();
 			}
 		});
 		lbl_Close.setHorizontalAlignment(SwingConstants.CENTER);
@@ -165,6 +167,8 @@ public class loginPage extends JFrame implements ActionListener {
 	// 로그인 버튼
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		switch(e.getActionCommand()) {  // 눌러진 버튼 액션
+		case "SignUp" : // 로그인 버튼
 		this.dao = new gosuDao();
 		this.setVisible(false);
 		String id = this.idU.getText();
@@ -185,13 +189,15 @@ public class loginPage extends JFrame implements ActionListener {
 			return;
 		} else if (id != null && pw != null) {
 			if (dao.loginCheck(id, pw)) {
-				//new MainView();
+				new MainView(idU.getText(), this);
 				JOptionPane.showMessageDialog(null, "로그인 성공", "로그인 확인!", JOptionPane.DEFAULT_OPTION);
 			} else {
 				JOptionPane.showMessageDialog(null, "아이디/비밀번호를 확인하세요", "로그인 실패", JOptionPane.DEFAULT_OPTION);
 				this.setVisible(true);
 			}
 		}
+		break;
+		} // 로그인 버튼 끝
 	}
 
 	public static void main(String[] args) {

@@ -41,18 +41,25 @@ public class GearaeGosu extends JFrame {
 	JTextField txtme;
 	JTextField txtgname;
 	JTextField txtg_message;
+	String tradenum;
 	
 	BorderLayout gb;
 	JLabel lbltitle, lbluserid;
 
 	
-	public GearaeGosu() {
+	public GearaeGosu(String tradenum, MainView mainview) {
+		this.tradenum = tradenum;
 		init();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("거래요청서가 도착했습니다");
 		setVisible(true);
 		setSize(800, 580);
 		setLocation(600, 200);	
+		txtgcode.setText(tradenum);
+		if(tradenum!=null)
+		btn3.doClick();
+		
+		
 		
 	}
 	

@@ -73,7 +73,7 @@ public class MainView extends JFrame implements ActionListener{
 		setBackground(new Color(255, 255, 255));
 		getContentPane().setBackground(new Color(255, 255, 255));
 		inite();
-		System.out.println(uid);
+		System.out.println(uid+" : 메인뷰 아이디확인");
 	}
 
 
@@ -607,6 +607,7 @@ public class MainView extends JFrame implements ActionListener{
 			break;
 		case "고수 업무 등록" :
 			System.out.println("고수 업무 등록");
+			System.out.println(uid + ": 로그인페이지 아이디 가져옴");
 			new res(uid);
 			break;
 		case "회원 정보 수정 / 삭제" :
@@ -614,6 +615,9 @@ public class MainView extends JFrame implements ActionListener{
 			break;
 
 		}
+	}
+	public static void main(String[] args) {
+		new MainView(null, null);
 	}
 
 	public void gosuRefresh() {
@@ -628,5 +632,6 @@ public class MainView extends JFrame implements ActionListener{
 				});
 		tabGosuList.repaint();
 	}
+	
 
 }
