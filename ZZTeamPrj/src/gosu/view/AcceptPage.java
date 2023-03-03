@@ -78,7 +78,7 @@ public class AcceptPage extends JFrame{
 		frame.setBounds(100, 100, 450, 544);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		//frame.setVisible(true);
+		frame.setVisible(true);
 		
 		JLabel lblNewLabel = new JLabel("\uAC70\uB798\uB97C \uC218\uB77D\uD569\uB2C8\uB2E4.");
 		lblNewLabel.setFont(new Font("궁서", Font.BOLD | Font.ITALIC, 35));
