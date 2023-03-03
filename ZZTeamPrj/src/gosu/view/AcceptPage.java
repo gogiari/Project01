@@ -64,6 +64,7 @@ public class AcceptPage extends JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 450, 544);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -127,51 +128,61 @@ public class AcceptPage extends JFrame{
 		
 		
 		txtDd = new JTextField();
+		txtDd.setBackground(new Color(255, 255, 255));
+		txtDd.setEditable(false);
+		txtDd.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
 		txtDd.setText( "1" );
-		txtDd.setEnabled(false);
 		txtDd.setBounds(131, 100, 268, 31);
 		frame.getContentPane().add(txtDd);
 		txtDd.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setBackground(new Color(255, 255, 255));
 		
 		textField_1.setColumns(10);
-		textField_1.setEnabled(false);
+		textField_1.setEditable(false);
 		textField_1.setBounds(131, 150, 268, 31);
 		frame.getContentPane().add(textField_1);
 		
 		textField_2 = new JTextField();
+		textField_2.setBackground(new Color(255, 255, 255));
+		textField_2.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		textField_2.setForeground(new Color(0, 0, 0));
 		
 		textField_2.setColumns(10);
-		textField_2.setEnabled(false);
+		textField_2.setEditable(false);
 		textField_2.setBounds(131, 200, 268, 31);
 		frame.getContentPane().add(textField_2);
 		
 		textField_3 = new JTextField();
+		textField_3.setBackground(new Color(255, 255, 255));
 		
 		textField_3.setColumns(10);
-		textField_3.setEnabled(false);
+		textField_3.setEditable(false);
 		textField_3.setBounds(131, 250, 268, 31);
 		frame.getContentPane().add(textField_3);
 		
 		textField_4 = new JTextField();
+		textField_4.setBackground(new Color(255, 255, 255));
 		
 		textField_4.setColumns(10);
-		textField_4.setEnabled(false);
+		textField_4.setEditable(false);
 		textField_4.setBounds(131, 300, 268, 31);
 		frame.getContentPane().add(textField_4);
 		
 		textField_5 = new JTextField();
+		textField_5.setBackground(new Color(255, 255, 255));
 		
 		textField_5.setColumns(10);
-		textField_5.setEnabled(false);
+		textField_5.setEditable(false);
 		textField_5.setBounds(131, 350, 268, 31);
 		frame.getContentPane().add(textField_5);
 		
 		textField_6 = new JTextField();
+		textField_6.setBackground(new Color(255, 255, 255));
 		
 		textField_6.setColumns(10);
-		textField_6.setEnabled(false);
+		textField_6.setEditable(false);
 		textField_6.setBounds(131, 400, 268, 31);
 		frame.getContentPane().add(textField_6);
 		
@@ -188,7 +199,8 @@ public class AcceptPage extends JFrame{
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		textField = new JTextField();
-		textField.setEnabled(false);
+		textField.setBackground(new Color(255, 255, 255));
+		textField.setEditable(false);
 		textField.setColumns(10);
 		textField.setBounds(170, 57, 94, 31);
 		frame.getContentPane().add(textField);

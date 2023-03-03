@@ -19,7 +19,6 @@ import gosu.data.gosuVo2;
 public class PaymentCompletePage extends JFrame{
 
 	private JFrame frame;
-	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -29,6 +28,7 @@ public class PaymentCompletePage extends JFrame{
 	private JButton    btnFind;
 	
 	PaymentPage    paymentPage        = null;
+	private JTextField textField;
 	/**
 	 * Launch the application.
 	 */
@@ -66,6 +66,7 @@ public class PaymentCompletePage extends JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 562, 539);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -111,44 +112,44 @@ public class PaymentCompletePage extends JFrame{
 		lblNewLabel_1_6.setBounds(85, 370, 88, 36);
 		frame.getContentPane().add(lblNewLabel_1_6);
 		
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setBounds(190, 70, 280, 32);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
 		textField_1 = new JTextField();
-		textField_1.setEnabled(false);
+		textField_1.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		textField_1.setBounds(190, 120, 280, 32);
 		frame.getContentPane().add(textField_1);
 		
 		textField_2 = new JTextField();
-		textField_2.setEnabled(false);
+		textField_2.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBounds(190, 170, 280, 32);
 		frame.getContentPane().add(textField_2);
 		
 		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
+		textField_3.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		textField_3.setBounds(190, 220, 280, 32);
 		frame.getContentPane().add(textField_3);
 		
 		textField_4 = new JTextField();
-		textField_4.setEnabled(false);
+		textField_4.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		textField_4.setEditable(false);
 		textField_4.setColumns(10);
 		textField_4.setBounds(190, 270, 280, 32);
 		frame.getContentPane().add(textField_4);
 		
 		textField_5 = new JTextField();
-		textField_5.setEnabled(false);
+		textField_5.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		textField_5.setEditable(false);
 		textField_5.setColumns(10);
 		textField_5.setBounds(190, 320, 280, 32);
 		frame.getContentPane().add(textField_5);
 		
 		textField_6 = new JTextField();
-		textField_6.setEnabled(false);
+		textField_6.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		textField_6.setEditable(false);
 		textField_6.setColumns(10);
 		textField_6.setBounds(190, 370, 280, 32);
 		frame.getContentPane().add(textField_6);
@@ -162,6 +163,14 @@ public class PaymentCompletePage extends JFrame{
 		btnFind = new JButton("\uC870\uD68C");
 		btnFind.setBounds(437, 454, 97, 36);
 		frame.getContentPane().add(btnFind);
+		
+		textField = new JTextField();
+		textField.setText("1");
+		textField.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		textField.setEditable(false);
+		textField.setColumns(10);
+		textField.setBounds(190, 74, 280, 32);
+		frame.getContentPane().add(textField);
 		
 		btnFind.addActionListener(new ActionListener() {
 			

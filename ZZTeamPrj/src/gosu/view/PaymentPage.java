@@ -76,6 +76,7 @@ public class PaymentPage extends JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 706, 489);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -117,6 +118,7 @@ public class PaymentPage extends JFrame{
 		frame.getContentPane().add(lblNewLabel_1_4);
 		
 		textArea = new JTextArea();
+		textArea.setBackground(new Color(255, 255, 204));
 		textArea.setText("20\uC790 \uC774\uB0B4\uB85C \uC785\uB825\uD558\uC2DC\uC624.");
 		textArea.setBounds(392, 197, 233, 130);
 		frame.getContentPane().add(textArea);
@@ -135,19 +137,19 @@ public class PaymentPage extends JFrame{
 		
 		textField = new JTextField();
 		textField.setText( "1" );
-		textField.setEnabled(false);
+		textField.setEditable(false);
 		textField.setBounds(133, 89, 167, 28);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setEnabled(false);
+		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		textField_1.setBounds(133, 141, 167, 28);
 		frame.getContentPane().add(textField_1);
 		
 		textField_2 = new JTextField();
-		textField_2.setEnabled(false);
+		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBounds(133, 196, 167, 28);
 		frame.getContentPane().add(textField_2);
@@ -156,22 +158,27 @@ public class PaymentPage extends JFrame{
 		
 // 점수 위에서부터 1~5까지		
 		rb1 = new JRadioButton("1");
+		rb1.setBackground(new Color(255, 255, 255));
 		rb1.setBounds(395, 121, 51, 23);
 		frame.getContentPane().add(rb1);
 				
 		rb2 = new JRadioButton("2");
+		rb2.setBackground(new Color(255, 255, 255));
 		rb2.setBounds(450, 122, 51, 23);
 		frame.getContentPane().add(rb2);
 		
 		rb3 = new JRadioButton("3");
+		rb3.setBackground(new Color(255, 255, 255));
 		rb3.setBounds(505, 121, 51, 23);
 		frame.getContentPane().add(rb3);
 		
 		rb4 = new JRadioButton("4");
+		rb4.setBackground(new Color(255, 255, 255));
 		rb4.setBounds(560, 121, 51, 23);
 		frame.getContentPane().add(rb4);
 		
 		rb5 = new JRadioButton("5");
+		rb5.setBackground(new Color(255, 255, 255));
 		rb5.setBounds(615, 121, 51, 23);
 		frame.getContentPane().add(rb5);
 // 점수버튼 그룹화		
@@ -187,7 +194,7 @@ public class PaymentPage extends JFrame{
 		frame.getContentPane().add(btnFind);
 		
 		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
+		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		textField_3.setBounds(133, 300, 167, 28);
 		frame.getContentPane().add(textField_3);

@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +43,7 @@ public class FAQList extends JFrame implements MouseListener{
 	private  void initComponent() {
 		
 		topPane      =  new JPanel();
+	 //   image1 = new ImageIcon("")
 		JLabel       =  new JLabel("FAQ List");  
 		JLabel.setPreferredSize(new Dimension(200, 50));
 		JLabel.setFont(JLabel.getFont().deriveFont(40.0f));

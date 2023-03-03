@@ -77,7 +77,7 @@ public class FAQ extends JFrame {
 		frame.setVisible(true);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(204, 255, 255));
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setForeground(new Color(0, 153, 255));
 		panel.setBounds(0, 0, 834, 507);
 		frame.getContentPane().add(panel);
