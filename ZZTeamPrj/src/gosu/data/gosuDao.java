@@ -933,15 +933,10 @@ public class gosuDao {
 		return vo2;
 	}
 	// 거래 리뷰,스코어
-	public int insertGereo(String review, String score, String u_id) {
+	public int insertGereo(String review, String score,String g_num) {
 
-		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE\r\n"
-				+ "FROM   GEORAE GE ,  GOSU GO, MIDLIST M, GWORK GW, USERLIST U\r\n"
-				+ "WHERE  U.U_ID = GO.U_ID\r\n"
-				+ "AND    GO.G_NUM = GW.G_NUM\r\n"
-				+ "AND    GW.MID_NUM = M.MID_NUM\r\n"
-				+ "AND    GW.W_NUM  = GE.W_NUM\r\n"
-				+ "AND    GE.GEORAE_CODE = 'GR0030'";
+		String sql = "INSERT INTO EVALUATION(REVIEW_CODE,GEORAE_CODE, REVIEW,G_SCORE,G_NUM) VALUES (\r\n"
+				+ "REVIEW_CODE.NEXTVAL,(SELECT GEORAE_CODE FROM GEORAE)   ,?,TO_NUMBER(?),(SELECT G.G_NUM FROM GOSU G, EVALUATION E WHERE G.G_NUM = E.G_NUM) )" ;
 				
 
 		PreparedStatement pstmt = null;
@@ -951,7 +946,7 @@ public class gosuDao {
 			// pstmt.setString(1, gereo_code2);
 			pstmt.setString(1, review);
 			pstmt.setString(2, score);
-			pstmt.setString(3, u_id);
+		
 
 			aftcnt = pstmt.executeUpdate();
 
@@ -969,12 +964,15 @@ public class gosuDao {
 
 	public int insertGereo(gosuVo2 vo2) {
 		String review = vo2.getReview();
-		String score = vo2.getScore();
-		String u_id = vo2.getU_id();
+		String score  = vo2.getScore();
+		String g_num  =  vo2.getG_num();
 
-		int aftcnt = insertGereo(review, score, u_id);
+		int aftcnt = insertGereo(review, score,g_num);
 		return aftcnt;
 	}
+
+	
+	
 
 	// FAQ등록
 	public int insertFAQ(String u_id, String f_head, String f_body, String reply) {
