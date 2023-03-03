@@ -85,14 +85,14 @@ public class ResDetail extends JFrame {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		labG5_0 = new JLabel("\uC774\uB984");
+		labG5_0 = new JLabel("이름");
 		labG5_0.setBounds(220, 10, 28, 20);
 		labG5_0.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		panel.add(labG5_0);
 		
-		labG5_1 = new JLabel("\uAC12");
+		labG5_1 = new JLabel("이름 값");
 		labG5_1.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		labG5_1.setBounds(260, 10, 37, 20);
+		labG5_1.setBounds(260, 10, 63, 20);
 		panel.add(labG5_1);
 		
 		labG5_2 = new JLabel("ID");
@@ -100,17 +100,17 @@ public class ResDetail extends JFrame {
 		labG5_2.setBounds(335, 10, 28, 20);
 		panel.add(labG5_2);
 		
-		labG5_3 = new JLabel("\uAC12");
+		labG5_3 = new JLabel("id값");
 		labG5_3.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		labG5_3.setBounds(361, 10, 37, 20);
 		panel.add(labG5_3);
 		
-		labG5_4 = new JLabel("\uD3C9\uC810:");
+		labG5_4 = new JLabel("평점");
 		labG5_4.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		labG5_4.setBounds(878, 10, 37, 20);
 		panel.add(labG5_4);
 		
-		labG5_5 = new JLabel("\uAC12");
+		labG5_5 = new JLabel("평균값");
 		labG5_5.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		labG5_5.setBounds(920, 10, 37, 20);
 		panel.add(labG5_5);
