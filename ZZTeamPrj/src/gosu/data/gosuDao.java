@@ -893,7 +893,7 @@ public class gosuDao {
 
 		gosuVo2 vo2 = null;
 
-		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.U_ID \r\n"
+		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.G_NUM \r\n"
 				+ "FROM   GEORAE GE , GOSU GO, MIDLIST M, GWORK GW, USERLIST U\r\n" + "WHERE  U.U_ID = GO.U_ID\r\n"
 				+ "AND    GO.G_NUM = GW.G_NUM\r\n" + "AND    GW.MID_NUM = M.MID_NUM\r\n"
 				+ "AND    GW.W_NUM  = GE.W_NUM\r\n" + "AND    GE.GEORAE_CODE = ? ";
@@ -934,19 +934,21 @@ public class gosuDao {
 		return vo2;
 	}
 	// 거래 리뷰,스코어
-	public int insertGereo(String review, String score,String g_num) {
+	public int insertGereo(String gereo_code,String review, String score,String g_num) {
 
 		String sql = "INSERT INTO EVALUATION(REVIEW_CODE,GEORAE_CODE, REVIEW,G_SCORE,G_NUM) VALUES (\r\n"
-				+ "REVIEW_CODE.NEXTVAL,(SELECT GEORAE_CODE FROM GEORAE)   ,?,TO_NUMBER(?),(SELECT G.G_NUM FROM GOSU G, EVALUATION E WHERE G.G_NUM = E.G_NUM) )" ;
+				+ "REVIEW_CODE.NEXTVAL,?   ,?,TO_NUMBER(?),? )" ;
 				
 
 		PreparedStatement pstmt = null;
 		int aftcnt = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			// pstmt.setString(1, gereo_code2);
-			pstmt.setString(1, review);
-			pstmt.setString(2, score);
+			pstmt.setString(1, gereo_code);
+			pstmt.setString(2, review);
+			pstmt.setString(3, score);
+			pstmt.setString(4, g_num);
+			
 		
 
 			aftcnt = pstmt.executeUpdate();
@@ -967,8 +969,9 @@ public class gosuDao {
 		String review = vo2.getReview();
 		String score  = vo2.getScore();
 		String g_num  =  vo2.getG_num();
-
-		int aftcnt = insertGereo(review, score,g_num);
+		String gereo_code = vo2.getGeorae_code();
+		
+		int aftcnt = insertGereo(gereo_code,review, score,g_num);
 		return aftcnt;
 	}
 
