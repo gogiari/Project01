@@ -37,6 +37,8 @@ public class MainView extends JFrame implements ActionListener{
 	MainView mainview = null;
 	GearaeGosu tradeGosu;
 	AcceptPage acPage = null;
+	loginPage loginpage;
+	
 	
 	// 고수리스트 변수
 	JLabel lblListname;
@@ -57,6 +59,7 @@ public class MainView extends JFrame implements ActionListener{
 	JButton btnGosuCreate, bntUserSet;
 	JTable tabMypage;
 	JScrollPane scrMypage;
+	String uid;
 	
 	//파라미터: 색상, 선 두께, border의 모서리를 둥글게 할 것인지
 	LineBorder lb = new LineBorder(Color.black, 1, true);
@@ -64,11 +67,16 @@ public class MainView extends JFrame implements ActionListener{
 	String bigSelect;
 	String titleMsg;
 	
-	public MainView() {
+	public MainView(String uid, loginPage loginPage) {
+		this.loginpage = loginPage;
+		this.uid = uid;
 		setBackground(new Color(255, 255, 255));
 		getContentPane().setBackground(new Color(255, 255, 255));
 		inite();
+		System.out.println(uid);
 	}
+
+
 
 	private void inite() {
 		setTitle("리스트");
@@ -580,9 +588,9 @@ public class MainView extends JFrame implements ActionListener{
 		return list;
 	}
 
-	public static void main(String[] args) {
-		new MainView();
-	}
+//	public static void main(String[] args) {
+//		new MainView();
+//	}
 
 	
 	
