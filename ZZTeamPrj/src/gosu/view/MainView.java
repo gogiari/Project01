@@ -40,6 +40,9 @@ public class MainView extends JFrame implements ActionListener{
 	loginPage loginpage;
 	ResDetail resdet;
 	
+	String sel;
+	String val;
+	
 	
 	// 고수리스트 변수
 	JLabel lblListname;
@@ -383,17 +386,17 @@ public class MainView extends JFrame implements ActionListener{
 				// 마우스를 클릭하면
 				int row = tabMsg.getSelectedRow();
 				int col = tabMsg.getSelectedColumn();
-				String tradenum = (String) tabMsg.getValueAt(row, 0);
-				String sel = (String) tabMsg.getValueAt(row, 2);
-				System.out.println(sel +" 상황클릭값");
+				sel = (String) tabMsg.getValueAt(row, 0);
+				val = (String) tabMsg.getValueAt(row, 2);
+				System.out.println(val +" 상황클릭값");
 				System.out.println(e);
 				if(tradeGosu != null)
 					tradeGosu.dispose();
 				if(e.getClickCount() == 2 ) {
-					if(sel.equals("요청중"))
-						tradeGosu = new GearaeGosu(tradenum, mainview);
-					if(sel.equals("거래중"))
-						acPage = new AcceptPage(tradenum, mainview);
+					if(val.equals("요청중"))
+						tradeGosu = new GearaeGosu(sel, mainview);
+					if(val.equals("거래중"))
+						acPage = new AcceptPage(sel, mainview);
 
 				}
 			}
@@ -625,6 +628,14 @@ public class MainView extends JFrame implements ActionListener{
 		switch(e.getActionCommand()) { // 눌러진 버튼의 글자
 		case "상세보기" :
 			System.out.println("상세보기클릭");
+			int row = tabMsg.getSelectedRow();
+			int col = tabMsg.getSelectedColumn();
+			sel = (String) tabMsg.getValueAt(row, 0);
+			val = (String) tabMsg.getValueAt(row, 2);
+			if(val.equals("요청중"))
+				tradeGosu = new GearaeGosu(sel, mainview);
+			if(val.equals("거래중"))
+				acPage = new AcceptPage(sel, mainview);
 			break;
 		case "새로고침" :
 			System.out.println("새로고침클릭");

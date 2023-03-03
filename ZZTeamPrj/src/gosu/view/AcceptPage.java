@@ -60,10 +60,10 @@ public class AcceptPage extends JFrame{
 		
 	}
 	
-	public AcceptPage(String tradenum, MainView mainview) {
+	public AcceptPage(String sel, MainView mainview) {
 		  this();
 	      this.mainview = mainview;
-	      txtDd.setText(tradenum);
+	      txtDd.setText(sel);
 	      btnFind.doClick();
 	}
 
@@ -308,6 +308,7 @@ public class AcceptPage extends JFrame{
 		this.textField_4.setText( sdate );
 		this.textField_5.setText( gcheck );
 		this.textField_6.setText( price );
+		
 			
 
 	
