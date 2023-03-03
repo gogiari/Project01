@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConn {
-/// 연결
+/// 연결ㅇㅇ
 		private  static      String      driver = "oracle.jdbc.OracleDriver"; 
 		private  static      String      dburl  = "jdbc:oracle:thin:@localhost:1521:xe"; 
 		private  static      String      dbuid  = "lck";
