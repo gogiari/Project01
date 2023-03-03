@@ -66,7 +66,7 @@ public class PaymentPage extends JFrame{
 		this();
 		this.acceptpage = acceptpage;
 		
-		// 넘어온 아이디를 txtId 에 넣고 find 버튼 클릭하면
+		// 넘어온 아이디를 txtGr 에 넣고 find 버튼 클릭하면
 		txtGr.setText( id );
 		btnFind.doClick();
 	}
@@ -102,7 +102,7 @@ public class PaymentPage extends JFrame{
 		lblNewLabel_1_2.setBounds(12, 192, 109, 30);
 		frame.getContentPane().add(lblNewLabel_1_2);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("\uACE0\uC218\uBC88\uD638");
+		JLabel lblNewLabel_1_3 = new JLabel("\uACE0\uC218ID");
 		lblNewLabel_1_3.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
 		lblNewLabel_1_3.setBounds(12, 300, 109, 30);
 		frame.getContentPane().add(lblNewLabel_1_3);
@@ -136,21 +136,19 @@ public class PaymentPage extends JFrame{
 		frame.getContentPane().add(btnNewButton_2);
 		
 		txtGr = new JTextField();
-		txtGr.setText( "GR0030" );
+		txtGr.setText("GR0030");
 		txtGr.setEditable(false);
 		txtGr.setBounds(133, 89, 167, 28);
 		frame.getContentPane().add(txtGr);
 		txtGr.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setText("\uBE14\uB799\uBC15\uC2A4 \uC124\uCE58");
 		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		textField_1.setBounds(133, 141, 167, 28);
 		frame.getContentPane().add(textField_1);
 		
 		textField_2 = new JTextField();
-		textField_2.setText("3000");
 		textField_2.setEditable(false);
 		textField_2.setColumns(10);
 		textField_2.setBounds(133, 196, 167, 28);
@@ -196,7 +194,6 @@ public class PaymentPage extends JFrame{
 		frame.getContentPane().add(btnFind);
 		
 		txtHong = new JTextField();
-		txtHong.setText("HONG");
 		txtHong.setEditable(false);
 		txtHong.setColumns(10);
 		txtHong.setBounds(133, 300, 167, 28);
@@ -265,7 +262,9 @@ public class PaymentPage extends JFrame{
 	private gosuVo2 getViewData() {
 		
 		String   review       =  this.textArea.getText();
-		String   g_num        =  this.txtHong.getText();
+		String   u_id         =  this.txtHong.getText();
+		String   gereo_code   =  this.txtGr.getText();
+		
 		
 		String   score       =  "";
 		if( this.rb1.isSelected() )    score = "1";
@@ -274,7 +273,7 @@ public class PaymentPage extends JFrame{
 		if( this.rb4.isSelected() )    score = "4";
 		if( this.rb5.isSelected() )    score = "5";
 		
-		gosuVo2  vo2        =  new gosuVo2( review,score,g_num );
+		gosuVo2  vo2        =  new gosuVo2( review,score,u_id,gereo_code );
 		return   vo2;
 	}
 
@@ -298,12 +297,12 @@ public class PaymentPage extends JFrame{
 		String   georae_code    =  vo2.getGeorae_code();		
 		String   midname        =  vo2.getMid_name();		
 		String   price          =  vo2.getPrice();
-		String   g_num           =  vo2.getG_num();
+		String   u_id           =  vo2.getU_id();
 		
 		this.txtGr.setText( georae_code );		
 		this.textField_1.setText( midname );	
 		this.textField_2.setText( price );
-		this.txtHong.setText(g_num);
+		this.txtHong.setText(u_id);
 			
 		
 	}

@@ -28,7 +28,7 @@ public class PaymentCompletePage extends JFrame{
 	private JButton    btnFind;
 	
 	PaymentPage    paymentPage        = null;
-	private JTextField textField;
+	private JTextField txtGr;
 	/**
 	 * Launch the application.
 	 */
@@ -57,7 +57,7 @@ public class PaymentCompletePage extends JFrame{
 		this.paymentPage = paymentPage;
 		
 		// 넘어온 아이디를 txtId 에 넣고 find 버튼 클릭하면
-		textField.setText( id );
+		txtGr.setText( id );
 		btnFind.doClick();
 	}
 	
@@ -164,13 +164,16 @@ public class PaymentCompletePage extends JFrame{
 		btnFind.setBounds(437, 454, 97, 36);
 		frame.getContentPane().add(btnFind);
 		
-		textField = new JTextField();
-		textField.setText("1");
-		textField.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
-		textField.setEditable(false);
-		textField.setColumns(10);
-		textField.setBounds(190, 74, 280, 32);
-		frame.getContentPane().add(textField);
+		txtGr = new JTextField();
+		txtGr.setText("GR0030");
+		txtGr.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		txtGr.setEditable(false);
+		txtGr.setColumns(10);
+		txtGr.setBounds(190, 74, 280, 32);
+		frame.getContentPane().add(txtGr);
+		
+		
+		
 		
 		btnFind.addActionListener(new ActionListener() {
 			
@@ -183,7 +186,7 @@ public class PaymentCompletePage extends JFrame{
 	}
 
 	protected void findgereo() {
-		String      georae_code  =  this.textField.getText();
+		String      georae_code  =  this.txtGr.getText();
 		if( georae_code.trim().equals("") )
 			return;
 		
@@ -205,7 +208,7 @@ public class PaymentCompletePage extends JFrame{
 		String   gcheck    =  vo2.getG_check();
 		String   price     =  vo2.getPrice();
 		
-		this.textField.setText( georae_code );
+		this.txtGr.setText( georae_code );
 		this.textField_1.setText( uname );
 		this.textField_2.setText( midname );
 		this.textField_3.setText( gdate );

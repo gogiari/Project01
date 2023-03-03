@@ -30,22 +30,30 @@ public class gosuVo2 {
 		this.mid_name = mid_name;
 		this.g_date = g_date;
 		this.sdate = sdate;
-		this.g_check = g_check;
+		this.g_check = g_check; 
 		this.price = price;  
 		
 		
 	}
-	
-	public gosuVo2(String ofaq_code, String f_head, String f_body, String reply) {
-		
+   public gosuVo2(String georae_code,String mid_name,String price,String g_num ) {
+	   this.georae_code = georae_code;
+	   this.mid_name = mid_name;
+	   this.price = price;
+	   this.g_num = g_num;
 	}
+	
+
 	
 	public gosuVo2(String review, String score,String g_num) {
 		this.review = review;
 		this.score  = score;
 		this.g_num = g_num;
 	}
-
+	
+	public gosuVo2(String gereo_code, String midname,String price2,String g_num2,String score2,String review2) {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public String getG_num() {
 		return g_num;
 	}
@@ -158,10 +166,11 @@ public class gosuVo2 {
 	public String toString() {
 		return "gosuVo2 [georae_code=" + georae_code + ", gereo_code2=" + gereo_code2 + ", u_name=" + u_name
 				+ ", mid_name=" + mid_name + ", g_date=" + g_date + ", sdate=" + sdate + ", g_check=" + g_check
-				+ ", price=" + price + ", review=" + review + ", score=" + score + ", u_id=" + u_id + ", faq_code="
-				+ faq_code + ", f_date=" + f_date + ", f_head=" + f_head + ", f_body=" + f_body + ", reply=" + reply
-				+ ", f_check=" + f_check + "]";
+				+ ", price=" + price + ", review=" + review + ", score=" + score + ", u_id=" + u_id + ", g_num=" + g_num
+				+ ", faq_code=" + faq_code + ", f_date=" + f_date + ", f_head=" + f_head + ", f_body=" + f_body
+				+ ", reply=" + reply + ", f_check=" + f_check + "]";
 	}
+	
 	
 	
 

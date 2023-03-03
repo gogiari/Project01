@@ -853,8 +853,13 @@ public class gosuDao {
 
 		gosuVo2 vo2 = null;
 
-		String sql = " SELECT GE.GEORAE_CODE,  M.MID_NAME, GW.PRICE\r\n" + "FROM   GEORAE GE, MIDLIST M, GWORK GW\r\n"
-				+ "WHERE  GE.W_NUM = GW.W_NUM\r\n" + "AND    GW.MID_NUM = M.MID_NUM\r\n" + "AND    GE.GEORAE_CODE = ? ";
+		String sql = " SELECT GE.GEORAE_CODE,  M.MID_NAME, GW.PRICE, GO.G_NUM\r\n"
+				+ " FROM   GEORAE GE, MIDLIST M, GWORK GW, GOSU GO\r\n"
+				+ " WHERE  GE.W_NUM = GW.W_NUM\r\n "
+				+ " AND    GW.MID_NUM = M.MID_NUM\r\n "
+				+ " AND    GO.G_NUM = GW.G_NUM\r\n "
+				+ " AND    GE.GEORAE_CODE = ? "; 
+		     
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -893,7 +898,7 @@ public class gosuDao {
 
 		gosuVo2 vo2 = null;
 
-		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.G_NUM \r\n"
+		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.U_ID \r\n"
 				+ "FROM   GEORAE GE , GOSU GO, MIDLIST M, GWORK GW, USERLIST U\r\n" + "WHERE  U.U_ID = GO.U_ID\r\n"
 				+ "AND    GO.G_NUM = GW.G_NUM\r\n" + "AND    GW.MID_NUM = M.MID_NUM\r\n"
 				+ "AND    GW.W_NUM  = GE.W_NUM\r\n" + "AND    GE.GEORAE_CODE = ? ";
@@ -915,6 +920,7 @@ public class gosuDao {
 				String sdate = rs.getString("SDATE");
 				String g_check = rs.getString("G_CHECK");
 				String price = rs.getString("PRICE");
+				String u_id = rs.getString("U_ID");
 				
 
 				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price);
@@ -934,9 +940,9 @@ public class gosuDao {
 		return vo2;
 	}
 	// 거래 리뷰,스코어
-	public int insertGereo(String gereo_code,String review, String score,String g_num) {
+	public int insertGereo(String gereo_code,String review, String score,String u_id) {
 
-		String sql = "INSERT INTO EVALUATION(REVIEW_CODE,GEORAE_CODE, REVIEW,G_SCORE,G_NUM) VALUES (\r\n"
+		String sql = "INSERT INTO EVALUATION(REVIEW_CODE,GEORAE_CODE, REVIEW,G_SCORE,U_ID) VALUES (\r\n"
 				+ "REVIEW_CODE.NEXTVAL,?   ,?,TO_NUMBER(?),? )" ;
 				
 
@@ -947,7 +953,7 @@ public class gosuDao {
 			pstmt.setString(1, gereo_code);
 			pstmt.setString(2, review);
 			pstmt.setString(3, score);
-			pstmt.setString(4, g_num);
+			pstmt.setString(4, u_id);
 			
 		
 
