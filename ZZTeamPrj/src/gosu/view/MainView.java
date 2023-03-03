@@ -78,7 +78,7 @@ public class MainView extends JFrame implements ActionListener{
 		pCenterBack.setBackground(new Color(255, 255, 255));
 //		pCenterList = new JPanel();
 //		pCenterMsg = new JPanel();
-//		pCenterMsg.setBounds(744, 237, 70, 25);
+//		pCenterMsg.setBounds(744, 237, 70, 25); 
 //		pCenterMypage = new JPanel();
 //		pCenterMypage.setBounds(819, 237, 94, 25);
 		pSouth     = new JPanel();
