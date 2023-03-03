@@ -227,7 +227,7 @@ public class AcceptPage extends JFrame{
 			}
 		});
 		
-		// 취소버튼 기능
+		// 취소버튼 기능 
 		btnReturn.addActionListener(new ActionListener() {
 			
 			@Override

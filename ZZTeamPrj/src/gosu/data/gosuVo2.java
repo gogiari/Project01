@@ -31,7 +31,7 @@ public class gosuVo2 {
 		this.g_date = g_date;
 		this.sdate = sdate;
 		this.g_check = g_check;
-		this.price = price; 
+		this.price = price;  
 		
 		
 	}
