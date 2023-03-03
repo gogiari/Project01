@@ -139,9 +139,9 @@ public class AcceptPage extends JFrame{
 		
 		txtDd = new JTextField();
 		txtDd.setBackground(new Color(255, 255, 255));
+		txtDd.setText("");
 		txtDd.setEditable(false);
 		txtDd.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
-		txtDd.setText( "GR0030" );
 		txtDd.setBounds(131, 100, 268, 31);
 		frame.getContentPane().add(txtDd);
 		txtDd.setColumns(10);
