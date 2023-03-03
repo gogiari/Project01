@@ -7,18 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 
 import gosu.view.MainView;
+
 
 public class gosuDao {
 
 	private Connection conn = null;
 	MainView mainview = null;
-	
-	
+
+
 
 	public gosuDao() {
 		conn = dbConn.getInstace();
@@ -32,7 +31,7 @@ public class gosuDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 
 	// 회원가입
 	public int insertMember(String u_id, String u_pw, String u_name, String u_phone, String u_email, String u_gender,
@@ -150,7 +149,7 @@ public class gosuDao {
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-//			}
+			//			}
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				String w_num = rs.getString("W_NUM");
@@ -183,11 +182,11 @@ public class gosuDao {
 
 	}
 
-	
-	
+
+
 	public Vector<Vector> getSelGosuList(String bigSelect) {
 		Vector<Vector> list = new Vector<Vector>();
-		
+
 		String sql = "";
 		sql += "SELECT W_NUM                             W_NUM , ";
 		sql += "       ML.MID_NAME                       MID_NAME, ";
@@ -200,14 +199,14 @@ public class gosuDao {
 		sql += "  ON GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
 		sql += "  ON ML.BI_NUM = BL.BI_NUM ";
 		sql += "  WHERE BL.BI_NAME = ? ";
-		
-		
+
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,  bigSelect); 
-			
+
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				String w_num = rs.getString("W_NUM");
@@ -215,7 +214,7 @@ public class gosuDao {
 				String username = rs.getString("USERNAME");
 				String price = rs.getString("PRICE");
 				String addr = rs.getString("ADDR");
-				
+
 				Vector v = new Vector();
 				v.add(w_num);
 				v.add(mid_name);
@@ -234,12 +233,12 @@ public class gosuDao {
 					pstmt.close();
 			} catch (SQLException e) {
 			}
-			
+
 		}
 		return list;
-		
+
 	}
-	
+
 
 	public Vector<Vector> getFAQList() {
 		Vector<Vector> list = new Vector<Vector>();
@@ -299,9 +298,9 @@ public class gosuDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
-				
+
 				String uid = rs.getString("U_ID");
 				String pw = rs.getString("USERPW");
 				String pw2= rs.getString("USERPW");
@@ -312,7 +311,7 @@ public class gosuDao {
 				String sido = rs.getString("U_SIDO");
 				String gugun = rs.getString("U_GUGUN");
 
-//				vo = new userVo(uid, pw, pw2 ,name, email, gender, phone, sido, gugun);
+				//				vo = new userVo(uid, pw, pw2 ,name, email, gender, phone, sido, gugun);
 				vo = new userVo();
 			}
 		} catch (SQLException e) {
@@ -366,7 +365,7 @@ public class gosuDao {
 	public boolean loginCheck(String Uid, String Upw) {
 		boolean flag = false;
 
-		
+
 		String sql = "SELECT USERPW "
 				+ "    FROM USERLIST "
 				+ "    WHERE U_ID   = ?  ";
@@ -404,19 +403,19 @@ public class gosuDao {
 	}
 	public  ArrayList<String> allSido(){
 		ArrayList<String> sidoData = new ArrayList<String>();
-		
+
 		String sql = "SELECT DISTINCT SIDO  FROM POST";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-		    rs= pstmt.executeQuery();
-		    
-		    while(rs.next()) {
-		    	sidoData.add(rs.getString("SIDO"));
-		    }
-		    
-		    
+			rs= pstmt.executeQuery();
+
+			while(rs.next()) {
+				sidoData.add(rs.getString("SIDO"));
+			}
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -426,25 +425,25 @@ public class gosuDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
+
 		return sidoData;
 	}
 	public ArrayList<String> allGugun(String sido){
 		ArrayList<String> gugunData = new ArrayList<String>();
-		
+
 		String sql = "SELECT DISTINCT GUGUN  FROM POST WHERE SIDO = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-		    pstmt =	conn.prepareStatement(sql);
+			pstmt =	conn.prepareStatement(sql);
 			pstmt.setString(1, sido);
-		    rs= pstmt.executeQuery();
-		    
-		    while(rs.next()) {
-		    	gugunData.add(rs.getString("GUGUN"));
-		    }
-		    
+			rs= pstmt.executeQuery();
+
+			while(rs.next()) {
+				gugunData.add(rs.getString("GUGUN"));
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -454,22 +453,22 @@ public class gosuDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return gugunData;
 	}
 
 	public class GugunComboBoxModel extends DefaultComboBoxModel<String> {
 		ArrayList<String> datas = new ArrayList<String>();
-		
+
 
 		public GugunComboBoxModel(String sido) {
 			gosuDao dao = new gosuDao();
 			datas = dao.allGugun(sido);
 		}
-		
+
 		@Override
 		public int getSize() {
-			
+
 			return datas.size();
 		}
 
@@ -477,17 +476,17 @@ public class gosuDao {
 		public String getElementAt(int index) {
 			return datas.get(index);
 		}
-	public class sidoComboBoxModel extends DefaultComboBoxModel<String> {
+		public class sidoComboBoxModel extends DefaultComboBoxModel<String> {
 			ArrayList<String> datas1= new ArrayList<String>();
-			
+
 			public sidoComboBoxModel() {
 				gosuDao dao = new gosuDao();
 				datas1 = dao.allSido();
 			}
-			
+
 			@Override
 			public int getSize() {
-				
+
 				return datas1.size() ;
 			}
 
@@ -496,354 +495,612 @@ public class gosuDao {
 				return datas1.get(index);
 			}
 
+		}
 	}
-  }
-	
+
 	// 회원 거래요청서에서 거래리스트에 저장
-			public int addgeorae(String g_code, String g_start, String g_end, String m_message, String g_message, String g_check)
+	public int addgeorae(String g_code, String g_start, String g_end, String m_message, String g_message, String g_check)
 
-			{	String sql = "INSERT INTO GEORAE "
-					+ "   ( GEORAE_CODE, W_NUM, G_START, G_END, M_MESSAGE, G_MESSAGE, G_CHECK) "
-					+ "     VALUES( 'GR'|| LPAD(G_SEQ.nextval,4,0), "
-					+ "               ?, ?, ?, '-', '요청중') ";
+	{	String sql = "INSERT INTO GEORAE "
+			+ "   ( GEORAE_CODE, W_NUM, G_START, G_END, M_MESSAGE, G_MESSAGE, G_CHECK) "
+			+ "     VALUES( 'GR'|| LPAD(G_SEQ.nextval,4,0), "
+			+ "               ?, ?, ?, '-', '요청중') ";
 
-			int aftcnt = 0;
+	int aftcnt = 0;
 
-			PreparedStatement pstmt1 = null;
+	PreparedStatement pstmt1 = null;
 
 
+	try {
+		pstmt1 = conn.prepareStatement(sql);
+
+		pstmt1.setString(1, g_start);
+		pstmt1.setString(2, g_end);
+		pstmt1.setString(3, m_message);
+
+		aftcnt = pstmt1.executeUpdate();	
+
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		try {
+			if(pstmt1 != null) pstmt1.close();
+
+		} catch (SQLException e) {
+
+		}
+	}
+	return  aftcnt;
+
+
+	}
+	public int addgeorae(georaeVo vo) {				
+
+		String   g_code     = vo.getG_code();
+		String   g_start    = vo.getG_start();
+		String   g_end      = vo.getG_end();
+		String   m_message  = vo.getM_message();
+		String   g_message  = vo.getG_message();
+		String   g_check    = vo.getG_check();
+
+		int aftcnt = addgeorae(g_code, g_start, g_end, m_message, g_message, g_check);
+		return aftcnt;				
+	}	
+
+	// 회원 거래요청서에서 메시지 리스트에 저장
+	public int select(String g_code, String messnum, String mread, String m_date) {
+
+		String sql = " INSERT INTO MESSAGE " 
+				+ " (GEORAE_CODE, MESSNUM, MREAD, M_DATE) "
+				+ "  VALUES ( (SELECT NVL(MAX(GEORAE_CODE), 0) FROM GEORAE), M_SEQ.nextval, '읽지않음', SYSDATE) ";
+
+		int afcnt = 0;
+		PreparedStatement pstmt = null;
+
+
+		try {
+			pstmt = conn.prepareStatement(sql);			
+			afcnt = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			try {
-				pstmt1 = conn.prepareStatement(sql);
-
-				pstmt1.setString(1, g_start);
-				pstmt1.setString(2, g_end);
-				pstmt1.setString(3, m_message);
-
-				aftcnt = pstmt1.executeUpdate();	
+				if(pstmt != null) pstmt.close();
 
 			} catch (SQLException e) {
+
+			}
+		}
+		return afcnt;
+
+	}
+
+	public int select(georaeVo vo) {				
+
+		String   g_code     = vo.getG_code();
+		String   messnum    = vo.getMessnum();
+		String   mread      = vo.getMread();
+		String   m_date     = vo.getM_date();
+
+		int aftcnt = select(g_code, messnum, mread, m_date);
+		return aftcnt;				
+	}	
+
+	// 회원 거래요청 취소
+	public int delete(georaeVo vo) {
+		String sql =  " DELETE FROM GEORAE "
+				+ " WHERE GEORAE_CODE= (SELECT NVL(MAX(GEORAE_CODE), 0) FROM GEORAE) ";
+
+		int afcnt = 0;
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);			
+			afcnt = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+
+			} catch (SQLException e) {
+
+			}
+		}
+		return afcnt;
+
+	}
+
+
+	// 고수 거래요청서에 뜨는 내용
+	public georaeVo getGeorae(String g_code) {
+
+		georaeVo  vo = null;
+
+		String  sql = "";
+		sql += " SELECT G.GEORAE_CODE, M.MID_NAME, ";
+		sql += "        GW.GDATE,   G.G_START,   G.G_END,    GW.WSIDO, ";
+		sql += "        GW.WGUGUN,  GU.USERNAME, G.M_MESSAGE ";
+		sql += " FROM   GEORAE G ";
+		sql += " JOIN   GWORK GW ON G.W_NUM = GW.W_NUM ";
+		sql += " JOIN   GOSU GS ON GS.G_NUM = GW.G_NUM ";
+		sql += " JOIN   USERLIST GU ON GU.U_ID = GS.U_ID ";
+		sql += " JOIN   MIDLIST M ON GW.MID_NUM = M.MID_NUM ";
+		sql += " WHERE  G.GEORAE_CODE = '"+ g_code +"'";
+
+		PreparedStatement pstmt  =  null;
+		ResultSet         rs     =  null;
+
+		try {
+			pstmt =  conn.prepareStatement(sql);
+			rs    =  pstmt.executeQuery();
+
+			if( rs.next() ) {	
+				String  g_code2   = rs.getString(1);
+				String  mid_name  = rs.getString(2);
+				String  gdate     = rs.getString(3);
+				String  g_start   = rs.getString(4);
+				String  g_end     = rs.getString(5);
+				String  wsido     = rs.getString(6);
+				String  wgugun    = rs.getString(7);
+				String  g_name    = rs.getString(8);
+				String  m_message = rs.getString(9);
+
+				vo = new georaeVo(g_code2, mid_name, gdate, g_start, g_end, wsido, wgugun, g_name, m_message);				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs    != null)   rs.close();
+				if(pstmt != null)   pstmt.close();
+			} catch (SQLException e) {		
+			}
+		}		
+
+		return    vo;
+
+
+	}
+	// 고수 거래요청서 답장에서 거래리스트에 저장(수정)
+	public int surakgeorae(updateVo vo) {
+		System.out.println("수정전:" + vo);	
+
+		String   sql    = "UPDATE GEORAE SET "
+				+ " G_MESSAGE          = ?, "
+				+ " G_CHECK            = '거래중' "
+				+  " WHERE GEORAE_CODE = ? " ;
+
+		int aftcnt = 0;
+		PreparedStatement pstmt  = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getG_message());
+			pstmt.setString(2, vo.getG_code());
+
+			aftcnt = pstmt.executeUpdate();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return  aftcnt;
+	}
+
+
+	// 고수 거래요청서 답장에서 반송
+	public int bansong(updateVo vo) {
+		System.out.println("반송:" + vo);	
+
+		String   sql    = "UPDATE GEORAE SET "
+				+ " G_MESSAGE          = ?, "
+				+ " G_CHECK            = '반송' "
+				+  " WHERE GEORAE_CODE = ? " ;
+
+		int aftcnt = 0;
+		PreparedStatement pstmt  = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getG_message());
+			pstmt.setString(2, vo.getG_code());
+
+			aftcnt = pstmt.executeUpdate();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return  aftcnt;
+	}
+
+
+	// 메시지 테이블 데이터
+	public Vector<Vector> getMsgList() {
+		Vector<Vector> list = new Vector<Vector>();
+		String sql = "";
+		sql       += " SELECT ME.GEORAE_CODE GEORAE_CODE, ";
+		sql       += "        GR.M_MESSAGE   M_MESSAGE, ";
+		sql       += "        UL.USERNAME    USERNAME, ";
+		sql       += "        ME.M_DATE      M_DATE ";
+		sql       += "  FROM  MESSAGE ME LEFT JOIN GEORAE GR ";
+		sql       += "  ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN USERLIST UL ";
+		sql       += "  ON    ME.U_ID = UL.U_ID ";
+
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			psmt = conn.prepareStatement(sql);
+
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				String georae_code = rs.getString("GEORAE_CODE");
+				String m_message = rs.getString("M_MESSAGE");
+				String username = rs.getString("USERNAME");
+				String m_date = rs.getString("M_DATE");
+
+				Vector v = new Vector();
+				v.add(georae_code);
+				v.add(m_message);
+				v.add(username);
+				v.add(m_date);
+
+				list.add(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(psmt!=null)psmt.close();
+			} catch (SQLException e) {
 				e.printStackTrace();
-			} finally {
-				try {
-					if(pstmt1 != null) pstmt1.close();
-
-				} catch (SQLException e) {
-
-				}
 			}
-			return  aftcnt;
+		}
 
+		return list;
+	}
+	public static void main(String[] args) {
+		System.out.println();
+	}
 
-			}
-			public int addgeorae(georaeVo vo) {				
+	// 마이페이지 테이블 데이터
+	public Vector<Vector> getmylist(String select) {
+		Vector<Vector> list = new Vector<Vector>( );
+		String sql = "";
+		sql       += "SELECT GR.GEORAE_CODE GEORAE_CODE, ";
+		sql       += "       BL.BI_NAME     BI_NAME, ";
+		sql       += "       ML.MID_NAME    MID_NAME, ";
+		sql       += "       UL.USERNAME    USERNAME, ";
+		sql       += "       GW.GDATE       GDATE, ";
+		sql       += "       GW.PRICE       PRICE, ";
+		sql       += "       GR.G_CHECK     G_CHECK, ";
+		sql       += "       EV.G_SCORE     G_SCORE" ;
+		sql       += " FROM  GEORAE GR LEFT JOIN GWORK GW ";
+		sql       += " ON    GR.W_NUM = GW.W_NUM LEFT JOIN GOSU GS ";
+		sql       += " ON    GW.G_NUM = GS.G_NUM LEFT JOIN USERLIST UL ";
+		sql       += " ON    GS.U_ID = UL.U_ID LEFT JOIN MIDLIST ML ";
+		sql       += " ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
+		sql       += " ON    ML.BI_NUM = BL.BI_NUM LEFT JOIN EVALUATION EV ";
+		sql       += " ON    GS.G_NUM = EV.G_NUM ";
+		if(select == "회원") {
+			sql       += " WHERE GS.U_ID = ? ";////////////////////// 뭘 넣어야함?
+		} else {
+			sql       += " WHERE UL.U_ID = ? ";////////////////////// 뭘 넣어야함?
+		}
 
-				String   g_code     = vo.getG_code();
-				String   g_start    = vo.getG_start();
-				String   g_end      = vo.getG_end();
-				String   m_message  = vo.getM_message();
-				String   g_message  = vo.getG_message();
-				String   g_check    = vo.getG_check();
-
-				int aftcnt = addgeorae(g_code, g_start, g_end, m_message, g_message, g_check);
-				return aftcnt;				
-			}	
-			
-			// 회원 거래요청서에서 메시지 리스트에 저장
-			public int select(String g_code, String messnum, String mread, String m_date) {
-
-				String sql = " INSERT INTO MESSAGE " 
-						+ " (GEORAE_CODE, MESSNUM, MREAD, M_DATE) "
-						+ "  VALUES ( (SELECT NVL(MAX(GEORAE_CODE), 0) FROM GEORAE), M_SEQ.nextval, '읽지않음', SYSDATE) ";
-
-				int afcnt = 0;
-				PreparedStatement pstmt = null;
-
-
-				try {
-					pstmt = conn.prepareStatement(sql);			
-					afcnt = pstmt.executeUpdate();
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						if(pstmt != null) pstmt.close();
-
-					} catch (SQLException e) {
-
-					}
-				}
-				return afcnt;
-
-			}
-			
-			public int select(georaeVo vo) {				
-
-				String   g_code     = vo.getG_code();
-				String   messnum    = vo.getMessnum();
-				String   mread      = vo.getMread();
-				String   m_date     = vo.getM_date();
-
-				int aftcnt = select(g_code, messnum, mread, m_date);
-				return aftcnt;				
-			}	
-			
-			// 회원 거래요청 취소
-				public int delete(georaeVo vo) {
-					String sql =  " DELETE FROM GEORAE "
-					            + " WHERE GEORAE_CODE= (SELECT NVL(MAX(GEORAE_CODE), 0) FROM GEORAE) ";
-				
-				int afcnt = 0;
-				PreparedStatement pstmt = null;
-
-				try {
-					pstmt = conn.prepareStatement(sql);			
-					afcnt = pstmt.executeUpdate();
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						if(pstmt != null) pstmt.close();
-
-					} catch (SQLException e) {
-
-					}
-				}
-				return afcnt;
-
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			psmt = conn.prepareStatement(sql);
+			if(select == "회원") {
+				psmt.setString(1, "123");
+			} else {
+				psmt.setString(1, "123");
 			}
 
-					
-			// 고수 거래요청서에 뜨는 내용
-			public georaeVo getGeorae(String g_code) {
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				String georae_code = rs.getString("GEORAE_CODE");
+				String bi_name = rs.getString("BI_NAME");
+				String mid_name = rs.getString("MID_NAME");
+				String username = rs.getString("USERNAME");
+				String gdate = rs.getString("GDATE");
+				String price = rs.getString("PRICE");
+				String g_check = rs.getString("G_CHECK");
+				String g_score = rs.getString("G_SCORE");
 
-				georaeVo  vo = null;
+				Vector v = new Vector();
+				v.add(georae_code);
+				v.add(bi_name);
+				v.add(mid_name);
+				v.add(username);
+				v.add(gdate);
+				v.add(price);
+				v.add(g_check);
+				v.add(g_score);
 
-				String  sql = "";
-				sql += " SELECT G.GEORAE_CODE, M.MID_NAME, ";
-				sql += "        GW.GDATE,   G.G_START,   G.G_END,    GW.WSIDO, ";
-				sql += "        GW.WGUGUN,  GU.USERNAME, G.M_MESSAGE ";
-				sql += " FROM   GEORAE G ";
-				sql += " JOIN   GWORK GW ON G.W_NUM = GW.W_NUM ";
-				sql += " JOIN   GOSU GS ON GS.G_NUM = GW.G_NUM ";
-				sql += " JOIN   USERLIST GU ON GU.U_ID = GS.U_ID ";
-				sql += " JOIN   MIDLIST M ON GW.MID_NUM = M.MID_NUM ";
-				sql += " WHERE  G.GEORAE_CODE = '"+ g_code +"'";
-
-				PreparedStatement pstmt  =  null;
-				ResultSet         rs     =  null;
-
-				try {
-				pstmt =  conn.prepareStatement(sql);
-				rs    =  pstmt.executeQuery();
-
-				if( rs.next() ) {	
-					String  g_code2   = rs.getString(1);
-					String  mid_name  = rs.getString(2);
-					String  gdate     = rs.getString(3);
-					String  g_start   = rs.getString(4);
-					String  g_end     = rs.getString(5);
-					String  wsido     = rs.getString(6);
-					String  wgugun    = rs.getString(7);
-					String  g_name    = rs.getString(8);
-					String  m_message = rs.getString(9);
-
-					vo = new georaeVo(g_code2, mid_name, gdate, g_start, g_end, wsido, wgugun, g_name, m_message);				
-				}
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						if(rs    != null)   rs.close();
-						if(pstmt != null)   pstmt.close();
-					} catch (SQLException e) {		
-					}
-				}		
-
-				return    vo;
-
-
+				list.add(v);
 			}
-			// 고수 거래요청서 답장에서 거래리스트에 저장(수정)
-			public int surakgeorae(updateVo vo) {
-				System.out.println("수정전:" + vo);	
-				
-				String   sql    = "UPDATE GEORAE SET "
-				                + " G_MESSAGE          = ?, "
-			                    + " G_CHECK            = '거래중' "
-		                        +  " WHERE GEORAE_CODE = ? " ;
-
-				int aftcnt = 0;
-				PreparedStatement pstmt  = null;
-
-				try {
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, vo.getG_message());
-					pstmt.setString(2, vo.getG_code());
-					
-					aftcnt = pstmt.executeUpdate();
-
-				}catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						if(pstmt != null) pstmt.close();
-					} catch (SQLException e) {
-					}
-				}
-				return  aftcnt;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(psmt!=null)psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
-			
-			// 고수 거래요청서 답장에서 반송
-			public int bansong(updateVo vo) {
-				System.out.println("반송:" + vo);	
-			
-				String   sql    = "UPDATE GEORAE SET "
-				                + " G_MESSAGE          = ?, "
-			                    + " G_CHECK            = '반송' "
-		                        +  " WHERE GEORAE_CODE = ? " ;
+		}
 
-				int aftcnt = 0;
-				PreparedStatement pstmt  = null;
+		return list;
+	}
 
-				try {
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, vo.getG_message());
-					pstmt.setString(2, vo.getG_code());
-					
-					aftcnt = pstmt.executeUpdate();
+	// 결제조회
+	public gosuVo2 getMember2(String georae_code) {
 
-				}catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						if(pstmt != null) pstmt.close();
-					} catch (SQLException e) {
-					}
-				}
-				return  aftcnt;
+		gosuVo2 vo2 = null;
+
+		String sql = " SELECT GE.GEORAE_CODE,  M.MID_NAME, GW.PRICE\r\n" + "FROM   GEORAE GE, MIDLIST M, GWORK GW\r\n"
+				+ "WHERE  GE.W_NUM = GW.W_NUM\r\n" + "AND    GW.MID_NUM = M.MID_NUM\r\n" + "AND    GE.GEORAE_CODE = ? ";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, georae_code);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String ogeorae_code = rs.getString("GEORAE_CODE");
+				String mid_name = rs.getString("MID_NAME");
+				String price = rs.getString("PRICE");
+
+				vo2 = new gosuVo2(ogeorae_code, mid_name, price);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
 
-		
-				 // 메시지 테이블 데이터
-				 public Vector<Vector> getMsgList() {
-					 Vector<Vector> list = new Vector<Vector>();
-					 String sql = "";
-					 sql       += " SELECT ME.GEORAE_CODE GEORAE_CODE, ";
-					 sql       += "        GR.M_MESSAGE   M_MESSAGE, ";
-					 sql       += "        UL.USERNAME    USERNAME, ";
-					 sql       += "        ME.M_DATE      M_DATE ";
-					 sql       += "  FROM  MESSAGE ME LEFT JOIN GEORAE GR ";
-					 sql       += "  ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN USERLIST UL ";
-					 sql       += "  ON    ME.U_ID = UL.U_ID ";
+		return vo2;
+	}
 
-					 PreparedStatement psmt = null;
-					 ResultSet rs = null;
-					 try {
-						 psmt = conn.prepareStatement(sql);
 
-						 rs = psmt.executeQuery();
-						 while(rs.next()) {
-							 String georae_code = rs.getString("GEORAE_CODE");
-							 String m_message = rs.getString("M_MESSAGE");
-							 String username = rs.getString("USERNAME");
-							 String m_date = rs.getString("M_DATE");
+	// 수락페이지조회
+	public gosuVo2 getMember(String georae_code) {
 
-							 Vector v = new Vector();
-							 v.add(georae_code);
-							 v.add(m_message);
-							 v.add(username);
-							 v.add(m_date);
+		gosuVo2 vo2 = null;
 
-							 list.add(v);
-						 }
-					 } catch (SQLException e) {
-						 e.printStackTrace();
-					 } finally {
-						 try {
-							 if(psmt!=null)psmt.close();
-						 } catch (SQLException e) {
-							 e.printStackTrace();
-						 }
-					 }
+		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.U_ID \r\n"
+				+ "FROM   GEORAE GE , GOSU GO, MIDLIST M, GWORK GW, USERLIST U\r\n" + "WHERE  U.U_ID = GO.U_ID\r\n"
+				+ "AND    GO.G_NUM = GW.G_NUM\r\n" + "AND    GW.MID_NUM = M.MID_NUM\r\n"
+				+ "AND    GW.W_NUM  = GE.W_NUM\r\n" + "AND    GE.GEORAE_CODE = ? ";
 
-					 return list;
-				 }
-				 public static void main(String[] args) {
-					System.out.println();
-				}
-				 
-				 // 마이페이지 테이블 데이터
-				 public Vector<Vector> getmylist(String select) {
-					 Vector<Vector> list = new Vector<Vector>( );
-					 String sql = "";
-					 sql       += "SELECT GR.GEORAE_CODE GEORAE_CODE, ";
-					 sql       += "       BL.BI_NAME     BI_NAME, ";
-					 sql       += "       ML.MID_NAME    MID_NAME, ";
-					 sql       += "       UL.USERNAME    USERNAME, ";
-					 sql       += "       GW.GDATE       GDATE, ";
-					 sql       += "       GW.PRICE       PRICE, ";
-					 sql       += "       GR.G_CHECK     G_CHECK, ";
-					 sql       += "       EV.G_SCORE     G_SCORE" ;
-					 sql       += " FROM  GEORAE GR LEFT JOIN GWORK GW ";
-					 sql       += " ON    GR.W_NUM = GW.W_NUM LEFT JOIN GOSU GS ";
-					 sql       += " ON    GW.G_NUM = GS.G_NUM LEFT JOIN USERLIST UL ";
-					 sql       += " ON    GS.U_ID = UL.U_ID LEFT JOIN MIDLIST ML ";
-					 sql       += " ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
-					 sql       += " ON    ML.BI_NUM = BL.BI_NUM LEFT JOIN EVALUATION EV ";
-					 sql       += " ON    GS.G_NUM = EV.G_NUM ";
-					 if(select == "회원") {
-						 sql       += " WHERE GS.U_ID = ? ";////////////////////// 뭘 넣어야함?
-					 } else {
-						 sql       += " WHERE UL.U_ID = ? ";////////////////////// 뭘 넣어야함?
-					 }
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-					 PreparedStatement psmt = null;
-					 ResultSet rs = null;
-					 try {
-						 psmt = conn.prepareStatement(sql);
-						 if(select == "회원") {
-							 psmt.setString(1, "123");
-						 } else {
-							 psmt.setString(1, "123");
-						 }
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, georae_code);
 
-						 rs = psmt.executeQuery();
-						 while(rs.next()) {
-							 String georae_code = rs.getString("GEORAE_CODE");
-							 String bi_name = rs.getString("BI_NAME");
-							 String mid_name = rs.getString("MID_NAME");
-							 String username = rs.getString("USERNAME");
-							 String gdate = rs.getString("GDATE");
-							 String price = rs.getString("PRICE");
-							 String g_check = rs.getString("G_CHECK");
-							 String g_score = rs.getString("G_SCORE");
+			rs = pstmt.executeQuery();
 
-							 Vector v = new Vector();
-							 v.add(georae_code);
-							 v.add(bi_name);
-							 v.add(mid_name);
-							 v.add(username);
-							 v.add(gdate);
-							 v.add(price);
-							 v.add(g_check);
-							 v.add(g_score);
+			if (rs.next()) {
+				String ogeorae_code = rs.getString("GEORAE_CODE");
+				String username = rs.getString("USERNAME");
+				String mid_name = rs.getString("MID_NAME");
+				String g_date = rs.getString("G_DATE");
+				String sdate = rs.getString("SDATE");
+				String g_check = rs.getString("G_CHECK");
+				String price = rs.getString("PRICE");
+				String u_id = rs.getString("U_ID");
 
-							 list.add(v);
-						 }
-					 } catch (SQLException e) {
-						 e.printStackTrace();
-					 } finally {
-						 try {
-							 if(psmt!=null)psmt.close();
-						 } catch (SQLException e) {
-							 e.printStackTrace();
-						 }
-					 }
+				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price, u_id);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
 
-					 return list;
-				 }
-}
+		return vo2;
+	}
+	// 거래 리뷰,스코어
+	public int insertGereo(String review, String score, String u_id) {
+
+		String sql = " INSERT INTO EVALUATION(REVIEW_CODE,GEORAE_CODE, REVIEW, SCORE,U_ID) VALUES (\r\n"
+				+ "REVIEW_CODE.NEXTVAL,(SELECT GEORAE_CODE FROM GEORAE)   ,?,?,(SELECT G.U_ID FROM GOSU G WHERE G.U_ID = ?)\r\n"
+				+ ") ";
+
+		PreparedStatement pstmt = null;
+		int aftcnt = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			// pstmt.setString(1, gereo_code2);
+			pstmt.setString(1, review);
+			pstmt.setString(2, score);
+			pstmt.setString(3, u_id);
+
+			aftcnt = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return aftcnt;
+	}
+
+	public int insertGereo(gosuVo2 vo2) {
+		String review = vo2.getReview();
+		String score = vo2.getScore();
+		String u_id = vo2.getU_id();
+
+		int aftcnt = insertGereo(review, score, u_id);
+		return aftcnt;
+	}
+
+	// FAQ등록
+	public int insertFAQ(String u_id, String f_head, String f_body, String reply) {
+
+		String sql = " INSERT INTO FAQ(FAQ_CODE,U_ID, F_DATE, F_HEAD, F_BODY, REPLY, F_CHECK) VALUES(\r\n"
+				+ " FAQ_CODE.NEXTVAL , (SELECT U.U_ID FROM USERLIST U WHERE U.U_ID = ? ) , SYSDATE , ?, ?, ?, 'N'                   \r\n"
+				+ ") ";
+
+		PreparedStatement pstmt = null;
+		int aftcnt = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, u_id);
+			pstmt.setString(2, f_head);
+			pstmt.setString(3, f_body);
+			pstmt.setString(4, reply);
+
+			aftcnt = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return aftcnt;
+	}
+
+	public int insertFAQ(gosuVo3 vo) {
+		String u_id = vo.getU_id();
+		String f_head = vo.getF_head();
+		String f_body = vo.getF_body();
+		String reply = vo.getReply();
+
+		int aftcnt = insertFAQ(u_id, f_head, f_body, reply);
+		return aftcnt;
+	}
+	// FAQ 리스트 회원용
+	public Vector<Vector> getHList() {
+		Vector<Vector> list = new Vector<Vector>(); // 조회된 결과전체 대응 : rs
+
+		String sql = "SELECT F.U_ID, F.FAQ_CODE, F.F_HEAD , F.F_BODY, F.F_CHECK\r\n" + "FROM   FAQ F, USERLIST U\r\n"
+				+ "WHERE  F.U_ID = U.U_ID\r\n";
+		// userid 같을때
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String u_id = rs.getString("U_ID");
+				String faq_code = rs.getString("FAQ_CODE");
+				String f_head = rs.getString("F_HEAD");
+				// 1: 칼럼번호(1~)
+				String f_body = rs.getString("F_BODY"); // 2
+				String f_check = rs.getString("F_CHECK"); // 3
+				// 4
+
+				// 5
+
+				Vector v = new Vector(); // 안쪽 Vector : 한 줄 Row 를 의미
+				v.add(u_id);
+				v.add(faq_code);
+				v.add(f_head);
+				v.add(f_body);
+				v.add(f_check);
+
+				list.add(v); // 전체 목록에 추가
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return list;
+
+	}
+	// FAQ 클릭시 불러오기
+	public gosuVo3 getFaq(String u_id) {
+
+		gosuVo3 vo3 = null;
+
+		String sql = " SELECT U_ID,FAQ_CODE, F_HEAD , F_BODY, REPLY\r\n" + " FROM   FAQ\r\n" + " WHERE  U_ID = ? ";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, u_id);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String ofaq_code = rs.getString("U_ID");
+				String f_head = rs.getString("F_HEAD");
+				String f_body = rs.getString("F_BODY");
+				String reply = rs.getString("REPLY");
+				String faq_code = rs.getString("FAQ_CODE");
+
+				vo3 = new gosuVo3(ofaq_code, f_head, f_body, reply, faq_code);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return vo3;
+	}
+
+}			 
+
+
+
+
+
