@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,6 +46,8 @@ public class GearaeGosu extends JFrame {
 	
 	BorderLayout gb;
 	JLabel lbltitle, lbluserid;
+	
+	MainView mainview = null;
 
 	
 	public GearaeGosu() {
@@ -53,12 +56,17 @@ public class GearaeGosu extends JFrame {
 		setTitle("거래요청서가 도착했습니다");
 		setVisible(true);
 		setSize(800, 580);
-		setLocation(600, 200);	
-		
+		setLocation(600, 200);
 	}
 	
-	private void init () {
-		
+	public GearaeGosu(String tradenum, MainView mainview) {
+		this();
+		this.mainview = mainview;
+		txtgcode.setText(tradenum);
+		btn3.doClick();
+	}
+
+	public void init () {
 		setBackground(Color.WHITE);
 		
 		getContentPane().setLayout(new BorderLayout());
