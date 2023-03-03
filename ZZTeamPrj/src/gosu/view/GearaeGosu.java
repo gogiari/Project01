@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import gosu.data.georaeVo;
 import gosu.data.gosuDao;
+import gosu.data.messageDao;
 import gosu.data.updateVo;
 
 
@@ -239,6 +240,7 @@ public class GearaeGosu extends JFrame {
 			public void keyPressed(KeyEvent e) {
 
 
+				
 			}
 		});
 		
@@ -250,11 +252,26 @@ public class GearaeGosu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("수락하기 클릭");				    				
 				surakgeorae();
-								
+				
+				mess();							
 
 			}
 
 		});
+		
+		// btn2(반송하기) 버튼에 기능 추가
+		btn2.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("반송하기 클릭");				    				
+				bansong();
+				
+				mess();
+			}
+
+		});
+		
 		
 		btn3.addActionListener( new ActionListener() {
 
@@ -262,13 +279,11 @@ public class GearaeGosu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("조회 클릭");				
 				getGeorae();
-
 			}
 
 
 		});
-		Pane.add( btn1);
-		
+		Pane.add( btn1);		
 		Pane.add( btn2 );
 		Pane.add( btn3 );
 		
@@ -288,7 +303,6 @@ public class GearaeGosu extends JFrame {
 		
 		if( g_code.trim().equals("") )
 			return;
-		
 
 		georaeVo    vo      =  gDao.getGeorae( g_code );
 		System.out.println( vo );
@@ -297,21 +311,76 @@ public class GearaeGosu extends JFrame {
 		
 	}
 	
+
 	protected void surakgeorae() {
 		
 		System.out.println("1:" + getViewData1());		
 		String      g_code3    =  this.txtgcode.getText();		
     	gosuDao     gDao       =  new gosuDao();
-		updateVo    vo         =  getViewData1();
-		int       aftcnt       =  gDao.surakgeorae( vo );
+    	
+    	int choice  =   JOptionPane.showConfirmDialog(null, 
+				"수정하시겠습니까?",
+				"수정확인",
+				JOptionPane.OK_CANCEL_OPTION);
+		int     aftcnt = 0 ;
+		String  msg    = "";
+		if( choice == 0) {
+			updateVo vo =  getViewData1();
+			aftcnt      =  gDao.surakgeorae( vo );
+			if( aftcnt > 0 )
+				msg     =   "수정되었습니다";
+			else
+				msg     =  "수정되지 않았습니다";
+		} else {
+			msg = "취소를 선택하였습니다";
+		}
+		JOptionPane.showMessageDialog(null, 
+				msg,
+				"수정",
+				JOptionPane.OK_OPTION);		
 		
-
-	
-		// 마이페이지 새로고침
-		
+		// 마이페이지 새로고침		
 		this.dispose();
 		
+	}	
+	
+	private void bansong() {
+
+		String      g_code3    =  this.txtgcode.getText();		
+    	gosuDao     gDao       =  new gosuDao();
+    	
+    	int choice  =   JOptionPane.showConfirmDialog(null, 
+				"반송하시겠습니까?",
+				"반송확인",
+				JOptionPane.OK_CANCEL_OPTION);
+		int     aftcnt = 0 ;
+		String  msg    = "";
+		if( choice == 0) {
+			updateVo vo =  getViewData1();
+			aftcnt      =  gDao.bansong( vo );
+			if( aftcnt > 0 )
+				msg     =   "반송되었습니다";
+			else
+				msg     =  "반송되지 않았습니다";
+		} else {
+			msg = "취소를 선택하였습니다";
+		}
+		JOptionPane.showMessageDialog(null, 
+				msg,
+				"반송",
+				JOptionPane.OK_OPTION);		
+		
+		// 마이페이지 새로고침		
+		this.dispose();
 	}
+	
+	private void mess() {
+		messageDao   mDao    =  new messageDao();
+		updateVo     vo      =  getViewData1();
+		int       aftcnt     =  mDao.mess( vo );
+		
+	}
+
 	
 
 	private void setViewData(georaeVo vo) {
@@ -370,8 +439,7 @@ public class GearaeGosu extends JFrame {
 		String   g_code3    =  this.txtgcode.getText(); 
 		String   g_message3 =  this.txtg_message.getText();
 		
-		updateVo   vo       = new updateVo(
-				g_code3, g_message3);
+		updateVo   vo       = new updateVo(g_code3, g_message3);
 		
 		return vo;
 	}

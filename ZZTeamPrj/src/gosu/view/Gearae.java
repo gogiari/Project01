@@ -124,7 +124,21 @@ public class Gearae extends JFrame {
 		lblendtime.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblendtime);
 		String [] endtime = { "선택", "7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"};
-		endcb = new JComboBox(endtime);
+		endcb = new JComboBox(endtime);		
+		
+		endcb.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {					
+				if (Integer.parseInt((String) endcb.getSelectedItem())
+				    <= Integer.parseInt((String) startcb.getSelectedItem())) {
+					JOptionPane.showMessageDialog(null, 
+							"올바른 시간을 선택해주세요", 
+							"시간 선택하기", JOptionPane.WARNING_MESSAGE);
+					return;
+				
+				}
+			}
+		});
+			
 		endcb.setFont(new Font("D2Coding", Font.PLAIN, 15));	
 		endcb.setBackground(SystemColor.text);
 		endcb.setBounds(320, 265, 80, 30);
@@ -228,7 +242,6 @@ public class Gearae extends JFrame {
 		Pane.add(panel);
 
 	   }
-
 
 
 		protected void addgeorae() {
