@@ -36,6 +36,7 @@ public class MainView extends JFrame implements ActionListener{
 	
 	MainView mainview = null;
 	GearaeGosu tradeGosu;
+	AcceptPage acPage = null;
 	
 	// 고수리스트 변수
 	JLabel lblListname;
@@ -334,7 +335,6 @@ public class MainView extends JFrame implements ActionListener{
 		lblMsgname.setFont(new Font("휴먼엑스포", Font.PLAIN, 60));
 		pCenterMsg.add(lblMsgname);
 		
-		//뷁
 		// 메시지 테이블 생성
 		tabMsg = new JTable();
 		tabMsg.setModel(
@@ -368,7 +368,7 @@ public class MainView extends JFrame implements ActionListener{
 		
 		System.out.println(titleMsg);
 		tabMsg.addMouseListener(new MouseListener() {
-			
+			//뷁
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 마우스를 클릭하면
@@ -382,7 +382,10 @@ public class MainView extends JFrame implements ActionListener{
 					tradeGosu.dispose();
 				if(e.getClickCount() == 2 ) {
 					if(sel.equals("요청중"))
-					tradeGosu = new GearaeGosu(tradenum, mainview);
+						tradeGosu = new GearaeGosu(tradenum, mainview);
+					if(sel.equals("거래중"))
+						acPage = new AcceptPage(tradenum, mainview);
+
 				}
 			}
 			@Override
@@ -444,9 +447,7 @@ public class MainView extends JFrame implements ActionListener{
 		tabGosuList = new JTable();
 		
 		userVo vo = new userVo();
-		vo.setBigSelect("전체");
 		
-		System.out.println(vo.getBigSelect());
 		tabGosuList.setModel(
 				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
 
