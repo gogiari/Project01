@@ -20,7 +20,7 @@ public class gosuVo2 {
 	String f_body;
 	String reply;
 	String f_check;
-	
+	    
 	public gosuVo2() {}
 	public gosuVo2(String georae_code, String u_name, String mid_name, String g_date, String sdate, String g_check,
 			String price) {
