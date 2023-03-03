@@ -607,7 +607,7 @@ public class MainView extends JFrame implements ActionListener{
 			break;
 		case "고수 업무 등록" :
 			System.out.println("고수 업무 등록");
-			new res();
+			new res(uid);
 			break;
 		case "회원 정보 수정 / 삭제" :
 			System.out.println("회원 정보 수정 / 삭제");
