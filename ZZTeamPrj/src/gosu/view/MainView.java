@@ -485,30 +485,17 @@ public class MainView extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 
 				bigSelect = (String) cbxlist.getSelectedItem();
-				vo.setBigSelect(bigSelect);
-				if(vo.getBigSelect() != "전체") { // 전체 선택 돌아갈때 필요
-					System.out.println(bigSelect);
-					
-					tabGosuList.setModel(
-							new DefaultTableModel(getSelGosuDataList(), getGosuCoulumnList()  ) {
+//				System.out.println(bigSelect+"zzz");
+				tabGosuList.setModel(
+						new DefaultTableModel(getSelGosuDataList(), getGosuCoulumnList()  ) {
 
-								@Override
-								public boolean isCellEditable(int row, int column) {
-									return false;
-								}
+							@Override
+							public boolean isCellEditable(int row, int column) {
+								return false;
+							}
 
-							});
-				} else { // 그외 선택
-					tabGosuList.setModel(
-							new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
+						});
 
-								@Override
-								public boolean isCellEditable(int row, int column) {
-									return false;
-								}
-
-							});
-				}
 				pCenterList.repaint();
 			}
 
