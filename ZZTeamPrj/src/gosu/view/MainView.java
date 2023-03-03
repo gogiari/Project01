@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -32,7 +34,8 @@ public class MainView extends JFrame implements ActionListener{
 	JLabel lblCenterMsg, lblCenterList, lblCenterMypage, lblList, lblMsg, lblMypage;
 	JButton  btnList, btnMsg, btnMypage;
 	
-	MainView mianview = null;
+	MainView mainview = null;
+	GearaeGosu tradeGosu;
 	
 	// 고수리스트 변수
 	JLabel lblListname;
@@ -45,6 +48,7 @@ public class MainView extends JFrame implements ActionListener{
 	JLabel lblMsgname;
 	JTable tabMsg;
 	JScrollPane scrMsg;
+	JButton btnMsgDetail;
 	
 	// 마이 페이지 변수
 	JLabel lblMyname;
@@ -57,6 +61,7 @@ public class MainView extends JFrame implements ActionListener{
 	LineBorder lb = new LineBorder(Color.black, 1, true);
 	
 	String bigSelect;
+	String titleMsg;
 	
 	public MainView() {
 		setBackground(new Color(255, 255, 255));
@@ -329,6 +334,7 @@ public class MainView extends JFrame implements ActionListener{
 		lblMsgname.setFont(new Font("휴먼엑스포", Font.PLAIN, 60));
 		pCenterMsg.add(lblMsgname);
 		
+		//뷁
 		// 메시지 테이블 생성
 		tabMsg = new JTable();
 		tabMsg.setModel(
@@ -338,9 +344,19 @@ public class MainView extends JFrame implements ActionListener{
 					public boolean isCellEditable(int row, int column) {
 						return false;
 					}
+					
 
 				});
-		
+		// 상세보기 버튼
+		btnMsgDetail = new JButton("상세보기");
+		btnMsgDetail.setBounds(1049, 703, 102, 17);
+
+		btnMsgDetail.setBorder(lb);
+		btnMsgDetail.setBackground(new Color(255, 255, 255));
+		btnMsgDetail.setForeground(new Color(0, 128, 192));
+		pCenterMsg.add(btnMsgDetail);
+		btnMsgDetail.addActionListener(this);
+
 		
 		// 메시지 테이블 스크롤 생성
 		scrMsg = new JScrollPane(tabMsg);
@@ -348,6 +364,42 @@ public class MainView extends JFrame implements ActionListener{
 		tabMsg.setBackground(Color.WHITE);
 		scrMsg.setBackground(Color.WHITE);
 		pCenterMsg.add(scrMsg);
+		
+		
+		System.out.println(titleMsg);
+		tabMsg.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 마우스를 클릭하면
+				int row = tabMsg.getSelectedRow();
+				int col = tabMsg.getSelectedColumn();
+				String tradenum = (String) tabMsg.getValueAt(row, 0);
+				String sel = (String) tabMsg.getValueAt(row, 2);
+				System.out.println(sel +" 상황클릭값");
+				System.out.println(e);
+				if(tradeGosu != null)
+					tradeGosu.dispose();
+				if(e.getClickCount() == 2 ) {
+					if(sel.equals("요청중"))
+					tradeGosu = new GearaeGosu(tradenum, mainview);
+				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			
+			
+		});
 		
 		return pCenterMsg;
 	}
@@ -508,9 +560,10 @@ public class MainView extends JFrame implements ActionListener{
 		cols.add("보낸날짜");
 		return cols;
 	}
-
+	// 메시지 테이블 데이터
 	private Vector<Vector> getMsgDataList() {
 		gosuDao dao = new gosuDao();
+		System.out.println(dao.getMsgList().get(1).get(1)+"");
 		Vector<Vector> list = dao.getMsgList();
 		return list;
 	}
@@ -549,6 +602,9 @@ public class MainView extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) { // 눌러진 버튼의 글자
+		case "상세보기" :
+			System.out.println("상세보기클릭");
+			break;
 		case "새로고침" :
 			System.out.println("새로고침클릭");
 			gosuRefresh();

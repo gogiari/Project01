@@ -732,8 +732,8 @@ public class gosuDao {
 		Vector<Vector> list = new Vector<Vector>();
 		String sql = "";
 		sql       += " SELECT ME.GEORAE_CODE GEORAE_CODE, ";
-		sql       += "        GR.M_MESSAGE   M_MESSAGE, ";
 		sql       += "        UL.USERNAME    USERNAME, ";
+		sql       += "        GR.G_CHECK     G_CHECK, ";
 		sql       += "        ME.M_DATE      M_DATE ";
 		sql       += "  FROM  MESSAGE ME LEFT JOIN GEORAE GR ";
 		sql       += "  ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN USERLIST UL ";
@@ -747,14 +747,14 @@ public class gosuDao {
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				String georae_code = rs.getString("GEORAE_CODE");
-				String m_message = rs.getString("M_MESSAGE");
 				String username = rs.getString("USERNAME");
+				String g_check = rs.getString("G_CHECK");
 				String m_date = rs.getString("M_DATE");
 
 				Vector v = new Vector();
 				v.add(georae_code);
-				v.add(m_message);
 				v.add(username);
+				v.add(g_check);
 				v.add(m_date);
 
 				list.add(v);
