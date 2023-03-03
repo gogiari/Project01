@@ -12,6 +12,7 @@ public class gosuVo2 {
 	String review;
 	String score;
 	String u_id;
+	String g_num;
 	
 	String faq_code;
 	String f_date;
@@ -22,7 +23,7 @@ public class gosuVo2 {
 	
 	public gosuVo2() {}
 	public gosuVo2(String georae_code, String u_name, String mid_name, String g_date, String sdate, String g_check,
-			String price,String u_id) {
+			String price) {
 		
 		this.georae_code = georae_code;
 		this.u_name = u_name;
@@ -31,7 +32,7 @@ public class gosuVo2 {
 		this.sdate = sdate;
 		this.g_check = g_check;
 		this.price = price; 
-		this.u_id  = u_id;
+		
 		
 	}
 	
@@ -39,16 +40,18 @@ public class gosuVo2 {
 		
 	}
 	
-	public gosuVo2(String review, String score,String u_id) {
+	public gosuVo2(String review, String score,String g_num) {
 		this.review = review;
 		this.score  = score;
-		this.u_id = u_id;
+		this.g_num = g_num;
 	}
-	
-	
 
-
-	
+	public String getG_num() {
+		return g_num;
+	}
+	public void setG_num(String g_num) {
+		this.g_num = g_num;
+	}
 	public String getU_id() {
 		return u_id;
 	}
@@ -159,6 +162,7 @@ public class gosuVo2 {
 				+ faq_code + ", f_date=" + f_date + ", f_head=" + f_head + ", f_body=" + f_body + ", reply=" + reply
 				+ ", f_check=" + f_check + "]";
 	}
+	
 	
 
 	

@@ -102,7 +102,7 @@ public class PaymentPage extends JFrame{
 		lblNewLabel_1_2.setBounds(12, 192, 109, 30);
 		frame.getContentPane().add(lblNewLabel_1_2);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("\uACE0\uC218ID");
+		JLabel lblNewLabel_1_3 = new JLabel("\uACE0\uC218\uBC88\uD638");
 		lblNewLabel_1_3.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
 		lblNewLabel_1_3.setBounds(12, 300, 109, 30);
 		frame.getContentPane().add(lblNewLabel_1_3);
@@ -264,8 +264,8 @@ public class PaymentPage extends JFrame{
 
 	private gosuVo2 getViewData() {
 		
-		String   review      =  this.textArea.getText();
-		String   u_id        =  this.txtHong.getText();
+		String   review       =  this.textArea.getText();
+		String   g_num        =  this.txtHong.getText();
 		
 		String   score       =  "";
 		if( this.rb1.isSelected() )    score = "1";
@@ -274,7 +274,7 @@ public class PaymentPage extends JFrame{
 		if( this.rb4.isSelected() )    score = "4";
 		if( this.rb5.isSelected() )    score = "5";
 		
-		gosuVo2  vo2        =  new gosuVo2( review,score,u_id );
+		gosuVo2  vo2        =  new gosuVo2( review,score,g_num );
 		return   vo2;
 	}
 
@@ -298,12 +298,12 @@ public class PaymentPage extends JFrame{
 		String   georae_code    =  vo2.getGeorae_code();		
 		String   midname        =  vo2.getMid_name();		
 		String   price          =  vo2.getPrice();
-		String   u_id           =  vo2.getU_id();
+		String   g_num           =  vo2.getG_num();
 		
 		this.txtGr.setText( georae_code );		
 		this.textField_1.setText( midname );	
 		this.textField_2.setText( price );
-		this.txtHong.setText(u_id);
+		this.txtHong.setText(g_num);
 			
 		
 	}
