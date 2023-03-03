@@ -3,11 +3,10 @@ package gosu.data;
 public class userVo {
 
 	String id,pw,pw2,name,phone,email,gender,sido,gugun;
-	String bigSelect;
-	
+
 	public userVo() {}
 	public userVo(String id, String pw, String pw2, String name, String phone, String email, String gender, String sido,
-			String gugun, String bigSelect) {
+			String gugun) {
 		super();
 		this.id = id;
 		this.pw = pw;
@@ -18,9 +17,13 @@ public class userVo {
 		this.gender = gender;
 		this.sido = sido;
 		this.gugun = gugun;
-		this.bigSelect = bigSelect;
 	}
-
+	public userVo(String id) {
+		super();
+		this.id = id;
+		this.pw = id;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -92,15 +95,6 @@ public class userVo {
 	public void setGugun(String gugun) {
 		this.gugun = gugun;
 	}
-	
-	public String getBigSelect() {
-		return bigSelect;
-	}
-	
-	public void setBigSelect(String bigSelect) {
-		this.bigSelect = bigSelect;
-	}
-	
 
 	@Override
 	public String toString() {

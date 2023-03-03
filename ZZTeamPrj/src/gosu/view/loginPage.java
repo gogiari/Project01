@@ -29,8 +29,7 @@ public class loginPage extends JFrame implements ActionListener {
 	gosuDao dao;
 	TextField idU;
 	JPasswordField pwU;
-	
-	MainView mianview = null;
+	Button findBtn;
 
 	public loginPage() {
 		setBackground(Color.WHITE);
@@ -63,8 +62,8 @@ public class loginPage extends JFrame implements ActionListener {
 		panel.add(label);
 
 		Button SignUp = new Button("SignUp");
-		SignUp.setForeground(SystemColor.textHighlight);
-		SignUp.setBackground(SystemColor.text);
+		SignUp.setForeground(new Color(255, 255, 0));
+		SignUp.setBackground(new Color(135, 206, 250));
 		SignUp.setFont(new Font("Sitka Text", Font.ITALIC, 18));
 		SignUp.setBounds(427, 291, 194, 32);
 		contentPane.add(SignUp);
@@ -76,13 +75,13 @@ public class loginPage extends JFrame implements ActionListener {
 		contentPane.add(separator);
 
 		JLabel lblNewLabel = new JLabel("User ID ");
-		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setForeground(Color.YELLOW);
 		lblNewLabel.setFont(new Font("Sitka Text", Font.ITALIC, 15));
 		lblNewLabel.setBounds(401, 120, 80, 23);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblPw = new JLabel("Password");
-		lblPw.setForeground(Color.WHITE);
+		lblPw.setForeground(Color.YELLOW);
 		lblPw.setFont(new Font("Sitka Text", Font.ITALIC, 15));
 		lblPw.setBounds(400, 189, 92, 23);
 		contentPane.add(lblPw);
@@ -91,7 +90,7 @@ public class loginPage extends JFrame implements ActionListener {
 		idU.setForeground(Color.BLACK);
 		idU.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		idU.setColumns(10);
-		idU.setBackground(new Color(176, 224, 230));
+		idU.setBackground(SystemColor.window);
 		idU.setBounds(400, 149, 248, 23);
 		contentPane.add(idU);
 
@@ -99,7 +98,7 @@ public class loginPage extends JFrame implements ActionListener {
 		pwU.setForeground(Color.BLACK);
 		pwU.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		pwU.setColumns(10);
-		pwU.setBackground(new Color(176, 224, 230));
+		pwU.setBackground(SystemColor.window);
 		pwU.setBounds(400, 215, 248, 23);
 		contentPane.add(pwU);
 
@@ -130,11 +129,32 @@ public class loginPage extends JFrame implements ActionListener {
 			}
 		});
 		create.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 12));
-		create.setBackground(SystemColor.textHighlightText);
-		create.setForeground(SystemColor.textHighlight);
-		create.setBounds(488, 341, 76, 23);
+		create.setBackground(new Color(135, 206, 250));
+		create.setForeground(Color.YELLOW);
+		create.setBounds(439, 339, 76, 23);
 		contentPane.add(create);
-
+		
+		findBtn = new Button("Find User");
+		findBtn.setForeground(Color.YELLOW);
+		findBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 12));
+		findBtn.setBackground(new Color(135, 206, 250));
+		findBtn.setBounds(537, 339, 76, 23);
+		contentPane.add(findBtn);
+		
+		JLabel lblWelcome = new JLabel("Welcome !");
+		lblWelcome.setForeground(Color.YELLOW);
+		lblWelcome.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 50));
+		lblWelcome.setBounds(401, 33, 344, 65);
+		contentPane.add(lblWelcome);
+		
+		findBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new findUser();
+			}
+		});
+		
 		setUndecorated(true);
 		setVisible(true);
 		setLocation(600, 300);
@@ -165,14 +185,13 @@ public class loginPage extends JFrame implements ActionListener {
 			return;
 		} else if (id != null && pw != null) {
 			if (dao.loginCheck(id, pw)) {
-				new MainView();
+				//new MainView();
 				JOptionPane.showMessageDialog(null, "로그인 성공", "로그인 확인!", JOptionPane.DEFAULT_OPTION);
 			} else {
 				JOptionPane.showMessageDialog(null, "아이디/비밀번호를 확인하세요", "로그인 실패", JOptionPane.DEFAULT_OPTION);
 				this.setVisible(true);
 			}
 		}
-		mianview.gosuRefresh();
 	}
 
 	public static void main(String[] args) {

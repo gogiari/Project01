@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 import gosu.view.MainView;
 
@@ -1098,6 +1099,206 @@ public class gosuDao {
 		return vo3;
 	}
 
+	public userVo getId(String name, String phone, String email) {
+
+		userVo id = null;
+		String sql = "SELECT U_ID FROM USERLIST " + "   WHERE USERNAME = ? " + "     AND    PHONE = ? "
+				+ "     AND    EMAIL = ? ";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, phone);
+			pstmt.setString(3, email);
+			
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				
+				String uid = rs.getString("U_ID");
+			
+				id = new userVo(uid);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				if 
+					(rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+
+		
+		}
+		if(id == null)
+		JOptionPane.showMessageDialog(null, "존재하지 않는 아이디입니다.", "아이디 확인", JOptionPane.WARNING_MESSAGE);
+		return id;
+	}
+
+	public userVo getPw(String id, String name, String phone, String email) {
+		userVo pw = null;
+		String sql = "SELECT USERPW FROM USERLIST " + "   WHERE     U_ID = ? " + "     and USERNAME = ? "
+				+ "     AND    PHONE = ? " + "     AND    EMAIL = ? ";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, phone);
+			pstmt.setString(4, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				String upw = rs.getString("USERPW");
+
+				pw = new userVo(upw);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+
+		}
+		if(pw == null)
+			JOptionPane.showMessageDialog(null, "존재하지 않는 아이디입니다.", "아이디 확인", JOptionPane.WARNING_MESSAGE);
+		return pw;
+	}
+
+	public int deleteUser(String id, String g_num) {
+		String sql1 = "DELETE FROM FAQ "
+				+ "    WHERE U_ID = ? ";
+		String sql2 = "DELETE FROM MESSAGE "
+				+ "    WHERE U_ID = ? ";
+		String sql3 = "DELETE FROM GEORAE A "
+				+ "  WHERE A.W_NUM = ( "
+				+ " SELECT B.W_NUM "
+				+ "   FROM GWORK B "
+				+ "  WHERE A.W_NUM = B.W_NUM "
+				+ "    AND B.G_NUM = ? ) ";
+		String sql4 = "DELETE FROM GWORK "
+				+ "    WHERE G_NUM = ? ";
+		String sql5 = "DELETE FROM GOSU "
+				+ "    WHERE U_ID = ? ";
+		String sql6 = "DELETE FROM USERLIST "
+				+ "    WHERE U_ID =  ? ";
+		
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
+		PreparedStatement pstmt5 = null;
+		PreparedStatement pstmt6 = null;
+		int aftcnt = 0;
+		try {
+			pstmt1 = conn.prepareStatement(sql1);
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt3 = conn.prepareStatement(sql3);
+			pstmt4 = conn.prepareStatement(sql4);
+			pstmt5 = conn.prepareStatement(sql5);
+			pstmt6 = conn.prepareStatement(sql6);
+			
+			pstmt1.setString(1, id);
+			pstmt2.setString(1, id);
+			pstmt3.setString(1, g_num);
+			pstmt4.setString(1, g_num);
+			pstmt5.setString(1, id);
+			pstmt6.setString(1, id);
+			
+			aftcnt = pstmt1.executeUpdate();
+			aftcnt = pstmt2.executeUpdate();
+			aftcnt = pstmt3.executeUpdate();
+			aftcnt = pstmt4.executeUpdate();
+			aftcnt = pstmt5.executeUpdate();
+			aftcnt = pstmt6.executeUpdate();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt1 != null)
+				if (pstmt2 != null)
+				if (pstmt3 != null)
+				if (pstmt4 != null)
+				if (pstmt5 != null)
+				if (pstmt6 != null)
+					pstmt1.close();
+					pstmt2.close();
+					pstmt3.close();
+					pstmt4.close();
+					pstmt5.close();
+					pstmt6.close();
+			} catch (SQLException e) {
+			}
+		}
+		return aftcnt;
+	}
+
+	public int deleteGosu(String wnum) {
+		String sql = "";
+		sql += "DELETE FROM  GWORK";
+		sql += " WHERE W_NUM = ? ";
+
+		PreparedStatement pstmt = null;
+		int aftcnt = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, wnum);
+			aftcnt = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return aftcnt;
+	}
+
+	public int updateMember(faqVo vo) {
+		String  sql = "UPDATE FAQ "
+				+ "       SET REPLY = ?, "
+				+ "           F_CHECK = 'O'"
+				+ "     WHERE U_ID  = ? ";
+	
+		int  aftcnt  = 0;
+		PreparedStatement  pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getRep() );
+			pstmt.setString(2, vo.getId() );
+			
+			aftcnt = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null ) pstmt.close();
+			} catch (SQLException e) {			
+			}
+		}		
+		return aftcnt;
+
+
+	}
 }			 
 
 

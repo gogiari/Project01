@@ -35,14 +35,14 @@ public class createPage extends JFrame {
 	JComboBox<String> sidoCB,gugunCB;
 	ButtonGroup group;
 	JPasswordField pwtxt, pwcheck;
-	Button cancelBtn, findBtn, alterBtn, addBtn, deleteBtn;
+	Button cancelBtn, findBtn, addBtn;
 	gosuDao dao;
 	
 	public createPage() {
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
+		panel.setBackground(SystemColor.inactiveCaptionBorder);
 		panel.setForeground(SystemColor.textHighlight);
 		panel.setBounds(0, 0, 562, 579);
 		getContentPane().add(panel);
@@ -111,7 +111,7 @@ public class createPage extends JFrame {
 		nametxt.setBounds(24, 255, 172, 23);
 		panel.add(nametxt);
 
-		phonetxt = new TextField("전화번호");
+		phonetxt = new TextField("ex:  010-0000-0000");
 		phonetxt.setForeground(Color.BLACK);
 		phonetxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		phonetxt.setColumns(10);
@@ -137,6 +137,7 @@ public class createPage extends JFrame {
 		panel.add(woman);
 		
 		sidoCB = new JComboBox<String>();
+		sidoCB.setBackground(Color.WHITE);
 		sidoCB.setModel(new SidoComboBoxModel());
 		sidoCB.setBounds(24, 485, 93, 23);
 		panel.add(sidoCB);
@@ -154,6 +155,8 @@ public class createPage extends JFrame {
 		});
 		
 		gugunCB = new JComboBox<String>();
+		gugunCB.setForeground(Color.BLACK);
+		gugunCB.setBackground(Color.WHITE);
 		gugunCB.setBounds(152, 485, 93, 23);
 		panel.add(gugunCB);
 		
@@ -172,10 +175,10 @@ public class createPage extends JFrame {
 		panel_1.setLayout(null);
 
 		Label label = new Label("Share Ability");
-		label.setForeground(new Color(255, 255, 255));
-		label.setFont(new Font("Comic Sans MS", Font.ITALIC, 32));
+		label.setForeground(Color.YELLOW);
+		label.setFont(new Font("Comic Sans MS", Font.BOLD | Font.ITALIC, 40));
 		label.setAlignment(Label.CENTER);
-		label.setBounds(10, 218, 200, 36);
+		label.setBounds(0, 213, 248, 77);
 		panel_1.add(label);
 
 		JLabel lblNewLabel_1 = new JLabel("X");
@@ -192,9 +195,9 @@ public class createPage extends JFrame {
 		cancelBtn = new Button("Cancel");
 		cancelBtn.setBounds(80, 497, 83, 23);
 		panel_1.add(cancelBtn);
-		cancelBtn.setForeground(new Color(30, 144, 255));
+		cancelBtn.setForeground(Color.YELLOW);
 		cancelBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		cancelBtn.setBackground(new Color(240, 248, 255));
+		cancelBtn.setBackground(new Color(135, 206, 250));
 
 		cancelBtn.addActionListener(new ActionListener() {
 			// 취소 버튼
@@ -209,32 +212,18 @@ public class createPage extends JFrame {
 
 			}
 		});
-
-		findBtn = new Button("find");
-		findBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		findBtn.setForeground(new Color(30, 144, 255));
-		findBtn.setBackground(new Color(240, 248, 255));
-		findBtn.setBounds(199, 100, 46, 23);
-		panel.add(findBtn);
-
-		findBtn.addActionListener(new ActionListener() {
-
-			// 찾기 버튼
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				findUser();
-			}
-		});
+		
+	
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(133, -27, 187, 182);
 		panel.add(lblNewLabel);
 		lblNewLabel.setIcon(new ImageIcon("img/deal.png"));
 
 		addBtn = new Button("Add");
-		addBtn.setForeground(new Color(30, 144, 255));
+		addBtn.setForeground(new Color(255, 255, 0));
 		addBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		addBtn.setBackground(new Color(240, 248, 255));
-		addBtn.setBounds(24, 546, 46, 23);
+		addBtn.setBackground(new Color(135, 206, 250));
+		addBtn.setBounds(85, 533, 96, 23);
 		panel.add(addBtn);
 		addBtn.addActionListener(new ActionListener() {
 
@@ -262,7 +251,7 @@ public class createPage extends JFrame {
 					JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "이름 입력", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				if (phonetxt.getText().trim().length() == 0 || phonetxt.getText().trim().equals("전화번호")) {
+				if (phonetxt.getText().trim().length() == 0 || phonetxt.getText().trim().equals("ex:  010-0000-0000")) {
 					JOptionPane.showMessageDialog(null, "전화번호를 입력해 주세요.", "전화번호 입력", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -282,26 +271,6 @@ public class createPage extends JFrame {
 
 			}
 		});
-
-		alterBtn = new Button("Alter");
-		alterBtn.setForeground(new Color(30, 144, 255));
-		alterBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		alterBtn.setBackground(new Color(240, 248, 255));
-		alterBtn.setBounds(121, 546, 56, 23);
-		panel.add(alterBtn);
-		alterBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-
-		deleteBtn = new Button("Delete");
-		deleteBtn.setForeground(new Color(30, 144, 255));
-		deleteBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		deleteBtn.setBackground(new Color(240, 248, 255));
-		deleteBtn.setBounds(228, 546, 56, 23);
-		panel.add(deleteBtn);
 
 		JLabel lblEail = new JLabel("Email");
 		lblEail.setForeground(SystemColor.textHighlight);
@@ -399,13 +368,13 @@ public class createPage extends JFrame {
 			@Override
 			public void focusLost(java.awt.event.FocusEvent e) {
 				if (phonetxt.getText().trim().length() == 0) {
-					phonetxt.setText("전화번호");
+					phonetxt.setText("");
 				}
 			}
 
 			@Override
 			public void focusGained(java.awt.event.FocusEvent e) {
-				if (phonetxt.getText().trim().equals("전화번호")) {
+				if (phonetxt.getText().trim().equals("ex:  010-0000-0000")) {
 					phonetxt.setText("");
 				}
 			}
@@ -433,7 +402,7 @@ public class createPage extends JFrame {
 		this.pwtxt.setText("비밀번호");
 		this.pwcheck.setText("비밀번호");
 		this.nametxt.setText("이름");
-		this.phonetxt.setText("전화번호");
+		this.phonetxt.setText("ex 010-0000-0000");
 		this.emailtxt.setText("이메일");
 		this.man.setSelected(false);
 		this.woman.setSelected(false);
@@ -445,6 +414,9 @@ public class createPage extends JFrame {
 		gosuDao gDao = new gosuDao();
 		userVo vo = getViewData();
 		int aftcnt = gDao.insertMember(vo);
+		if(aftcnt == 0)
+			JOptionPane.showMessageDialog(null, "회원가입 실패 \n입력사항이 올바르지않습니다.", "입력사항 확인", JOptionPane.WARNING_MESSAGE);
+		else
 		JOptionPane.showMessageDialog(null, "회원 가입이 완료 되었습니다.", "회원 가입 완료.", JOptionPane.WARNING_MESSAGE);
 		setVisible(false);
 	}
@@ -463,7 +435,6 @@ public class createPage extends JFrame {
 	private void setViewData(userVo vo) {
 		String id = vo.getId();
 		String pw = vo.getPw();
-		String pw2 = vo.getPw();
 		String name = vo.getName();
 		String phone = vo.getPhone();
 		String email = vo.getEmail();
@@ -473,7 +444,6 @@ public class createPage extends JFrame {
 
 		this.idtxt.setText(id);
 		this.pwtxt.setText(pw);
-		this.pwcheck.setText(pw);
 		this.nametxt.setText(name);
 		this.phonetxt.setText(phone);
 		this.emailtxt.setText(email);
