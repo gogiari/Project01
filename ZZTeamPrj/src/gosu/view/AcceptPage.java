@@ -24,7 +24,9 @@ public class AcceptPage extends JFrame{
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
+	private JButton    btnFind;
 	
+	MainView mainview = null;
 	PaymentPage          pay   = null;  // 회원가입창 전역변수
 	static AcceptPage    acc = null;
 
@@ -57,6 +59,15 @@ public class AcceptPage extends JFrame{
 		initialize();
 		
 	}
+	
+	public AcceptPage(String tradenum, MainView mainview) {
+		  this();
+	      this.mainview = mainview;
+	      txtDd.setText(tradenum);
+	      btnFind.doClick();
+	}
+
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -67,7 +78,7 @@ public class AcceptPage extends JFrame{
 		frame.setBounds(100, 100, 450, 544);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		//frame.setVisible(true);
+		frame.setVisible(true);
 		
 		JLabel lblNewLabel = new JLabel("\uAC70\uB798\uB97C \uC218\uB77D\uD569\uB2C8\uB2E4.");
 		lblNewLabel.setFont(new Font("궁서", Font.BOLD | Font.ITALIC, 35));
@@ -185,7 +196,7 @@ public class AcceptPage extends JFrame{
 		textField_6.setBounds(131, 400, 268, 31);
 		frame.getContentPane().add(textField_6);
 		
-		JButton btnFind = new JButton("\uC870\uD68C");
+		btnFind = new JButton("\uC870\uD68C");
 		btnFind.setForeground(Color.BLACK);
 		btnFind.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
 		btnFind.setBackground(Color.CYAN);
@@ -227,7 +238,7 @@ public class AcceptPage extends JFrame{
 			}
 		});
 		
-		// 취소버튼 기능
+		// 취소버튼 기능 
 		btnReturn.addActionListener(new ActionListener() {
 			
 			@Override
