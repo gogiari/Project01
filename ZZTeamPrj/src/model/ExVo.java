@@ -14,7 +14,7 @@ public class ExVo {
 	public ExVo(String exBigList, String exMidList, String exWsido) {
 		super();
 		this.exBigList = exBigList;
-		this.exMidList = exMidList;
+		this.exMidList = exMidList; 
 		this.exWsido = exWsido;
 	}
 	

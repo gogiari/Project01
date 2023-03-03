@@ -16,16 +16,17 @@ public class Vo {
 				   staTime,
 				   endTime,
 				   price,
-				   wsido1,
-				   wsido2,
+				   sido,
+				   gugun,
 				   prMes;
 	String endDate;
 	String staDate;
+	String dateStr, dateEnd; // 데이터 날짜 값으로 변환 변수
 	
 	public Vo() {}
 
 	public Vo(String bigList, String midList, String staDate, String endDate, String staTime, String endTime,
-			String price, String wsido1,String wsido2, String prMes) {
+			String price, String sido, String gugun, String prMes, String dateStr, String dateEnd) {
 		super();
 		this.bigList = bigList;
 		this.midList = midList;
@@ -34,12 +35,13 @@ public class Vo {
 		this.staTime = staTime;
 		this.endTime = endTime;
 		this.price = price;
-		this.wsido1 = wsido1;
-		this.wsido2 = wsido2;
+		this.sido = sido;
+		this.gugun = gugun;
 		this.prMes = prMes;
+		this.dateStr = dateStr;	
+		this.dateEnd = dateEnd;
 	}
 
-	//getter setter
 	public String getBigList() {
 		return bigList;
 	}
@@ -54,22 +56,6 @@ public class Vo {
 
 	public void setMidList(String midList) {
 		this.midList = midList;
-	}
-
-	public String getStaDate() {
-		return staDate;
-	}
-
-	public void setStaDate(String staDate) {
-		this.staDate = staDate;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
 	}
 
 	public String getStaTime() {
@@ -96,20 +82,20 @@ public class Vo {
 		this.price = price;
 	}
 
-	public String getWsido1() {
-		return wsido1;
+	public String getSido() {
+		return sido;
 	}
 
-	public void setWsido1(String wsido1) {
-		this.wsido1 = wsido1;
+	public void setSido(String sido) {
+		this.sido = sido;
 	}
 
-	public String getWsido2() {
-		return wsido2;
+	public String getGugun() {
+		return gugun;
 	}
 
-	public void setWsido2(String wsido2) {
-		this.wsido2 = wsido2;
+	public void setGugun(String gugun) {
+		this.gugun = gugun;
 	}
 
 	public String getPrMes() {
@@ -119,13 +105,47 @@ public class Vo {
 	public void setPrMes(String prMes) {
 		this.prMes = prMes;
 	}
-	
-	//toString
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getStaDate() {
+		return staDate;
+	}
+
+	public void setStaDate(String staDate) {
+		this.staDate = staDate;
+	}
+
+	public String getDateStr() {
+		return dateStr;
+	}
+
+	public void setDateStr(String dateStr) {
+		this.dateStr = dateStr;
+	}
+
+	public String getDateEnd() {
+		return dateEnd;
+	}
+
+	public void setDateEnd(String dateEnd) {
+		this.dateEnd = dateEnd;
+	}
+
 	@Override
 	public String toString() {
-		return "Vo [bigList=" + bigList + ", midList=" + midList + ", staDate=" + staDate + ", endDate=" + endDate
-				+ ", staTime=" + staTime + ", endTime=" + endTime + ", price=" + price + ", wsido1=" + wsido1
-				+ ", wsido2=" + wsido2 + ", prMes=" + prMes + "]";
+		return "Vo [bigList=" + bigList + ", midList=" + midList + ", staTime=" + staTime + ", endTime=" + endTime
+				+ ", price=" + price + ", sido=" + sido + ", gugun=" + gugun + ", prMes=" + prMes + ", endDate="
+				+ endDate + ", staDate=" + staDate + ", dateStr=" + dateStr + ", dateEnd=" + dateEnd + "]";
 	}
+
+
+	
 	
 }
