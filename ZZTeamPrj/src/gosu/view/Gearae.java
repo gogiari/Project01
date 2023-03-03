@@ -6,8 +6,10 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,11 +20,13 @@ import javax.swing.JTextField;
 
 import gosu.data.georaeVo;
 import gosu.data.gosuDao;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import model.Vo;
 
 
-public class Gearae extends JFrame {
+public class Gearae extends JFrame {	
+	
+	ResDetail rd;
+	
 	JPanel Pane;
 	JLabel lblusername, lblgosuname, lblwork, lbldate, lblstarttime, lblendtime, lblprice, lbllocation, lblmessage;
 	
@@ -33,17 +37,24 @@ public class Gearae extends JFrame {
 	BorderLayout gb;
 	JLabel lbltitle, lbluserid;
 	
-	public Gearae() {
+	public Gearae() {	
 		init();
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("거래요청서");
-		//setUndecorated(true);
-		setVisible(true);
-		setSize(800,500);
-		setLocation(600, 200);		
+			
 	}
-	
-	
+
+	public Gearae(ResDetail rd) {
+		init();
+		this.rd =  rd;
+
+		txtwo.setText(rd.comboBoxG2.getSelectedItem().toString());
+		txtda.setText(rd.model1.getYear()+ "-" + (rd.model1.getMonth() + 1) + "-" + rd.model1.getDay() +
+		              " ~ " + rd.model2.getYear()+ "-" + (rd.model2.getMonth() + 1) + "-" + rd.model2.getDay());
+		txtgname.setText(rd.labG5_1.getText().toString());
+		txtlsido.setText(rd.sidoCB.getSelectedItem().toString());
+		txtlgugun.setText(rd.gugunCB.getSelectedItem().toString());
+	}
+
+
 	private void init () {
 		
 		setBackground(Color.WHITE);
@@ -84,7 +95,7 @@ public class Gearae extends JFrame {
 		lblwork.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		lblwork.setBounds(30, 150, 200, 20);
 		Pane.add(lblwork);
-		txtwo = new JTextField("업무내용불러오기");
+		txtwo = new JTextField("업무 내용 불러오기");
 		txtwo.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtwo.setBounds(200, 145, 200, 30);
 		Pane.add(txtwo);
@@ -159,8 +170,7 @@ public class Gearae extends JFrame {
 		txtlgugun.setBounds(310, 325, 90, 30);
 		txtlgugun.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtlgugun);
-		
-		
+			
 		// 고수이름
 		lblgosuname = new JLabel("고수 이름");
 		lblgosuname.setForeground(SystemColor.textHighlight);
@@ -221,6 +231,7 @@ public class Gearae extends JFrame {
 		
      	});
 		
+		// btncancel(취소) 버튼에 기능 추가
 		btncancel.addActionListener( new ActionListener() {
 
 			@Override
@@ -229,8 +240,7 @@ public class Gearae extends JFrame {
 				dispose();
 				
 			}	
-     	});		
-				
+     	});						
 		
 		Pane.add( btnsend );
 		Pane.add( btncancel );
@@ -240,16 +250,23 @@ public class Gearae extends JFrame {
 		//panel.setBackground(new Color(102, 204, 255));
 		panel.setBounds(12, 55, 760, 329);
 		Pane.add(panel);
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setTitle("거래요청서");
+		//setUndecorated(true);
+		setVisible(true);
+		setSize(800,500);
+		setLocation(600, 200);			
 
 	   }
 
-
+   
 		protected void addgeorae() {
 			gosuDao  gDao     =  new gosuDao();
 			georaeVo    vo    =  getViewData();
 			int       aftcnt  =  gDao.addgeorae( vo );					
 		}
-
+			
 
 		private void setViewData(georaeVo vo) {
 			String   u_name    =  vo.getU_name(); 
@@ -290,10 +307,11 @@ public class Gearae extends JFrame {
 
 			return vo;
 		}
+
 		
-	
 	public static void main(String[] args) {
 		new Gearae();
 
 	}
+
 }

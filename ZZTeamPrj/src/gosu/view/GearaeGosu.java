@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -42,12 +41,9 @@ public class GearaeGosu extends JFrame {
 	JTextField txtme;
 	JTextField txtgname;
 	JTextField txtg_message;
-
 	
 	BorderLayout gb;
 	JLabel lbltitle, lbluserid;
-	
-	MainView mainview = null;
 
 	
 	public GearaeGosu() {
@@ -56,17 +52,12 @@ public class GearaeGosu extends JFrame {
 		setTitle("거래요청서가 도착했습니다");
 		setVisible(true);
 		setSize(800, 580);
-		setLocation(600, 200);
+		setLocation(600, 200);	
+		
 	}
 	
-	public GearaeGosu(String tradenum, MainView mainview) {
-		this();
-		this.mainview = mainview;
-		txtgcode.setText(tradenum);
-		btn3.doClick();
-	}
-
-	public void init () {
+	private void init () {
+		
 		setBackground(Color.WHITE);
 		
 		getContentPane().setLayout(new BorderLayout());
@@ -259,8 +250,7 @@ public class GearaeGosu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("수락하기 클릭");				    				
-				surakgeorae();
-				
+				surakgeorae();				
 				mess();							
 
 			}
@@ -273,9 +263,8 @@ public class GearaeGosu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("반송하기 클릭");				    				
-				bansong();
-				
-				mess();
+				bansong();				
+				mess2();
 			}
 
 		});
@@ -386,6 +375,13 @@ public class GearaeGosu extends JFrame {
 		messageDao   mDao    =  new messageDao();
 		updateVo     vo      =  getViewData1();
 		int       aftcnt     =  mDao.mess( vo );
+		
+	}
+	
+	private void mess2() {
+		messageDao   mDao    =  new messageDao();
+		updateVo     vo      =  getViewData1();
+		int       aftcnt     =  mDao.mess2( vo );
 		
 	}
 

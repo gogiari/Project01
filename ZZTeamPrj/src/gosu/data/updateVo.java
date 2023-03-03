@@ -8,6 +8,7 @@ public class updateVo {
 	String messnum;
 	String mread;
 	String m_date;
+	String title;
 
 	public updateVo() {
 		super();
@@ -27,13 +28,18 @@ public class updateVo {
 
 	}
 	
-	public updateVo(String g_code4, String messnum, String mread, String m_date) {
+	public updateVo(String g_code4, String messnum, String mread, String m_date, String title) {
 		super();
 		this.g_code3   = g_code4;
 		this.messnum   = messnum;
 		this.mread     = mread;
 		this.m_date    = m_date;
+		this.title     = title;
 		
+	}
+
+	public updateVo(String g_code32) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getG_code() {
@@ -84,14 +90,20 @@ public class updateVo {
 		this.m_date = m_date;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
 		return "updateVo [g_code3=" + g_code3 + ", g_message3=" + g_message3 + ", g_check3=" + g_check3 + ", messnum="
-				+ messnum + ", mread=" + mread + ", m_date=" + m_date + "]";
+				+ messnum + ", mread=" + mread + ", m_date=" + m_date + ", title=" + title + "]";
 	}
-	
 
 
-	
 }
 

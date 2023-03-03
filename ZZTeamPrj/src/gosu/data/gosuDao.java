@@ -499,11 +499,12 @@ public class gosuDao {
 		}
 	}
 
+
 	// 회원 거래요청서에서 거래리스트에 저장
 	public int addgeorae(String g_code, String g_start, String g_end, String m_message, String g_message, String g_check)
 
 	{	String sql = "INSERT INTO GEORAE "
-			+ "   ( GEORAE_CODE, W_NUM, G_START, G_END, M_MESSAGE, G_MESSAGE, G_CHECK) "
+			+ "   ( GEORAE_CODE, G_START, G_END, M_MESSAGE, G_MESSAGE, G_CHECK) "
 			+ "     VALUES( 'GR'|| LPAD(G_SEQ.nextval,4,0), "
 			+ "               ?, ?, ?, '-', '요청중') ";
 
@@ -549,11 +550,11 @@ public class gosuDao {
 	}	
 
 	// 회원 거래요청서에서 메시지 리스트에 저장
-	public int select(String g_code, String messnum, String mread, String m_date) {
+	public int select(String g_code, String messnum, String mread, String m_date, String title) {
 
 		String sql = " INSERT INTO MESSAGE " 
-				+ " (GEORAE_CODE, MESSNUM, MREAD, M_DATE) "
-				+ "  VALUES ( (SELECT NVL(MAX(GEORAE_CODE), 0) FROM GEORAE), M_SEQ.nextval, '읽지않음', SYSDATE) ";
+				+ " (GEORAE_CODE, MESSNUM, MREAD, M_DATE, TITLE) "
+				+ "  VALUES ( (SELECT NVL(MAX(GEORAE_CODE), 0) FROM GEORAE), M_SEQ.nextval, '읽지않음', SYSDATE, '거래요청서') ";
 
 		int afcnt = 0;
 		PreparedStatement pstmt = null;
@@ -576,22 +577,23 @@ public class gosuDao {
 		return afcnt;
 
 	}
-
+	 
 	public int select(georaeVo vo) {				
 
 		String   g_code     = vo.getG_code();
 		String   messnum    = vo.getMessnum();
 		String   mread      = vo.getMread();
 		String   m_date     = vo.getM_date();
+		String   title      = vo.getTitle();
 
-		int aftcnt = select(g_code, messnum, mread, m_date);
+		int aftcnt = select(g_code, messnum, mread, m_date, title);
 		return aftcnt;				
 	}	
 
 	// 회원 거래요청 취소
 	public int delete(georaeVo vo) {
 		String sql =  " DELETE FROM GEORAE "
-				+ " WHERE GEORAE_CODE= (SELECT NVL(MAX(GEORAE_CODE), 0) FROM GEORAE) ";
+				+ " WHERE GEORAE_CODE = (SELECT NVL(MAX(GEORAE_CODE), 0) FROM GEORAE) ";
 
 		int afcnt = 0;
 		PreparedStatement pstmt = null;
@@ -726,7 +728,6 @@ public class gosuDao {
 		}
 		return  aftcnt;
 	}
-
 
 	// 메시지 테이블 데이터
 	public Vector<Vector> getMsgList() {
