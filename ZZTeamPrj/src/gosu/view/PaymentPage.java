@@ -15,8 +15,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import model.gosuDao;
-import model.gosuVo2;
+import gosu.data.gosuDao;
+import gosu.data.gosuVo2;
+
+
 
 public class PaymentPage extends JFrame{
 
@@ -206,16 +208,17 @@ public class PaymentPage extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				/*
 				String  id  = (String)textField.getText(); 
 				System.out.println( e );	
 				if ( pay != null)
 					pay.dispose();
 				PaymentPage ppp = PaymentPage.this;
 				pay = new PaymentCompletePage( id, ppp );
+				*/
 				
 				addGereo();
-				
+				// 메인화면으로 돌아가게하면될듯?
 				 
 			}
 		});

@@ -11,8 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import model.gosuDao;
-import model.gosuVo2;
+import gosu.data.gosuDao;
+import gosu.data.gosuVo2;
+
+
 
 public class PaymentCompletePage extends JFrame{
 

@@ -1,20 +1,18 @@
 package gosu.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import model.gosuDao;
-import model.gosuVo2;
-
-import java.awt.Color;
+import gosu.data.gosuDao;
+import gosu.data.gosuVo2;
 
 public class AcceptPage extends JFrame{
 

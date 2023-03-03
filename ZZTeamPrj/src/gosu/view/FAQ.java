@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import model.gosuDao;
-import model.gosuVo3;
+import gosu.data.gosuDao;
+import gosu.data.gosuVo3;
 
 public class FAQ extends JFrame {
 
