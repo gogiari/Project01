@@ -55,9 +55,10 @@ public class res extends JFrame implements ActionListener {
 	JDatePickerImpl datePicker1, datePicker2;
 
 	String dateStr, dateEnd;
+	static String uid;
 
 	public res(Edit edit, String getDateStr) {
-		this();
+		this(uid);
 
 		JButton btn4 = new JButton("수정");
 		btn4.setFont(new Font("굴림", Font.PLAIN, 14));
@@ -79,7 +80,8 @@ public class res extends JFrame implements ActionListener {
 
 	}
 
-	public res() {
+	public res(String uid) {
+		this.uid = uid;
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
 
@@ -600,7 +602,7 @@ public class res extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new res();
+		new res(null);
 	}
 
 	@Override

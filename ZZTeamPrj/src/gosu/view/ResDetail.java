@@ -53,7 +53,7 @@ public class ResDetail extends JFrame {
 
 	String dateStr, dateEnd;
 
-	public ResDetail() {
+	public ResDetail(String sel, MainView mainview) {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
 
@@ -415,6 +415,9 @@ public class ResDetail extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(1200, 800);
 		setVisible(true);
+		//-----------------------------------------------------------------
+		//뷁
+		labG5_1.setText(sel);
 	}
 
 	// ---------------------------------------------------------------------
@@ -532,6 +535,6 @@ public class ResDetail extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new ResDetail();
+		new ResDetail(null, null);
 	}
 }

@@ -38,6 +38,7 @@ public class MainView extends JFrame implements ActionListener{
 	GearaeGosu tradeGosu;
 	AcceptPage acPage = null;
 	loginPage loginpage;
+	ResDetail resdet;
 	
 	
 	// 고수리스트 변수
@@ -408,8 +409,6 @@ public class MainView extends JFrame implements ActionListener{
 			@Override
 			public void mouseEntered(MouseEvent e) {
 			}
-			
-			
 		});
 		
 		return pCenterMsg;
@@ -506,8 +505,38 @@ public class MainView extends JFrame implements ActionListener{
 
 				pCenterList.repaint();
 			}
+			
 
 			
+		});
+		tabGosuList.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 마우스를 클릭하면
+				int row = tabGosuList.getSelectedRow();
+				int col = tabGosuList.getSelectedColumn();
+				String sel = (String) tabGosuList.getValueAt(row, 0);
+				System.out.println(sel +" 상황클릭값");
+				System.out.println(e);
+				if(tradeGosu != null)
+					tradeGosu.dispose();
+				if(e.getClickCount() == 2 ) {
+					resdet = new ResDetail(sel, mainview);
+				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
 		});
 
 		
@@ -587,10 +616,6 @@ public class MainView extends JFrame implements ActionListener{
 		Vector<Vector> list = dao.getmylist(cbxMypage.getSelectedItem().toString());
 		return list;
 	}
-
-//	public static void main(String[] args) {
-//		new MainView();
-//	}
 
 	
 	
