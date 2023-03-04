@@ -501,41 +501,46 @@ public class gosuDao {
 
 
 	// 회원 거래요청서에서 거래리스트에 저장
-	public int addgeorae(String g_code, String g_start, String g_end, String m_message, String g_message, String g_check)
+		public int addgeorae(String g_code, String g_num, String g_start, String g_end, String m_message, String g_message, String g_check)
 
-	{	String sql = "INSERT INTO GEORAE "
-			+ "   ( GEORAE_CODE, G_START, G_END, M_MESSAGE, G_MESSAGE, G_CHECK) "
-			+ "     VALUES( 'GR'|| LPAD(G_SEQ.nextval,4,0), "
-			+ "               ?, ?, ?, '-', '요청중') ";
+		{	String sql = "INSERT INTO GEORAE "
+				+ "   ( GEORAE_CODE, W_NUM, G_START, G_END, M_MESSAGE, G_MESSAGE, G_CHECK) "
+				+ "     VALUES( 'GR'|| LPAD(G_SEQ.nextval,4,0),"
+				+ "      (SELECT GW.W_NUM FROM GOSU GS JOIN GWORK GW ON GS.G_NUM = GW.G_NUM "
+				+ "       WHERE GS.G_NUM = ? ),"
+				+ "               ?, ?, ?, '-', '요청중') ";
+		
+	    System.out.println(g_code + g_num + g_start);
+	    
+		int aftcnt = 0;
 
-	int aftcnt = 0;
-
-	PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt1 = null;
 
 
-	try {
-		pstmt1 = conn.prepareStatement(sql);
-
-		pstmt1.setString(1, g_start);
-		pstmt1.setString(2, g_end);
-		pstmt1.setString(3, m_message);
-
-		aftcnt = pstmt1.executeUpdate();	
-
-	} catch (SQLException e) {
-		e.printStackTrace();
-	} finally {
 		try {
-			if(pstmt1 != null) pstmt1.close();
+			pstmt1 = conn.prepareStatement(sql);
+
+			pstmt1.setString(1, g_num);
+			pstmt1.setString(2, g_start);
+			pstmt1.setString(3, g_end);
+			pstmt1.setString(4, m_message);
+
+			aftcnt = pstmt1.executeUpdate();	
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt1 != null) pstmt1.close();
+
+			} catch (SQLException e) {
+
+			}
+		}
+		return  aftcnt;
+
 
 		}
-	}
-	return  aftcnt;
-
-
-	}
 	public int addgeorae(georaeVo vo) {				
 
 		String   g_code     = vo.getG_code();

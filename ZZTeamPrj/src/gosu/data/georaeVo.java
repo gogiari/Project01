@@ -11,13 +11,13 @@ public class georaeVo  {
 	String wgugun;
 	String g_name;
 	String m_message;
-	
+	String g_num;
 
 	String g_message;
 	String g_check;
 	
 	String messnum;
-	String u_id;
+	String uid;
 	String mread;
 	String m_date;
 	String title;
@@ -28,7 +28,7 @@ public class georaeVo  {
 	}
 		
 	public georaeVo(String g_code, String mid_name, String gdate, String g_start, String g_end, String wsido,
-			String wgugun, String g_name, String m_message) {
+			String wgugun, String g_num, String m_message) {
 		super();
 		this.g_code = g_code;
 		this.mid_name = mid_name;
@@ -37,8 +37,9 @@ public class georaeVo  {
 		this.g_end = g_end;
 		this.wsido = wsido;
 		this.wgugun = wgugun;
-		this.g_name = g_name;
+		this.g_num = g_num;
 		this.m_message = m_message;
+
 
 	}
 
@@ -64,6 +65,13 @@ public class georaeVo  {
 		// TODO Auto-generated constructor stub
 	}
 
+
+	public georaeVo(georaeVo vo2) {
+		super();
+		this.uid    = uid;
+		this.u_name = uid;	
+		
+	}
 
 	public String getU_name() {
 		return u_name;
@@ -125,7 +133,7 @@ public class georaeVo  {
 		return g_name;
 	}
 
-	public void setG_num(String g_name) {
+	public void setG_name(String g_name) {
 		this.g_name = g_name;
 	}
 
@@ -166,11 +174,11 @@ public class georaeVo  {
 		this.messnum = messnum;
 	}
 
-	public String getU_id() {
-		return u_id;
+	public String getUid() {
+		return uid;
 	}
 	public void setU_id(String u_id) {
-		this.u_id = u_id;
+		this.uid = uid;
 	}
 
 	public String getMread() {
@@ -192,13 +200,21 @@ public class georaeVo  {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public String getG_num() {
+		return g_num;
+	}
+	public void setG_num(String g_num) {
+		this.g_num = g_num;
+	}
+	
 
 	@Override
 	public String toString() {
 		return "georaeVo [g_code=" + g_code + ", u_name=" + u_name + ", mid_name=" + mid_name + ", gdate=" + gdate
 				+ ", g_start=" + g_start + ", g_end=" + g_end + ", wsido=" + wsido + ", wgugun=" + wgugun + ", g_name="
 				+ g_name + ", m_message=" + m_message + ", g_message=" + g_message + ", g_check=" + g_check
-				+ ", messnum=" + messnum + ", u_id=" + u_id + ", mread=" + mread + ", m_date=" + m_date + ", title="
+				+ ", messnum=" + messnum + ", uid=" + uid + ", mread=" + mread + ", m_date=" + m_date + ", title="
 				+ title + "]";
 	}
 
