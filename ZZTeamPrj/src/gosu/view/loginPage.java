@@ -8,10 +8,13 @@ import java.awt.SystemColor;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,6 +33,7 @@ public class loginPage extends JFrame implements ActionListener {
 	TextField idU;
 	JPasswordField pwU;
 	Button findBtn;
+	JButton SignUp;
 	MainView mainview;
 
 	public loginPage() {
@@ -62,7 +66,7 @@ public class loginPage extends JFrame implements ActionListener {
 		label.setBounds(19, 342, 241, 65);
 		panel.add(label);
 
-		Button SignUp = new Button("SignUp");
+		SignUp = new JButton("SignUp");
 		SignUp.setForeground(new Color(0, 0, 0));
 		SignUp.setBackground(Color.WHITE);
 		SignUp.setFont(new Font("Arial", Font.ITALIC, 15));
@@ -155,7 +159,21 @@ public class loginPage extends JFrame implements ActionListener {
 		setVisible(true);
 		setLocation(600, 300);
 		SignUp.addActionListener(this);
-
+		pwU.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					SignUp.doClick();
+				}
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
 	}
 
 	// 로그인 버튼
