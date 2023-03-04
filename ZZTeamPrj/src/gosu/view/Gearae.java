@@ -51,6 +51,9 @@ public class Gearae extends JFrame {
 		this.rd  =  rd;
 		this.uid = uid;
 		System.out.println("거래:"+ uid);
+		
+		txtuid.setText(rd.uid);
+		
 		txtwo.setText(rd.comboBoxG2.getSelectedItem().toString());
 		txtda.setText(rd.model1.getYear()+ "-" + (rd.model1.getMonth() + 1) + "-" + rd.model1.getDay() +
 		             " ~ " + rd.model2.getYear()+ "-" + (rd.model2.getMonth() + 1) + "-" + rd.model2.getDay());
