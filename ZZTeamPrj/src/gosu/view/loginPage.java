@@ -111,7 +111,7 @@ public class loginPage extends JFrame implements ActionListener {
 		separator_1.setForeground(Color.WHITE);
 		separator_1.setBackground(Color.WHITE);
 		separator_1.setBounds(372, 251, 248, 2);
-		contentPane.add(separator_1);
+		contentPane.add(separator_1); 
 
 		JLabel lbl_Close = new JLabel("X");
 		lbl_Close.addMouseListener(new MouseAdapter() {
