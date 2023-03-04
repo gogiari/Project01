@@ -404,6 +404,7 @@ public class res extends JFrame implements ActionListener {
 		sidoR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cb = (String) sidoR.getSelectedItem();
+				
 				Vector<String> list = getDataGu(cb);
 				gugunR.setModel(new DefaultComboBoxModel(list));
 			}
@@ -542,10 +543,14 @@ public class res extends JFrame implements ActionListener {
 		System.out.println("함수 확인"+ combo2);
 
 		String textf = list.get(4);
-		String texta = list.get(6);
+		String sido = list.get(5);
+		String gugum = list.get(6);
+		String texta = list.get(7);
 
 		this.comboBox1.setSelectedItem(combo1);
 		this.comboBox2.setSelectedItem(combo2);
+		this.sidoR.setSelectedItem(sido);
+		this.gugunR.setSelectedItem(gugum);
 		this.textField1.setText(textf);
 		this.textArea1.setText(texta);
 	}

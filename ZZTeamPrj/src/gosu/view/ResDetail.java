@@ -384,14 +384,6 @@ public class ResDetail extends JFrame implements ActionListener{
 		btnG2.setBackground(new Color(212, 212, 212));
 		btnG2.setBounds(634, 10, 100, 30);
 		panel_G5.add(btnG2);
-
-//삭제
-//		JButton btn3 = new JButton("수정 조회");
-//		btn3.setForeground(Color.WHITE);
-//		btn3.setFont(new Font("굴림", Font.PLAIN, 14));
-//		btn3.setBackground(new Color(0, 175, 212));
-//		btn3.setBounds(1061, 10, 100, 30);
-//		panel_G5.add(btn3);
 		
 		btnG1.addActionListener(this);
 

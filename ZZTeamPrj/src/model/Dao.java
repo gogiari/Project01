@@ -257,7 +257,7 @@ public class Dao {
 	public Vector<Vector> getEditList(String userID) {
 		Vector<Vector> list = new Vector<Vector>();
 		String sql = "";
-		sql += " SELECT M.MID_NAME,  W.PRICE, W.SDATE, W.EDATE, W.WSIDO ";
+		sql += " SELECT M.MID_NAME,  W.PRICE, W.SDATE, W.EDATE, W.WSIDO, W.WGUGUN";
 		sql += " FROM GWORK W INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM ";
 		sql += " WHERE G_NUM IN ( SELECT G_NUM ";
 		sql += "		  FROM GOSU ";
@@ -279,13 +279,16 @@ public class Dao {
 				String sdate = rs.getString(3);
 				String edate = rs.getString(4);
 				String wsido = rs.getString(5);
+				String wsido2 = rs.getString(6);
+				
+				String wsido3 = wsido + wsido2;
 
 				Vector v = new Vector();
 				v.add(mName);
 				v.add(price);
 				v.add(sdate);
 				v.add(edate);
-				v.add(wsido);
+				v.add( wsido3);
 
 				list.add(v);
 			}
@@ -310,7 +313,7 @@ public class Dao {
 		Vector<String> comlist = new Vector<String>();
 
 		String sql = "";
-		sql += "SELECT  B.BI_NAME, M.MID_NAME, W.SDATE, W.EDATE, W.PRICE, W.WSIDO, W.PRMESSAGE ";
+		sql += "SELECT  B.BI_NAME, M.MID_NAME, W.SDATE, W.EDATE, W.PRICE, W.WSIDO, W.WGUGUN, W.PRMESSAGE ";
 		sql += " FROM GWORK W INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM INNER JOIN BIGLIST B ON B.BI_NUM = M.BI_NUM ";
 		sql += " WHERE G_NUM IN ( SELECT G_NUM ";
 		sql += "		  FROM GOSU ";
@@ -334,6 +337,7 @@ public class Dao {
 				String eDate = rs.getString("EDATE");
 				String price = rs.getString("PRICE");
 				String wSido = rs.getString("WSIDO");
+				String gugun = rs.getString("WGUGUN");
 				String prMess = rs.getString("PRMESSAGE");
 
 				Vector v = new Vector();
@@ -344,6 +348,7 @@ public class Dao {
 				v.add(eDate);
 				v.add(price);
 				v.add(wSido);
+				v.add(gugun);
 				v.add(prMess);
 
 				comlist.addAll(v);
@@ -431,7 +436,8 @@ public class Dao {
 		sql += " EDATE = TO_DATE(? , 'YYYY-MM-DD HH24:MI'), ";  //3
 		sql += " PRICE = ?, ";  //4
 		sql += " WSIDO = ?, ";  //5
-		sql += " PRMESSAGE = ? ";  //6 
+		sql += " WGUGUN = ?, ";  //6
+		sql += " PRMESSAGE = ? ";  //7 
 		sql += " WHERE G_NUM like ? AND SDATE = TO_DATE(? , 'YYYY-MM-DD HH24:MI') ";  //7 8
 
 		PreparedStatement pstmt = null;
@@ -445,12 +451,13 @@ public class Dao {
 			pstmt.setString(3, vo.getDateEnd());
 			pstmt.setString(4, vo.getPrice());
 			pstmt.setString(5, vo.getSido());
-			pstmt.setString(6, vo.getPrMes());
+			pstmt.setString(6, vo.getGugun());
+			pstmt.setString(7, vo.getPrMes());
 
 			String names = "%"+ GNum +"%";
-			pstmt.setString(7, names);
+			pstmt.setString(8, names);
 			//String stDate = "%"+ vo.getDateStr() +"%";
-			pstmt.setString(8, vo.getDateStr());
+			pstmt.setString(9, vo.getDateStr());
 			
 			aftcnt = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -508,63 +515,5 @@ public class Dao {
 		return aftcnt;
 	}
 	
-	//시도 군 출력
-	public ArrayList<String> allSido() {
-		ArrayList<String> sidoData = new ArrayList<String>();
 
-		String sql = "SELECT DISTINCT SIDO FROM POST";
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				sidoData.add(rs.getString("SIDO"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
-			if (conn != null)
-				conn.close();
-			if (rs != null)
-				rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return sidoData;
-	}
-
-	public ArrayList<String> allGugun(String sido) {
-		ArrayList<String> gugunData = new ArrayList<String>();
-
-		String sql = "SELECT DISTINCT GUGUN  FROM POST WHERE SIDO = ?";
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, sido);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				gugunData.add(rs.getString("GUGUN"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
-			if (conn != null)
-				conn.close();
-			if (rs != null)
-				rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return gugunData;
-	}
 }
