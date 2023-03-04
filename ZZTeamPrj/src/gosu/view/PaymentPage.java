@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import gosu.data.gosuDao;
 import gosu.data.gosuVo2;
+import gosu.data.messageDao;
 
 
 
@@ -225,6 +226,7 @@ public class PaymentPage extends JFrame{
 				*/
 				
 				addGereo();
+				payment();
 				// 메인화면으로 돌아가게하면될듯?
 				 
 			}
@@ -294,6 +296,43 @@ public class PaymentPage extends JFrame{
 		setViewData( vo2 );
 		
 	}
+	private void payment() {
+		String      g_code32    =  this.txtGr.getText();		
+    	messageDao  gDao        =  new messageDao();
+    	
+    	int choice  =   JOptionPane.showConfirmDialog(null, 
+				"결제하시겠습니까?",
+				"확인",
+				JOptionPane.OK_CANCEL_OPTION);
+		int     aftcnt = 0 ;
+		String  msg    = "";
+		if( choice == 0) {
+			gosuVo2 vo2 =  getViewData1();
+			aftcnt      =  gDao.payment( vo2 );
+			if( aftcnt > 0 )
+				msg     =   "결제되었습니다";
+			else
+				msg     =  "결제되지 않았습니다";
+		} else {
+			msg = "결제를 선택하였습니다";
+		}
+		JOptionPane.showMessageDialog(null, 
+				msg,
+				"결제",
+				JOptionPane.OK_OPTION);		
+		
+		// 마이페이지 새로고침		
+		this.dispose();
+	}
+	
+	public gosuVo2 getViewData1() {
+		String     georae_code    =  this.txtGr.getText(); 	
+		gosuVo2    vo2             =  new gosuVo2(georae_code);	
+		
+		return     vo2;
+	}
+
+
 
 	private void setViewData(gosuVo2 vo2) {
 		String   georae_code    =  vo2.getGeorae_code();		

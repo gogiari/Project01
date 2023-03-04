@@ -50,6 +50,11 @@ public class gosuVo2 {
 
 	
 	
+	public gosuVo2(String georae_code) {
+		this.georae_code = georae_code;
+	}
+
+	
 	public String getG_num() {
 		return g_num;
 	}
