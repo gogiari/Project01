@@ -23,7 +23,7 @@ public class gosuVo2 {
 	    
 	public gosuVo2() {}
 	public gosuVo2(String georae_code, String u_name, String mid_name, String g_date, String sdate, String g_check,
-			String price) {
+			String price,String u_id) {
 		
 		this.georae_code = georae_code;
 		this.u_name = u_name;
@@ -32,27 +32,23 @@ public class gosuVo2 {
 		this.sdate = sdate;
 		this.g_check = g_check; 
 		this.price = price;  
+		this.u_id = u_id;
 		
 		
 	}
-   public gosuVo2(String georae_code,String mid_name,String price,String g_num ) {
-	   this.georae_code = georae_code;
-	   this.mid_name = mid_name;
-	   this.price = price;
-	   this.g_num = g_num;
+
+
+	
+	public gosuVo2(String georae_code, String u_id, String score,String review) {
+		this.georae_code = georae_code; 
+		this.review = review;
+		this.score  = score;
+		this.u_id   = u_id;
 	}
 	
 
+
 	
-	public gosuVo2(String review, String score,String g_num) {
-		this.review = review;
-		this.score  = score;
-		this.g_num = g_num;
-	}
-	
-	public gosuVo2(String gereo_code, String midname,String price2,String g_num2,String score2,String review2) {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public String getG_num() {
 		return g_num;
