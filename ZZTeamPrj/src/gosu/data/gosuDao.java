@@ -737,16 +737,27 @@ public class gosuDao {
 	// 메시지 테이블 데이터
 	public Vector<Vector> getMsgList(String uid) {
 		Vector<Vector> list = new Vector<Vector>();
-		String sql = "";
-		sql       += " SELECT ME.GEORAE_CODE GEORAE_CODE, ";
-		sql       += "        UL.USERNAME    USERNAME, ";
-		sql       += "        GR.G_CHECK     G_CHECK, ";
-		sql       += "        ME.M_DATE      M_DATE ";
-		sql       += "  FROM  MESSAGE ME LEFT JOIN GEORAE GR ";
-		sql       += "  ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN USERLIST UL ";
-		sql       += "  ON    ME.U_ID = UL.U_ID ";
-		sql       += "  WHERE ME.U_ID = ?";
-		sql       += "  OR    ME.G_NUM = ?";
+		String sql = "SELECT ME.GEORAE_CODE GEORAE_CODE,  "
+				   + "		UL.USERNAME    USERNAME,  "
+				   + "		GR.G_CHECK     G_CHECK,  "
+				   + "		ME.M_DATE      M_DATE  "
+				   + "FROM  MESSAGE ME LEFT JOIN GEORAE GR  "
+				   + "ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN GOSU GS "
+				   + "ON    ME.G_NUM = GS.G_NUM LEFT JOIN USERLIST UL "
+				   + "ON    GS.U_ID = UL.U_ID  "
+				   + "WHERE ME.U_ID = ? "
+				   + "UNION "
+				   + "SELECT ME.GEORAE_CODE GEORAE_CODE,  "
+				   + "		UL2.USERNAME    USERNAME,  "
+				   + "		GR.G_CHECK     G_CHECK,  "
+				   + "		ME.M_DATE      M_DATE  "
+				   + "FROM  MESSAGE ME LEFT JOIN GEORAE GR  "
+				   + "ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN GOSU GS "
+				   + "ON    ME.G_NUM = GS.G_NUM LEFT JOIN USERLIST UL "
+				   + "ON    GS.U_ID = UL.U_ID LEFT JOIN USERLIST UL2 "
+				   + "ON    ME.U_ID = UL2.U_ID "
+				   + "WHERE UL.U_ID = ? ";
+	
 
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
