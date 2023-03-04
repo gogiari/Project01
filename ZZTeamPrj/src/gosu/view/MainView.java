@@ -564,7 +564,7 @@ public class MainView extends JFrame implements ActionListener{
 				int row = tabGosuList.getSelectedRow();
 				int col = tabGosuList.getSelectedColumn();
 				String sel = (String) tabGosuList.getValueAt(row, 0);
-				System.out.println(sel +" 상황클릭값");
+				System.out.println(sel +" 상황클릭값 + ㅇ");
 				System.out.println(e);
 				if(tradeGosu != null)
 					tradeGosu.dispose();
