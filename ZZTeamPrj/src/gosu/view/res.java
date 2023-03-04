@@ -43,7 +43,7 @@ public class res extends JFrame implements ActionListener {
 	private JButton btn1, btn2;
 	private JComboBox<String> comboBox5, comboBox6;
 	private ArrayList<String> comboTime ,comboTime2 ;
-	JComboBox<String> sidoCB, gugunCB;
+	JComboBox<String> sidoR, gugunR;
 
 	// RoundedButton btn2 = new RoundedButton();
 	Design comDe = new Design();
@@ -280,29 +280,29 @@ public class res extends JFrame implements ActionListener {
 		line_6.setBounds(37, 121, 300, 15);
 		panel_4.add(line_6);
 		line_6.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		sidoR = new JComboBox(new DefaultComboBoxModel(getDataSi()));
+		sidoR.setForeground(new Color(128, 128, 128));
+		sidoR.setBounds(37, 141, 125, 26);
+		panel_4.add(sidoR);
+		sidoR.setToolTipText("\uC2DC");
+		sidoR.setBackground(new Color(255, 255, 255));
+//		sidoR.addItemListener(new ItemListener() {
+//			@Override
+//			public void itemStateChanged(ItemEvent e) {
+//				if (e.getStateChange() == ItemEvent.SELECTED) {
+//					String sidoR = (String) sidoR.getSelectedItem();
+//					gugunR.setModel(new GugunComboBoxModel(sidoR));
+//				}
+//			}
+//		});
 
-		sidoCB = new JComboBox<String>();
-		sidoCB.setForeground(new Color(128, 128, 128));
-		sidoCB.setBounds(37, 141, 125, 26);
-		panel_4.add(sidoCB);
-		sidoCB.setToolTipText("\uC2DC");
-		sidoCB.setBackground(new Color(255, 255, 255));
-		sidoCB.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					String sido = (String) sidoCB.getSelectedItem();
-					gugunCB.setModel(new GugunComboBoxModel(sido));
-				}
-			}
-		});
-
-		gugunCB = new JComboBox<String>();
-		gugunCB.setForeground(new Color(128, 128, 128));
-		gugunCB.setBounds(187, 141, 125, 26);
-		panel_4.add(gugunCB);
-		gugunCB.setToolTipText("");
-		gugunCB.setBackground(new Color(255, 255, 255));
+		gugunR = new JComboBox<String>();
+		gugunR.setForeground(new Color(128, 128, 128));
+		gugunR.setBounds(187, 141, 125, 26);
+		panel_4.add(gugunR);
+		gugunR.setToolTipText("");
+		gugunR.setBackground(new Color(255, 255, 255));
 
 		// 자기 PR
 		lab7 = new JLabel("\uC790\uAE30 PR");
@@ -400,6 +400,14 @@ public class res extends JFrame implements ActionListener {
 				cancelMember();
 			}
 		});
+		
+		sidoR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String cb = (String) sidoR.getSelectedItem();
+				Vector<String> list = getDataGu(cb);
+				gugunR.setModel(new DefaultComboBoxModel(list));
+			}
+		});
 
 		// -----------------------------------------------------------------
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -414,20 +422,32 @@ public class res extends JFrame implements ActionListener {
 		return exlist;
 	}
 
-	private Vector<String> getDataMidList() {
-		String bigCom = String.valueOf(comboBox1.getSelectedIndex() + 1);
-		Dao dao = new Dao();
-		Vector<String> exlist = dao.getExList2(String.valueOf(bigCom));
-		return exlist;
-	}
+//	private Vector<String> getDataMidList() {
+//		String bigCom = String.valueOf(comboBox1.getSelectedIndex() + 1);
+//		Dao dao = new Dao();
+//		Vector<String> exlist = dao.getExList2(String.valueOf(bigCom));
+//		return exlist;
+//	}
 
 	private Vector<String> getDataMidList(int index) {
-		String bigCom = String.valueOf(index + 1);
-		System.out.println(bigCom);
+		//String bigCom = String.valueOf(index + 1);
 		Dao dao = new Dao();
 		Vector<String> exlist = dao.getExList2(String.valueOf(index));
 		return exlist;
 	}
+	
+	private Vector<String> getDataSi() {
+		Dao dao = new Dao();
+		Vector<String> exlist = dao.getExSi();
+		return exlist;
+	}
+
+	private Vector<String> getDataGu(String si) {
+		Dao dao = new Dao();
+		Vector<String> exlist = dao.getExGu(String.valueOf(si));
+		return exlist;
+	}
+	
 	// --------------------------------------------------------------------------
 	private void addMember() {
 		if (textField1 != null) {
@@ -466,8 +486,8 @@ public class res extends JFrame implements ActionListener {
 		this.comboBox5.setSelectedItem(combo5);
 		this.comboBox6.setSelectedItem(combo6);
 		this.textField1.setText(textf);
-		this.sidoCB.setSelectedItem(combo3);
-		this.gugunCB.setSelectedItem(combo4);
+		this.sidoR.setSelectedItem(combo3);
+		this.gugunR.setSelectedItem(combo4);
 		this.textArea1.setText(texta);
 	}
 
@@ -480,8 +500,8 @@ public class res extends JFrame implements ActionListener {
 		String mod2 = model2.getYear() + "-" + (model2.getMonth() + 1) + "-" + model2.getDay();
 		String combo5 = (String) this.comboBox5.getSelectedItem();
 		String combo6 = (String) this.comboBox6.getSelectedItem();
-		String combo3 = (String) this.sidoCB.getSelectedItem();
-		String combo4 = (String) this.gugunCB.getSelectedItem();
+		String combo3 = (String) this.sidoR.getSelectedItem();
+		String combo4 = (String) this.gugunR.getSelectedItem();
 		String textf = this.textField1.getText();
 		String texta = this.textArea1.getText();
 
@@ -579,8 +599,8 @@ public class res extends JFrame implements ActionListener {
 		model2.setSelected(false);
 		this.comboBox5.setSelectedIndex(0);
 		this.comboBox6.setSelectedIndex(0);
-		// this.sidoCB.setSelectedIndex(0);
-		// this.gugunCB.setSelectedIndex(0);
+		// this.sidoR.setSelectedIndex(0);
+		// this.gugunR.setSelectedIndex(0);
 
 		this.textField1.setText("");
 		this.textArea1.setText("");

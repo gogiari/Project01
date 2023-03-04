@@ -109,15 +109,100 @@ public class Dao {
 
 		return comlist;
 	}
+	
+	//시 데이터 출력
+	public Vector<String> getExSi() {
+
+		Vector<String> comlist = new Vector<String>();
+
+		String sql = "";
+		sql += " SELECT SI_NAME";
+		sql += " FROM SI";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String exSi = rs.getString("SI_NAME");
+
+				System.out.print(exSi);
+
+				Vector v = new Vector();
+				v.add(exSi);
+				comlist.addAll(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return comlist;
+	}
+	
+	// 구군 데이터 출력
+	public Vector<String> getExGu(String si) {
+
+		// ExVo exvo = null;
+		Vector<String> comlist = new Vector<String>();
+
+		String sql = "";
+		sql += "SELECT G.GU_NAME ";
+		sql += "FROM GU G INNER JOIN SI S ON G.SI_NUM = S.SI_NUM ";
+		sql += " WHERE  S.SI_NAME like ?";
+		// sql += " WHERE M.BI_NUM like '%'+ ? +'%' ";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			String names = "%" + si + "%";
+			pstmt.setString(1, names);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String exgu = rs.getString("GU_NAME");
+
+				Vector v = new Vector();
+				v.add(exgu);
+				comlist.addAll(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return comlist;
+	}
+	
 
 	// 고수 업무 리스트 데이터 추가
 	public int insertGWORK(String midList, String price, String wsido, String prMes, String staDate, String endDate,
-			String staTime, String endTime, String dateStr, String dateEnd) {
+			String staTime, String endTime, String dateStr, String dateEnd, String wsido2) {
 		String sql = "";
 		sql += "INSERT INTO GWORK (";
-		sql += "    W_NUM, G_NUM, MID_NUM, PRICE, PRMESSAGE , SDATE, EDATE) ";
+		sql += "    W_NUM, G_NUM, MID_NUM, PRICE, PRMESSAGE , SDATE, EDATE, WSIDO, WGUGUN ) ";
 		sql += " VALUES ";
-		sql += " ( 'W-' || gwork_Num.NEXTVAL, ?, ?, ?, ?, TO_DATE(? , 'YYYY-MM-DD HH24:MI') , TO_DATE(? , 'YYYY-MM-DD HH24:MI') ) ";
+		sql += " ( 'W-' || gwork_Num.NEXTVAL, ?, ?, ?, ?, TO_DATE(? , 'YYYY-MM-DD HH24:MI') , TO_DATE(? , 'YYYY-MM-DD HH24:MI'), ?, ? ) ";
 
 		String sql2 = "";
 		sql2 += "SELECT  MID_NUM ";
@@ -150,8 +235,8 @@ public class Dao {
 			pstmt.setString(5, dateStr);
 			System.out.println(dateStr);
 			pstmt.setString(6, dateEnd);
-			// pstmt.setString(6, endDate);
-			// pstmt.setString(7, prMes);
+			pstmt.setString(7, wsido);
+			pstmt.setString(8, wsido2);
 
 			aftcnt = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -378,11 +463,37 @@ public class Dao {
 		}		
 		return aftcnt;
 	}
+	
+	//삭제
+	public int removePrvGoList(String GNum, String stDate ) {
+		String sql = "";
+		sql += "DELETE FROM GWORK ";
+		sql += " WHERE G_NUM like ? AND SDATE = TO_DATE(? , 'YYYY-MM-DD HH24:MI') ";
+		
+		PreparedStatement pstmt = null;
+		int aftcnt = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, GNum);
+			pstmt.setString(2, stDate);
+			
+			aftcnt = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null)pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return aftcnt;
+	}
+	
 
 	public int insertGWORK(Vo vo) {
 		String midList = vo.getMidList();
 		String price = vo.getPrice();
-		String wsido = vo.getSido();
 		String prMes = vo.getPrMes();
 		String staDate = vo.getStaDate();
 		String endDate = vo.getEndDate();
@@ -393,7 +504,7 @@ public class Dao {
 		String dateStr = vo.getDateStr();
 		String dateEnd = vo.getDateEnd();
 		System.out.println(dateStr);
-		int aftcnt = insertGWORK(midList, price, wsido, prMes, staDate, endDate, staTime, endTime, dateStr, dateEnd);
+		int aftcnt = insertGWORK(midList, price, wsido1, prMes, staDate, endDate, staTime, endTime, dateStr, dateEnd, wsido2);
 		return aftcnt;
 	}
 	

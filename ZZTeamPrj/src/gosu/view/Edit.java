@@ -62,7 +62,7 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 		btnDelete.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//removePrvGoList("G01");
+				removePrvGoList("G01");
 			}
 		});
 		
@@ -78,14 +78,12 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 		
 	}
 
-	/*protected void removePrvGoList(String gNum) {
+	protected void removePrvGoList(String gNum) {
 		Dao dao = new Dao();
 		int row = table.getSelectedRow();
 		
 		TableModel data = table.getModel();
 		String tableTime = (String)data.getValueAt(row,2);
-		
-		
 		
 		System.out.println(tableTime);
 		
@@ -106,38 +104,26 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 			int text2 = Integer.parseInt(tableTime.substring(8,9));
 			System.out.println("테스트2" + text2);
 			
-			tableTime1 = tableTime1.substring(0,16);
-			
-			System.out.println("시간테스트ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + tableTime1);			
+			tableTime1 = tableTime1.substring(0,16);		
 			
 			String[] date = tableTime1.split("-");
 			String dateY = date[0];
 			String dateM = date[1];
 			String dateD = date[2];
 			String time = tableTime1.substring(11,16);
-			System.out.println("테스트ㅡ트트트트트트트트" + time);
 			
-			//System.out.println("ddddddddddddd"+tableTime.substring(5,6));
-			//System.out.println("ssssssssssssssss"+tableTime.substring(8,9));
 			if( (text1 == 0) || (text2 == 0) ) {
-				System.out.println("테스트xxx" + text1);
 				if(text1 == 0) {
-					System.out.println("테스트xxxsss" + text1);
 					dateM = dateM.substring(0,2).replace("0", "");
-					System.out.println("테스트3" + dateM);
 				}
 				if(text2 == 0) {
 					 dateD =  dateD.substring(0,2).replace("0", "");
-					System.out.println("테스트4" + dateD);
 				}
-				tableTime1 = dateY + "-" + dateM + "-" + dateD + " " + time;
+				tableTime1 = dateY + "-" + dateM + "-" + dateD;
 			}else {
-				tableTime1 = dateY + "-" + dateM + "-" + dateD + " " + time;				
+				tableTime1 = dateY + "-" + dateM + "-" + dateD;				
 			}
 			
-					
-			System.out.println("테스트222222 확인" + tableTime1);
-			//2023-3-3 8:00
 			int aftcnt = dao.removePrvGoList(gNum, tableTime1);
 			
 			if(aftcnt > 0) { 
@@ -145,9 +131,9 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 			}else {
 				msg = "삭제 되지 않았습니다";
 			}
-		}else {
-			msg = "취소를 클릭하였습니다";
-		}
+			}else {
+				msg = "취소를 클릭하였습니다";
+			}
 		
 		JOptionPane.showMessageDialog(
 				null,
@@ -161,7 +147,7 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 
 	public void jTableRefresh() {
 		table.repaint();
-	}*/
+	}
 
 	//-----------------------------------------------------------------
 	private Vector<? extends Vector> getDataList() {
