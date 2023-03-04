@@ -1031,7 +1031,7 @@ public class gosuDao {
 		Vector<Vector> list = new Vector<Vector>(); // 조회된 결과전체 대응 : rs
 
 		String sql = "SELECT F.U_ID, F.FAQ_CODE, F.F_HEAD , F.F_BODY, F.F_CHECK\r\n" + "FROM   FAQ F, USERLIST U\r\n"
-				+ "WHERE  F.U_ID = U.U_ID\r\n"
+				+ " WHERE  F.U_ID = U.U_ID\r\n"
 				+ "AND  U.U_ID = ?\r\n";
 		// userid 같을때
 
