@@ -52,11 +52,18 @@ public class ResDetail extends JFrame implements ActionListener{
 	JDatePickerImpl datePicker1, datePicker2;
 
 	String dateStr, dateEnd;
+	MainView mainview;	
+	String uid;
 
-	public ResDetail(String sel, MainView mainview) {
+
+	public ResDetail(String sel, String uid, MainView mainview) {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
 
+		this.mainview = mainview;
+		this.uid = uid;
+
+		
 		// comDesign(JFrame frame, JLabel label, JComboBox combobox, JTextField textf,
 		// JButton button){};
 		// new LineBorder(Color.black, 1, true);
@@ -615,12 +622,12 @@ public class ResDetail extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) {
-		new ResDetail(null, null);
+		new ResDetail(null, null, null);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new Gearae(this);
+		new Gearae(uid, this);
 	}
 	
 }

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,17 +20,21 @@ import javax.swing.JTextField;
 
 import gosu.data.georaeVo;
 import gosu.data.gosuDao;
+import model.Vo;
 
 
 public class Gearae extends JFrame {	
 	
 	ResDetail rd;
+	loginPage lg;
+	MainView mainview;
+	String uid;
 	
 	JPanel Pane;
 	JLabel lblusername, lblgosuname, lblwork, lbldate, lblstarttime, lblendtime, lblprice, lbllocation, lblmessage;
 	
 	JButton btnsend, btncancel, btnmess;
-	JTextField  txtm_message, txtuname, txtwo, txtda, txtlsido, txtlgugun, txtme, txtgname;
+	JTextField  txtm_message, txtuid, txtwo, txtda, txtlsido, txtlgugun, txtme, txtgname;
 	JComboBox  startcb, endcb;
 	
 	BorderLayout gb;
@@ -40,17 +45,20 @@ public class Gearae extends JFrame {
 			
 	}
 
-	public Gearae(ResDetail rd) {
-		init();
-		this.rd =  rd;
 
+	public Gearae(String uid, ResDetail rd) {
+		init();
+		this.rd  =  rd;
+		this.uid = uid;
+		System.out.println("거래:"+ uid);
 		txtwo.setText(rd.comboBoxG2.getSelectedItem().toString());
 		txtda.setText(rd.model1.getYear()+ "-" + (rd.model1.getMonth() + 1) + "-" + rd.model1.getDay() +
-		              " ~ " + rd.model2.getYear()+ "-" + (rd.model2.getMonth() + 1) + "-" + rd.model2.getDay());
+		             " ~ " + rd.model2.getYear()+ "-" + (rd.model2.getMonth() + 1) + "-" + rd.model2.getDay());
 		txtgname.setText(rd.labG5_1.getText().toString());
 		txtlsido.setText(rd.sidoCB.getSelectedItem().toString());
 		txtlgugun.setText(rd.gugunCB.getSelectedItem().toString());
 	}
+
 
 
 	private void init () {
@@ -73,18 +81,19 @@ public class Gearae extends JFrame {
 		lbltitle.setBounds(325, 10, 200, 34);
 		Pane.add(lbltitle);
 		
-		// 거래요청자 이름
-		lblusername = new JLabel("거래요청자 이름");
-		lblusername.setForeground(SystemColor.textHighlight);
-		lblusername.setBackground(SystemColor.text);
-		lblusername.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		lblusername.setBounds(30, 90, 200, 20);
-		Pane.add(lblusername);
-		txtuname = new JTextField("이름불러오기");
-		txtuname.setColumns(10);
-		txtuname.setFont(new Font("D2Coding", Font.PLAIN, 17));
-		txtuname.setBounds(200, 85, 200, 30);
-		Pane.add(txtuname);
+	    // 거래요청자 이름
+	      lblusername = new JLabel("거래요청자 ID");
+	      lblusername.setForeground(SystemColor.textHighlight);
+	      lblusername.setBackground(SystemColor.text);
+	      lblusername.setFont(new Font("D2Coding", Font.PLAIN, 20));
+	      lblusername.setBounds(30, 90, 200, 20);
+	      Pane.add(lblusername);
+	      txtuid = new JTextField("회원 ID 불러오기");
+	      txtuid.setColumns(10);
+	      txtuid.setFont(new Font("D2Coding", Font.PLAIN, 17));
+	      txtuid.setBounds(200, 85, 200, 30);
+	      Pane.add(txtuid);
+	      
 		
 		// 업무내용(중분류)
 		lblwork = new JLabel("업무 내용");
@@ -170,13 +179,13 @@ public class Gearae extends JFrame {
 		Pane.add(txtlgugun);
 			
 		// 고수이름
-		lblgosuname = new JLabel("고수 이름");
+		lblgosuname = new JLabel("고수 ID");
 		lblgosuname.setForeground(SystemColor.textHighlight);
 		lblgosuname.setBackground(SystemColor.text);
 		lblgosuname.setBounds(450, 90, 200, 20);
 		lblgosuname.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblgosuname);
-		txtgname = new JTextField("이름불러오기");
+		txtgname = new JTextField("고수 ID 불러오기");
 		txtgname.setBounds(560, 85, 200, 30);
 		txtgname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtgname);
@@ -267,41 +276,46 @@ public class Gearae extends JFrame {
 			
 
 		private void setViewData(georaeVo vo) {
-			String   u_name    =  vo.getU_name(); 
+			String   uid       =  vo.getUid(); 
+			
 			String   mid_name  =  vo.getMid_name(); 
 			String   gdate     =  vo.getGdate(); 
 			String   g_start   =  vo.getG_start();
 			String   g_end     =  vo.getG_end();
 			String   wsido     =  vo.getWsido(); 
-			String   wgugun    =  vo.getWgugun(); 
-			String   g_name    =  vo.getG_name(); 
+			String   wgugun    =  vo.getWgugun();
+			
+			String   g_num     =  vo.getG_num(); 
+			
 			String   m_message =  vo.getM_message();
 			
-			this.txtuname.setText(u_name); 
+			this.txtuid.setText(uid); 
 			this.txtwo.setText(mid_name); 
 			this.txtda.setText(gdate); 
 			this.startcb.setSelectedItem(g_start);
 			this.endcb.setSelectedItem(g_end);
 			this.txtlsido.setText(wsido); 
 			this.txtlgugun.setText(wgugun); 
-			this.txtgname.setText(g_name); 
+			this.txtgname.setText(g_num); 
 			this.txtm_message.setText(m_message);
 
 		}
 
 		private georaeVo getViewData() {
-			String   u_name     =  this.txtuname.getText(); 
+			String   uid        =  this.txtuid.getText(); 
+			
 			String   mid_name   =  this.txtwo.getText(); 
 			String   gdate      =  this.txtda.getText(); 
 			String   g_start    =  (String) this.startcb.getSelectedItem();
 			String   g_end      =  (String) this.endcb.getSelectedItem();
 			String   wsido      =  this.txtlsido.getText(); 
-			String   wgugun     =  this.txtlgugun.getText(); 
+			String   wgugun     =  this.txtlgugun.getText();
+			
 			String   g_num      =  this.txtgname.getText(); 
 			String   m_message  =  this.txtm_message.getText();
 
 			georaeVo   vo       = new georaeVo(
-					u_name, mid_name, gdate, g_start, g_end, wsido, wgugun, g_num, m_message);
+					uid, mid_name, gdate, g_start, g_end, wsido, wgugun, g_num, m_message);
 
 			return vo;
 		}
@@ -309,7 +323,7 @@ public class Gearae extends JFrame {
 		
 	public static void main(String[] args) {
 		new Gearae();
-
+		
 	}
 
 }
