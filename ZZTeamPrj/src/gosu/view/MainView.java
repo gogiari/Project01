@@ -335,6 +335,41 @@ public class MainView extends JFrame implements ActionListener{
 				pCenterMypage.repaint();
 			}
 		});
+		
+		tabMypage.addMouseListener(new MouseListener() {
+			//뷁
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 마우스를 클릭하면
+				int row = tabMypage.getSelectedRow();
+				int col = tabMypage.getSelectedColumn();
+				sel = (String) tabMypage.getValueAt(row, 0);
+				val = (String) tabMypage.getValueAt(row, 6);
+				System.out.println(val +" 상황클릭값");
+				System.out.println(e);
+				if(tradeGosu != null)
+					tradeGosu.dispose();
+				if(e.getClickCount() == 2 ) {
+					if(val.equals("요청중"))
+						tradeGosu = new GearaeGosu(sel, mainview);
+					if(val.equals("거래중"))
+						acPage = new AcceptPage(sel, mainview);
+
+				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+		});
 
 		return pCenterMypage;
 	}
@@ -600,8 +635,8 @@ public class MainView extends JFrame implements ActionListener{
 	// 메시지 테이블 데이터
 	private Vector<Vector> getMsgDataList() {
 		gosuDao dao = new gosuDao();
-		System.out.println(dao.getMsgList().get(1).get(1)+"");
-		Vector<Vector> list = dao.getMsgList();
+//		System.out.println(dao.getMsgList().get(1).get(1)+"");
+		Vector<Vector> list = dao.getMsgList(uid);
 		return list;
 	}
 	
@@ -657,7 +692,7 @@ public class MainView extends JFrame implements ActionListener{
 			break;
 		case "회원 정보 수정 / 삭제" :
 			System.out.println("회원 정보 수정 / 삭제");
-			new UserEdit(uid);
+//			new UserEdit(uid);
 			break;
 		case "FAQ" :
 			System.out.println("FAQ버튼");

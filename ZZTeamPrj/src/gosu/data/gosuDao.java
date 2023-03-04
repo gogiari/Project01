@@ -730,7 +730,7 @@ public class gosuDao {
 	}
 
 	// 메시지 테이블 데이터
-	public Vector<Vector> getMsgList() {
+	public Vector<Vector> getMsgList(String uid) {
 		Vector<Vector> list = new Vector<Vector>();
 		String sql = "";
 		sql       += " SELECT ME.GEORAE_CODE GEORAE_CODE, ";
@@ -740,12 +740,15 @@ public class gosuDao {
 		sql       += "  FROM  MESSAGE ME LEFT JOIN GEORAE GR ";
 		sql       += "  ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN USERLIST UL ";
 		sql       += "  ON    ME.U_ID = UL.U_ID ";
+		sql       += "  WHERE ME.U_ID = ?";
+		sql       += "  OR    ME.G_NUM = ?";
 
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
 			psmt = conn.prepareStatement(sql);
-
+			psmt.setString(1, uid);
+			psmt.setString(2, uid);
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				String georae_code = rs.getString("GEORAE_CODE");
