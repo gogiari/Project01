@@ -30,16 +30,16 @@ import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
-public class ResDetail extends JFrame {
-	private JPanel panel_G1, panel_G2, panel_G3, panel_G4, panel_G5;
-	private JLabel logo, title, labG5_0,labG5_1, labG5_2, labG5_3, labG5_4, labG5_5, labG1, labG2, labG3, labG3_1, labG3_2, labG4, labG4_1, labG4_2, labG5, labG6, labG7, line_1,
+public class ResDetail extends JFrame implements ActionListener{
+	JPanel panel_G1, panel_G2, panel_G3, panel_G4, panel_G5;
+	JLabel logo, title, labG5_0,labG5_1, labG5_2, labG5_3, labG5_4, labG5_5, labG1, labG2, labG3, labG3_1, labG3_2, labG4, labG4_1, labG4_2, labG5, labG6, labG7, line_1,
 			line_2, line_3, line_4, line_5, line_6, line_7;
-	private JComboBox comboBoxG1, comboBoxG2;
-	private JTextField textFieldG1;
-	private JTextArea textArea1;
-	private JButton btnG1, btnG2;
-	private JComboBox<String> comboBoxG5, comboBoxG6;
-	private ArrayList<String> comboTime ,comboTimeG2 ;
+	JComboBox comboBoxG1, comboBoxG2;
+	JTextField textFieldG1;
+	JTextArea textArea1;
+	JButton btnG1, btnG2;
+	JComboBox<String> comboBoxG5, comboBoxG6;
+	ArrayList<String> comboTime ,comboTimeG2 ;
 	JComboBox<String> sidoCB, gugunCB;
 
 	// RoundedButton btnG2 = new RoundedButton();
@@ -92,17 +92,17 @@ public class ResDetail extends JFrame {
 		
 		labG5_1 = new JLabel("이름 값");
 		labG5_1.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		labG5_1.setBounds(260, 10, 63, 20);
+		labG5_1.setBounds(260, 10, 132, 20);
 		panel.add(labG5_1);
 		
 		labG5_2 = new JLabel("ID");
 		labG5_2.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		labG5_2.setBounds(335, 10, 28, 20);
+		labG5_2.setBounds(404, 10, 28, 20);
 		panel.add(labG5_2);
 		
 		labG5_3 = new JLabel("id값");
 		labG5_3.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		labG5_3.setBounds(361, 10, 37, 20);
+		labG5_3.setBounds(430, 10, 142, 20);
 		panel.add(labG5_3);
 		
 		labG5_4 = new JLabel("평점");
@@ -112,7 +112,7 @@ public class ResDetail extends JFrame {
 		
 		labG5_5 = new JLabel("평균값");
 		labG5_5.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		labG5_5.setBounds(920, 10, 37, 20);
+		labG5_5.setBounds(920, 10, 88, 20);
 		panel.add(labG5_5);
 		
 		JLabel line_1_1 = new JLabel();
@@ -386,6 +386,7 @@ public class ResDetail extends JFrame {
 //		btn3.setBounds(1061, 10, 100, 30);
 //		panel_G5.add(btn3);
 		
+		btnG1.addActionListener(this);
 
 		comboBoxG1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -416,8 +417,8 @@ public class ResDetail extends JFrame {
 		setSize(1200, 800);
 		setVisible(true);
 		//-----------------------------------------------------------------
-		//뷁
-		labG5_1.setText(sel);
+		
+		getMainDataDetail(sel);
 	}
 
 	// ---------------------------------------------------------------------
@@ -500,6 +501,85 @@ public class ResDetail extends JFrame {
 		return vo;
 	}
 	
+	private void getMainDataDetail(String getSel) {
+		Dao dao = new Dao();
+		Vector<String> list = dao.getMainDataDetail(getSel);
+		
+		String stDateAll = list.get(2);
+		String edDateAll = list.get(3);
+		
+		String stDate = stDateAll.substring(0, 10);   // 시작날짜 model 값 - 완전체 
+		String stTime = stDateAll.substring(11, 19);  // stTime 값 - 미완전체
+		
+		String edDate = edDateAll.substring(0, 10);   // 마감날짜 model 값 - 완전체
+		String edTime = edDateAll.substring(11, 19);  // edTime 값 - 미완전체
+		
+		stTime = getDateDetailFunction(stTime, comboBoxG5 );
+		edTime = getDateDetailFunction(edTime, comboBoxG6 );
+		
+		getDate(stDate, model1 );
+		getDate(edDate, model2 );
+		
+		
+		//------------
+		String combo1 = list.get(0);
+		System.out.println("함수 확인"+ combo1);
+		String combo2 = list.get(1);
+		System.out.println("함수 확인"+ combo2);
+
+		String textf = list.get(4);
+		String texta = list.get(6);
+		String userid = list.get(7);
+		String username = list.get(8);
+
+		this.comboBoxG1.setSelectedItem(combo1);
+		this.comboBoxG2.setSelectedItem(combo2);
+		this.textFieldG1.setText(textf);
+		this.textArea1.setText(texta);
+		this.labG5_3.setText(userid);
+		this.labG5_1.setText(username);
+	}
+	
+	private void getDate(String inputDate, UtilDateModel inputModel ) {
+		String[] date = inputDate.split("-");
+		int dateY = Integer.parseInt(date[0]);
+		int dateM = Integer.parseInt(date[1]) - 1;
+		int dateD = Integer.parseInt(date[2]);
+		inputModel.setDate(dateY, dateM, dateD);
+		inputModel.setSelected(true);
+	}
+
+	// 수정 및 상세보기 날짜 출력 기능
+	private String getDateDetailFunction(String DateInput, JComboBox<String> combobox) {
+		DateInput = DateInput.substring(0, 2) + "시" + DateInput.substring(3, 5) + "분";
+		String text1 = DateInput.substring(0, 2);
+		String text2 = DateInput.substring(3, 5);
+		int dateindex = Integer.parseInt(DateInput.substring(0, 2));
+
+		if (dateindex < 13) {
+			String conString = "오전";
+			if(text1.indexOf("0") == 0) {text1 = text1.replace("0", "");}
+			DateInput = conString + text1 + "시" + text2 + "분";
+			if(text2.indexOf("00") == 00) {DateInput = conString + text1 + "시" + text2;}
+		} else {
+			String conString = "오후";
+			
+			if(text1.indexOf("0") == 0) {text1.replace("0", "");}
+			DateInput = conString + text1 + "시" + text2 + "분";
+			if(text2.indexOf("00") == 00) {DateInput = conString + text1 + "시" + text2;}
+		}
+		
+		if (comboTime.contains(DateInput)) {
+			combobox.setSelectedItem(DateInput.trim());		
+		}
+		
+		String DateAll = DateInput;
+		return DateAll;
+	}
+	
+	
+	
+	
 	// ------------------------------------------------------------
 	private void cancelMember() {
 		clearViewData();
@@ -537,4 +617,10 @@ public class ResDetail extends JFrame {
 	public static void main(String[] args) {
 		new ResDetail(null, null);
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		new Gearae(this);
+	}
+	
 }

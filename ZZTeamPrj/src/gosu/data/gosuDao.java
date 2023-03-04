@@ -730,7 +730,7 @@ public class gosuDao {
 	}
 
 	// 메시지 테이블 데이터
-	public Vector<Vector> getMsgList() {
+	public Vector<Vector> getMsgList(String uid) {
 		Vector<Vector> list = new Vector<Vector>();
 		String sql = "";
 		sql       += " SELECT ME.GEORAE_CODE GEORAE_CODE, ";
@@ -740,12 +740,15 @@ public class gosuDao {
 		sql       += "  FROM  MESSAGE ME LEFT JOIN GEORAE GR ";
 		sql       += "  ON    ME.GEORAE_CODE = GR.GEORAE_CODE LEFT JOIN USERLIST UL ";
 		sql       += "  ON    ME.U_ID = UL.U_ID ";
+		sql       += "  WHERE ME.U_ID = ?";
+		sql       += "  OR    ME.G_NUM = ?";
 
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
 			psmt = conn.prepareStatement(sql);
-
+			psmt.setString(1, uid);
+			psmt.setString(2, uid);
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				String georae_code = rs.getString("GEORAE_CODE");
@@ -847,7 +850,7 @@ public class gosuDao {
 
 		return list;
 	}
-
+/*
 	// 결제조회
 	public gosuVo2 getMember2(String georae_code) {
 
@@ -891,7 +894,7 @@ public class gosuDao {
 
 		return vo2;
 	}
-
+*/
 
 	// 수락페이지조회
 	public gosuVo2 getMember(String georae_code) {
@@ -923,7 +926,7 @@ public class gosuDao {
 				String u_id = rs.getString("U_ID");
 				
 
-				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price);
+				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price,u_id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -974,10 +977,10 @@ public class gosuDao {
 	public int insertGereo(gosuVo2 vo2) {
 		String review = vo2.getReview();
 		String score  = vo2.getScore();
-		String g_num  =  vo2.getG_num();
+		String u_id  =  vo2.getU_id();
 		String gereo_code = vo2.getGeorae_code();
 		
-		int aftcnt = insertGereo(gereo_code,review, score,g_num);
+		int aftcnt = insertGereo(gereo_code,review, score,u_id);
 		return aftcnt;
 	}
 
@@ -1028,7 +1031,7 @@ public class gosuDao {
 		Vector<Vector> list = new Vector<Vector>(); // 조회된 결과전체 대응 : rs
 
 		String sql = "SELECT F.U_ID, F.FAQ_CODE, F.F_HEAD , F.F_BODY, F.F_CHECK\r\n" + "FROM   FAQ F, USERLIST U\r\n"
-				+ "WHERE  F.U_ID = U.U_ID\r\n"
+				+ " WHERE  F.U_ID = U.U_ID\r\n"
 				+ "AND  U.U_ID = ?\r\n";
 		// userid 같을때
 

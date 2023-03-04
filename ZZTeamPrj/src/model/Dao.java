@@ -277,6 +277,65 @@ public class Dao {
 		System.out.println("상세보기 출력" + comlist);
 		return comlist;
 	}
+	
+	// 메인 상세보기
+	public Vector<String> getMainDataDetail(String sel) {
+
+		Vector<String> comlist = new Vector<String>();
+
+		String sql = "";
+		sql += "SELECT  B.BI_NAME, M.MID_NAME, W.SDATE, W.EDATE, W.PRICE, W.WSIDO, W.PRMESSAGE, G.U_ID, U.USERNAME";
+		sql += " FROM USERLIST U INNER JOIN GOSU G ON U.U_ID = G.U_ID INNER JOIN GWORK W ON G.G_NUM = W.G_NUM INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM INNER JOIN BIGLIST B ON B.BI_NUM = M.BI_NUM ";
+		sql += " WHERE W_NUM = ? ";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, sel);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String biName = rs.getString("BI_NAME");
+				String midName = rs.getString("MID_NAME");
+				String sDate = rs.getString("SDATE");
+				String eDate = rs.getString("EDATE");
+				String price = rs.getString("PRICE");
+				String wSido = rs.getString("WSIDO");
+				String prMess = rs.getString("PRMESSAGE");
+				String userid = rs.getString("U_ID");
+				String username = rs.getString("USERNAME");
+
+				Vector v = new Vector();
+
+				v.add(biName);
+				v.add(midName);
+				v.add(sDate);
+				v.add(eDate);
+				v.add(price);
+				v.add(wSido);
+				v.add(prMess);
+				v.add(userid);
+				v.add(username);
+
+				comlist.addAll(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		System.out.println("상세보기 출력" + comlist);
+		return comlist;
+	}
 
 	// 수정
 	public int updateInfo(Vo vo, String GNum) {

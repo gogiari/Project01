@@ -62,7 +62,7 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 		btnDelete.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				removePrvGoList("G01");
+				//removePrvGoList("G01");
 			}
 		});
 		
@@ -78,7 +78,7 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 		
 	}
 
-	protected void removePrvGoList(String gNum) {
+	/*protected void removePrvGoList(String gNum) {
 		Dao dao = new Dao();
 		int row = table.getSelectedRow();
 		
@@ -161,7 +161,7 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 
 	public void jTableRefresh() {
 		table.repaint();
-	}
+	}*/
 
 	//-----------------------------------------------------------------
 	private Vector<? extends Vector> getDataList() {
