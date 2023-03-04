@@ -926,7 +926,7 @@ public class gosuDao {
 				String u_id = rs.getString("U_ID");
 				
 
-				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price);
+				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price,u_id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -977,10 +977,10 @@ public class gosuDao {
 	public int insertGereo(gosuVo2 vo2) {
 		String review = vo2.getReview();
 		String score  = vo2.getScore();
-		String g_num  =  vo2.getG_num();
+		String u_id  =  vo2.getU_id();
 		String gereo_code = vo2.getGeorae_code();
 		
-		int aftcnt = insertGereo(gereo_code,review, score,g_num);
+		int aftcnt = insertGereo(gereo_code,review, score,u_id);
 		return aftcnt;
 	}
 

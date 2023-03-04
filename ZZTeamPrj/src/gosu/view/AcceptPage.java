@@ -29,6 +29,7 @@ public class AcceptPage extends JFrame{
 	MainView mainview = null;
 	PaymentPage          pay   = null;  // 회원가입창 전역변수
 	static AcceptPage    acc = null;
+	private JTextField textField;
 
 	// 조회한 결과를 vo로 돌려받는다
 	
@@ -140,7 +141,7 @@ public class AcceptPage extends JFrame{
 		txtDd = new JTextField();
 		txtDd.setBackground(new Color(255, 255, 255));
 		txtDd.setText("");
-		txtDd.setEditable(false);
+		//txtDd.setEditable(false);
 		txtDd.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
 		txtDd.setBounds(131, 100, 268, 31);
 		frame.getContentPane().add(txtDd);
@@ -202,6 +203,16 @@ public class AcceptPage extends JFrame{
 		btnFind.setBackground(Color.CYAN);
 		btnFind.setBounds(20, 450, 108, 45);
 		frame.getContentPane().add(btnFind);
+		
+		textField = new JTextField();
+		textField.setBounds(150, 60, 141, 27);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("\uACE0\uC218ID");
+		lblNewLabel_2.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		lblNewLabel_2.setBounds(94, 66, 57, 15);
+		frame.getContentPane().add(lblNewLabel_2);
 		
 		
 		
@@ -280,13 +291,13 @@ public class AcceptPage extends JFrame{
 		String   sdate  =  this.textField_4.getText();
 		String   gcheck  =  this.textField_5.getText();
 		String   price  =  this.textField_6.getText();
-		
+		String   u_id   = this.textField.getText();
 		
 		
 		
 		
 		gosuVo2 vo        =  new gosuVo2(georae_code, uname, midname, gdate, 
-				sdate, gcheck, price);
+				sdate, gcheck, price,u_id);
 		return   vo;
 	}
 
@@ -300,6 +311,7 @@ public class AcceptPage extends JFrame{
 		String   sdate          =  vo2.getSdate();  // "남", "여", ""  
 		String   gcheck         =  vo2.getG_check();
 		String   price          =  vo2.getPrice();
+		String   u_id           =  vo2.getU_id();
 				
 		this.txtDd.setText( georae_code );
 		this.textField_1.setText( uname );
@@ -308,11 +320,9 @@ public class AcceptPage extends JFrame{
 		this.textField_4.setText( sdate );
 		this.textField_5.setText( gcheck );
 		this.textField_6.setText( price );
-		
+		this.textField.setText(u_id);
 			
 
 	
 }
-
-
 }
