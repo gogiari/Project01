@@ -138,6 +138,48 @@ public class messageDao {
 		}
 		return  aftcnt;
 	}
+	// 결제페이지에서 결제 완료시 메시지
+		public int mess3(String g_code4, String messnum, String mread, String m_date, String title) {
+			
+			System.out.println(g_code4);
+			
+			String sql = " INSERT INTO MESSAGE " 
+					+ " (GEORAE_CODE, MESSNUM, MREAD, M_DATE, TITLE) "
+					+ "  VALUES ( (SELECT GEORAE_CODE FROM GEORAE WHERE GEORAE_CODE= '" + g_code4 + "' ),"
+			        +              " M_SEQ.nextval, '읽지않음', SYSDATE, '결제완료') ";
+			
+			int aftcnt = 0;
+			PreparedStatement pstmt = null;
+
+			try {
+				pstmt = conn.prepareStatement(sql);			
+				aftcnt = pstmt.executeUpdate();		
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if(pstmt != null) pstmt.close();
+
+				} catch (SQLException e) {
+
+				}
+			}
+			return aftcnt;
+
+		}
+		
+		public int mess3(updateVo vo) {
+			
+			String   g_code4    = vo.getG_code();
+			String   messnum    = vo.getMessnum();
+			String   mread      = vo.getMread();
+			String   m_date     = vo.getM_date();
+			String   title      = vo.getTitle();
+			
+			int aftcnt = mess3(g_code4, messnum, mread, m_date, title);
+			return aftcnt;
+		}
 
 
 

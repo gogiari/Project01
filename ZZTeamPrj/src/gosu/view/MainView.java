@@ -647,9 +647,9 @@ public class MainView extends JFrame implements ActionListener{
 		cols.add("대분류");
 		cols.add("중분류");
 		if(cbxMypage.getSelectedItem().toString() == "회원") {
-			cols.add("고수이름");
+			cols.add("고수이름(상대방)");
 			} else {
-		cols.add("회원이름");
+		cols.add("회원이름(상대방)");
 			}
 		cols.add("날짜");
 		cols.add("금액");
