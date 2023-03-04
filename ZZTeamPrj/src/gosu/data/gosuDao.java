@@ -850,7 +850,7 @@ public class gosuDao {
 
 		return list;
 	}
-
+/*
 	// 결제조회
 	public gosuVo2 getMember2(String georae_code) {
 
@@ -894,7 +894,7 @@ public class gosuDao {
 
 		return vo2;
 	}
-
+*/
 
 	// 수락페이지조회
 	public gosuVo2 getMember(String georae_code) {

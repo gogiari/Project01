@@ -136,7 +136,7 @@ public class PaymentPage extends JFrame{
 		frame.getContentPane().add(btnNewButton_2);
 		
 		txtGr = new JTextField();
-		txtGr.setText("GR0030");
+		txtGr.setText("GR0059");
 		txtGr.setEditable(false);
 		txtGr.setBounds(133, 89, 167, 28);
 		frame.getContentPane().add(txtGr);
@@ -261,6 +261,8 @@ public class PaymentPage extends JFrame{
 
 	private gosuVo2 getViewData() {
 		
+		
+		
 		String   review       =  this.textArea.getText();
 		String   u_id         =  this.txtHong.getText();
 		String   gereo_code   =  this.txtGr.getText();
@@ -273,7 +275,7 @@ public class PaymentPage extends JFrame{
 		if( this.rb4.isSelected() )    score = "4";
 		if( this.rb5.isSelected() )    score = "5";
 		
-		gosuVo2  vo2        =  new gosuVo2( review,score,u_id,gereo_code );
+		gosuVo2  vo2        =  new gosuVo2( gereo_code ,u_id, score,review );
 		return   vo2;
 	}
 
