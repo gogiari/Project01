@@ -24,11 +24,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 
 import gosu.data.gosuDao;
-import gosu.data.gosuDao.GugunComboBoxModel.sidoComboBoxModel;
 import gosu.data.userVo;
-import javax.swing.JSeparator;
 
 public class createPage extends JFrame {
 	TextField idtxt, nametxt, phonetxt, emailtxt;
@@ -142,14 +141,15 @@ public class createPage extends JFrame {
 		sidoCB.setModel(new SidoComboBoxModel());
 		sidoCB.setBounds(24, 485, 93, 23);
 		panel.add(sidoCB);
-		
 		sidoCB.addItemListener(new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
+			
 				if(e.getStateChange() == ItemEvent.SELECTED) {
 					String sido = (String)sidoCB.getSelectedItem();
 					gugunCB.setModel(new GugunComboBoxModel(sido));
+					
 				}
 				
 			}
