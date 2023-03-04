@@ -23,6 +23,8 @@ import gosu.data.gosuDao;
 
 
 public class FAQList extends JFrame implements MouseListener{
+	
+	String uid;
 
 	
 	private JFrame frame;
@@ -35,7 +37,8 @@ public class FAQList extends JFrame implements MouseListener{
 	FAQ                faq = null;  
     static FAQList    fList = null;																	
 	
-	public  FAQList() {
+	public  FAQList(String uid) {
+		this.uid = uid;
 		initComponent();
 	}
 	
@@ -99,7 +102,7 @@ public class FAQList extends JFrame implements MouseListener{
 
 	private Vector<Vector> getDataList() {
 		gosuDao         dao   =  new gosuDao();
-		Vector<Vector>  list  =  dao.getHList();
+		Vector<Vector>  list  =  dao.getHList(uid);
 		return  list;
 	}
 
@@ -143,7 +146,7 @@ public class FAQList extends JFrame implements MouseListener{
 	
 	
 	public static void main(String[] args) {
-		fList = new FAQList();
+		fList = new FAQList(null);
 	}
 	
        public void jTableRefresh() {

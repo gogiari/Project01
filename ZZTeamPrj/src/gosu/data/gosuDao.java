@@ -778,7 +778,7 @@ public class gosuDao {
 	}
 
 	// 마이페이지 테이블 데이터
-	public Vector<Vector> getmylist(String select) {
+	public Vector<Vector> getmylist(String select, String uid) {
 		Vector<Vector> list = new Vector<Vector>( );
 		String sql = "";
 		sql       += "SELECT GR.GEORAE_CODE GEORAE_CODE, ";
@@ -806,10 +806,10 @@ public class gosuDao {
 		ResultSet rs = null;
 		try {
 			psmt = conn.prepareStatement(sql);
-			if(select == "회원") {
-				psmt.setString(1, "123");
+			if(select.equals("회원")) {
+				psmt.setString(1, uid);
 			} else {
-				psmt.setString(1, "123");
+				psmt.setString(1, uid);
 			}
 
 			rs = psmt.executeQuery();
@@ -1024,18 +1024,19 @@ public class gosuDao {
 		return aftcnt;
 	}
 	// FAQ 리스트 회원용
-	public Vector<Vector> getHList() {
+	public Vector<Vector> getHList(String uid) {
 		Vector<Vector> list = new Vector<Vector>(); // 조회된 결과전체 대응 : rs
 
 		String sql = "SELECT F.U_ID, F.FAQ_CODE, F.F_HEAD , F.F_BODY, F.F_CHECK\r\n" + "FROM   FAQ F, USERLIST U\r\n"
-				+ "WHERE  F.U_ID = U.U_ID\r\n";
+				+ "WHERE  F.U_ID = U.U_ID\r\n"
+				+ "AND  U.U_ID = ?\r\n";
 		// userid 같을때
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-
+			pstmt.setString(1, uid);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				String u_id = rs.getString("U_ID");
@@ -1311,6 +1312,43 @@ public class gosuDao {
 		return aftcnt;
 
 
+	}
+
+	public int editUser() {
+		return 0;
+	}
+	// 회원 수정
+	public int editUser(userVo vo) {
+		int aftcnt = 0;
+		String  sql = "";
+		sql     +=" UPDATE USERLIST "
+				+ "  SET   USERPW   = ?, "
+				+ "        USERNAME = ?, "
+				+ "        PHONE    = ?, "
+				+ "        GENDER   = ?, "
+				+ "        U_SIDO   = ?, "
+				+ "        U_GUGUN  = ? "
+				+ "  WHERE U_ID     = ? ";
+		PreparedStatement  pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getPw() );
+			pstmt.setString(2, vo.getName() );
+			pstmt.setString(3, vo.getPhone() );
+			pstmt.setString(4, vo.getGender() );
+			pstmt.setString(5, vo.getSido() );
+			pstmt.setString(6, vo.getGugun() );
+			
+			aftcnt = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null ) pstmt.close();
+			} catch (SQLException e) {			
+			}
+		}		
+		return aftcnt;
 	}
 }			 
 

@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -60,7 +61,7 @@ public class MainView extends JFrame implements ActionListener{
 	// 마이 페이지 변수
 	JLabel lblMyname;
 	JComboBox cbxMypage;
-	JButton btnGosuCreate, bntUserSet;
+	JButton btnGosuCreate, bntUserSet, btnFAQ;
 	JTable tabMypage;
 	JScrollPane scrMypage;
 	String uid;
@@ -290,6 +291,14 @@ public class MainView extends JFrame implements ActionListener{
 		bntUserSet.setBackground(new Color(255, 255, 255));
 		bntUserSet.setForeground(new Color(0, 128, 192));
 		pCenterMypage.add(bntUserSet);
+		
+		btnFAQ = new JButton("FAQ");
+		btnFAQ.setBounds(30, 703, 142, 17);
+		btnFAQ.setBorder(lb);
+		btnFAQ.setBackground(new Color(255, 255, 255));
+		btnFAQ.setForeground(new Color(0, 128, 192));
+		pCenterMypage.add(btnFAQ);
+		btnFAQ.addActionListener(this);
 		
 		bntUserSet.setVisible(false);
 
@@ -616,7 +625,7 @@ public class MainView extends JFrame implements ActionListener{
 
 	private Vector<Vector> getMyDataList() {
 		gosuDao dao = new gosuDao();
-		Vector<Vector> list = dao.getmylist(cbxMypage.getSelectedItem().toString());
+		Vector<Vector> list = dao.getmylist(cbxMypage.getSelectedItem().toString(), uid);
 		return list;
 	}
 
@@ -648,6 +657,11 @@ public class MainView extends JFrame implements ActionListener{
 			break;
 		case "회원 정보 수정 / 삭제" :
 			System.out.println("회원 정보 수정 / 삭제");
+			new UserEdit(uid);
+			break;
+		case "FAQ" :
+			System.out.println("FAQ버튼");
+			new FAQList(uid);
 			break;
 
 		}
