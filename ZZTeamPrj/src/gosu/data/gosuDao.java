@@ -522,7 +522,6 @@ public class gosuDao {
 
 			pstmt1.setString(1, g_num);
 			pstmt1.setString(2, g_start);
-			pstmt1.setString(3, g_end);
 			pstmt1.setString(4, m_message);
 
 			aftcnt = pstmt1.executeUpdate();	
@@ -541,18 +540,19 @@ public class gosuDao {
 
 
 		}
-	public int addgeorae(georaeVo vo) {				
+		public int addgeorae(georaeVo vo) {				
 
-		String   g_code     = vo.getG_code();
-		String   g_start    = vo.getG_start();
-		String   g_end      = vo.getG_end();
-		String   m_message  = vo.getM_message();
-		String   g_message  = vo.getG_message();
-		String   g_check    = vo.getG_check();
+			String   g_num      = vo.getG_num();
+			String   g_code     = vo.getG_code();
+			String   g_start    = vo.getG_start();
+			String   g_end      = vo.getG_end();
+			String   m_message  = vo.getM_message();
+			String   g_message  = vo.getG_message();
+			String   g_check    = vo.getG_check();
 
-		int aftcnt = addgeorae(g_code, g_start, g_end, m_message, g_message, g_check);
-		return aftcnt;				
-	}	
+			int aftcnt = addgeorae(g_num, g_code, g_start, g_end, m_message, g_message, g_check);
+			return aftcnt;				
+		}	
 
 	// 회원 거래요청서에서 메시지 리스트에 저장
 	public int select(String g_code, String messnum, String mread, String m_date, String title) {
