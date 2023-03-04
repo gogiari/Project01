@@ -63,7 +63,7 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 			}
 		});
 		lblNewLabel_1.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 17));
-		lblNewLabel_1.setForeground(SystemColor.textHighlight);
+		lblNewLabel_1.setForeground(new Color(0, 0, 0));
 		lblNewLabel_1.setBounds(775, 0, 22, 24);
 		panel.add(lblNewLabel_1);
 
@@ -81,7 +81,7 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 		GosuPane.setLayout(null);
 
 		JLabel lblGosu = new JLabel("Gosu List");
-		lblGosu.setForeground(SystemColor.textHighlight);
+		lblGosu.setForeground(new Color(0, 0, 0));
 		lblGosu.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 27));
 		lblGosu.setBounds(317, 10, 154, 32);
 		GosuPane.add(lblGosu);
@@ -105,7 +105,7 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 
 		JLabel lblFAQ;
 		lblFAQ = new JLabel("FAQ List");
-		lblFAQ.setForeground(SystemColor.textHighlight);
+		lblFAQ.setForeground(new Color(0, 0, 0));
 		lblFAQ.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 27));
 		lblFAQ.setBounds(317, 10, 154, 32);
 		FAQPane.add(lblFAQ);
@@ -123,7 +123,7 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 		FAQPane.add(FAQ1);
 
 		JPanel mainBtnPane = new JPanel();
-		mainBtnPane.setBackground(new Color(135, 206, 250));
+		mainBtnPane.setBackground(new Color(204, 204, 255));
 		mainBtnPane.setBounds(0, 411, 807, 95);
 		panel.add(mainBtnPane);
 		mainBtnPane.setLayout(null);
@@ -131,9 +131,9 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 		Button FAQBtn = new Button("FAQ List");
 		FAQBtn.setBounds(561, 0, 144, 83);
 		mainBtnPane.add(FAQBtn);
-		FAQBtn.setForeground(new Color(255, 255, 255));
+		FAQBtn.setForeground(new Color(0, 0, 0));
 		FAQBtn.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		FAQBtn.setBackground(new Color(135, 206, 250));
+		FAQBtn.setBackground(new Color(204, 204, 255));
 
 		JSeparator client1 = new JSeparator();
 		client1.setForeground(Color.BLACK);
@@ -147,24 +147,29 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 
 		Button ClientLBtn = new Button("ClientList");
 		JLabel lblClient = new JLabel("Client List");
-		lblClient.setForeground(SystemColor.textHighlight);
+		lblClient.setForeground(new Color(0, 0, 0));
 		lblClient.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 27));
 		lblClient.setBounds(317, 10, 154, 32);
 		ClientPane.add(lblClient);
 
 		ClientLBtn.setBounds(64, 0, 133, 83);
 		mainBtnPane.add(ClientLBtn);
-		ClientLBtn.setForeground(new Color(255, 255, 255));
+		ClientLBtn.setForeground(new Color(0, 0, 0));
 		ClientLBtn.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		ClientLBtn.setBackground(new Color(135, 206, 250));
+		ClientLBtn.setBackground(new Color(204, 204, 255));
 
-		GosuBtn.setForeground(Color.WHITE);
+		GosuBtn.setForeground(new Color(0, 0, 0));
 		GosuBtn.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		GosuBtn.setBackground(new Color(135, 206, 250));
+		GosuBtn.setBackground(new Color(204, 204, 255));
 		GosuBtn.setBounds(321, 0, 133, 83);
 		mainBtnPane.add(GosuBtn);
 		// 회원 리스트
 		userTable = new JTable();
+		//userTable.setShowVerticalLines(false);
+		userTable.getTableHeader().setBackground(new Color(204, 204, 255));
+		userTable.getTableHeader().setForeground(Color.BLACK);
+		userTable.setSelectionBackground(Color.LIGHT_GRAY);
+		userTable.setRowHeight(25);
 		userTable.setModel(new DefaultTableModel(getUserList(), getUserColumnList()) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -182,7 +187,7 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 		Button deleteUser = new Button("Delete User");
 		deleteUser.setForeground(new Color(255, 0, 0));
 		deleteUser.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		deleteUser.setBackground(new Color(135, 206, 250));
+		deleteUser.setBackground(new Color(204, 204, 255));
 		deleteUser.setBounds(320, 376, 132, 28);
 		ClientPane.add(deleteUser);
 
@@ -206,6 +211,10 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 
 		// 고수 리스트
 		gosuTable = new JTable();
+		gosuTable.getTableHeader().setBackground(new Color(204, 204, 255));
+		gosuTable.getTableHeader().setForeground(Color.BLACK);
+		gosuTable.setSelectionBackground(Color.LIGHT_GRAY);
+		gosuTable.setRowHeight(25);
 		gosuTable.setModel(new DefaultTableModel(getGosuList(), getGosuColumnList()) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -261,7 +270,7 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 		deleteGosu.setActionCommand("Delete Gosu");
 		deleteGosu.setForeground(Color.RED);
 		deleteGosu.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		deleteGosu.setBackground(new Color(135, 206, 250));
+		deleteGosu.setBackground(new Color(204, 204, 255));
 		deleteGosu.setBounds(320, 376, 132, 28);
 		GosuPane.add(deleteGosu);
 		deleteGosu.addActionListener(new ActionListener() {
@@ -281,6 +290,10 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 
 		// FAQ 테이블리스트
 		FAQTable = new JTable();
+		FAQTable.getTableHeader().setBackground(new Color(204, 204, 255));
+		FAQTable.getTableHeader().setForeground(Color.BLACK);
+		FAQTable.setSelectionBackground(Color.LIGHT_GRAY);
+		FAQTable.setRowHeight(25);
 		FAQTable.setModel(new DefaultTableModel(getFAQList(), getFAQColumnList()) {
 			;
 			@Override
@@ -298,7 +311,7 @@ public class ConstructorPage extends JFrame implements MouseListener, ActionList
 		REP = new Button("Rep / Alt");
 		REP.setForeground(Color.BLACK);
 		REP.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
-		REP.setBackground(new Color(135, 206, 250));
+		REP.setBackground(new Color(204, 204, 255));
 		REP.setActionCommand("REPLY");
 		REP.setBounds(320, 376, 132, 28);
 		FAQPane.add(REP);

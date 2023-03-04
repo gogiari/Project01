@@ -38,7 +38,7 @@ public class loginPage extends JFrame implements ActionListener {
 		setBounds(100, 100, 721, 480);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(0, 0, 139));
-		contentPane.setBackground(new Color(102, 204, 255));
+		contentPane.setBackground(new Color(204, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -56,57 +56,57 @@ public class loginPage extends JFrame implements ActionListener {
 		panel.add(lblNewLabel_1);
 
 		Label label = new Label("Share Ability");
-		label.setForeground(new Color(0, 153, 204));
-		label.setFont(new Font("Comic Sans MS", Font.ITALIC, 32));
+		label.setForeground(new Color(0, 0, 0));
+		label.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 32));
 		label.setAlignment(Label.CENTER);
-		label.setBounds(50, 358, 200, 36);
+		label.setBounds(19, 342, 241, 65);
 		panel.add(label);
 
 		Button SignUp = new Button("SignUp");
-		SignUp.setForeground(new Color(255, 255, 0));
-		SignUp.setBackground(new Color(135, 206, 250));
-		SignUp.setFont(new Font("Sitka Text", Font.ITALIC, 18));
-		SignUp.setBounds(427, 291, 194, 32);
+		SignUp.setForeground(new Color(0, 0, 0));
+		SignUp.setBackground(Color.WHITE);
+		SignUp.setFont(new Font("Arial", Font.ITALIC, 15));
+		SignUp.setBounds(443, 326, 137, 23);
 		contentPane.add(SignUp);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(Color.WHITE);
 		separator.setBackground(Color.WHITE);
-		separator.setBounds(400, 172, 248, 2);
+		separator.setBounds(368, 166, 248, 2);
 		contentPane.add(separator);
 
 		JLabel lblNewLabel = new JLabel("User ID ");
-		lblNewLabel.setForeground(Color.YELLOW);
-		lblNewLabel.setFont(new Font("Sitka Text", Font.ITALIC, 15));
-		lblNewLabel.setBounds(401, 120, 80, 23);
+		lblNewLabel.setForeground(new Color(0, 0, 0));
+		lblNewLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+		lblNewLabel.setBounds(365, 138, 114, 23);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblPw = new JLabel("Password");
-		lblPw.setForeground(Color.YELLOW);
-		lblPw.setFont(new Font("Sitka Text", Font.ITALIC, 15));
-		lblPw.setBounds(400, 189, 92, 23);
+		lblPw.setForeground(new Color(0, 0, 0));
+		lblPw.setFont(new Font("Calibri", Font.PLAIN, 20));
+		lblPw.setBounds(369, 222, 132, 23);
 		contentPane.add(lblPw);
 
 		idU = new TextField();
 		idU.setForeground(Color.BLACK);
 		idU.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		idU.setColumns(10);
-		idU.setBackground(SystemColor.window);
-		idU.setBounds(400, 149, 248, 23);
+		idU.setBackground(new Color(255, 255, 255));
+		idU.setBounds(370, 176, 245, 23);
 		contentPane.add(idU);
 
 		pwU = new JPasswordField();
 		pwU.setForeground(Color.BLACK);
 		pwU.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		pwU.setColumns(10);
-		pwU.setBackground(SystemColor.window);
-		pwU.setBounds(400, 215, 248, 23);
+		pwU.setBackground(new Color(255, 255, 255));
+		pwU.setBounds(373, 259, 245, 23);
 		contentPane.add(pwU);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.WHITE);
 		separator_1.setBackground(Color.WHITE);
-		separator_1.setBounds(400, 238, 248, 2);
+		separator_1.setBounds(372, 251, 248, 2);
 		contentPane.add(separator_1);
 
 		JLabel lbl_Close = new JLabel("X");
@@ -119,7 +119,7 @@ public class loginPage extends JFrame implements ActionListener {
 		});
 		lbl_Close.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_Close.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 17));
-		lbl_Close.setBounds(679, 0, 26, 23);
+		lbl_Close.setBounds(679, 0, 42, 23);
 		contentPane.add(lbl_Close);
 		Button create = new Button("Create");
 
@@ -130,24 +130,18 @@ public class loginPage extends JFrame implements ActionListener {
 
 			}
 		});
-		create.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 12));
-		create.setBackground(new Color(135, 206, 250));
-		create.setForeground(Color.YELLOW);
-		create.setBounds(439, 339, 76, 23);
+		create.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 12));
+		create.setBackground(Color.WHITE);
+		create.setForeground(new Color(0, 0, 0));
+		create.setBounds(395, 382, 76, 23);
 		contentPane.add(create);
 		
 		findBtn = new Button("Find User");
-		findBtn.setForeground(Color.YELLOW);
+		findBtn.setForeground(new Color(0, 0, 0));
 		findBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 12));
-		findBtn.setBackground(new Color(135, 206, 250));
-		findBtn.setBounds(537, 339, 76, 23);
+		findBtn.setBackground(Color.WHITE);
+		findBtn.setBounds(545, 381, 76, 23);
 		contentPane.add(findBtn);
-		
-		JLabel lblWelcome = new JLabel("Welcome !");
-		lblWelcome.setForeground(Color.YELLOW);
-		lblWelcome.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 50));
-		lblWelcome.setBounds(401, 33, 344, 65);
-		contentPane.add(lblWelcome);
 		
 		findBtn.addActionListener(new ActionListener() {
 			

@@ -37,15 +37,15 @@ public class rep extends JFrame{
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(new Color(204, 204, 255));
 		panel.setLayout(null);
 		panel.setBounds(0, 0, 462, 547);
 		getContentPane().add(panel);
 		
 		JLabel lblFaqcode = new JLabel("F_Code");
-		lblFaqcode.setForeground(SystemColor.textHighlight);
+		lblFaqcode.setForeground(new Color(0, 0, 0));
 		lblFaqcode.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
-		lblFaqcode.setBackground(Color.WHITE);
+		lblFaqcode.setBackground(new Color(0, 0, 0));
 		lblFaqcode.setBounds(10, 10, 60, 15);
 		panel.add(lblFaqcode);
 		
@@ -59,7 +59,7 @@ public class rep extends JFrame{
 		fcodetxt.setEditable(false);
 		
 		JLabel lblUid = new JLabel("U_ID");
-		lblUid.setForeground(SystemColor.textHighlight);
+		lblUid.setForeground(new Color(0, 0, 0));
 		lblUid.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
 		lblUid.setBackground(Color.WHITE);
 		lblUid.setBounds(128, 10, 60, 15);
@@ -75,7 +75,7 @@ public class rep extends JFrame{
 		idtxt.setEditable(false);
 		
 		JLabel lblFdate = new JLabel("F_date");
-		lblFdate.setForeground(SystemColor.textHighlight);
+		lblFdate.setForeground(new Color(0, 0, 0));
 		lblFdate.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
 		lblFdate.setBackground(Color.WHITE);
 		lblFdate.setBounds(252, 10, 60, 15);
@@ -91,7 +91,7 @@ public class rep extends JFrame{
 		datetxt.setEditable(false);
 		
 		JLabel lblhead = new JLabel("head");
-		lblhead.setForeground(SystemColor.textHighlight);
+		lblhead.setForeground(new Color(0, 0, 0));
 		lblhead.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
 		lblhead.setBackground(Color.WHITE);
 		lblhead.setBounds(10, 60, 60, 15);
@@ -107,7 +107,7 @@ public class rep extends JFrame{
 		headtxt.setEditable(false);
 		
 		JLabel lblbody = new JLabel("body");
-		lblbody.setForeground(SystemColor.textHighlight);
+		lblbody.setForeground(new Color(0, 0, 0));
 		lblbody.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
 		lblbody.setBackground(Color.WHITE);
 		lblbody.setBounds(10, 110, 60, 15);
@@ -118,12 +118,12 @@ public class rep extends JFrame{
 		bodytxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		bodytxt.setColumns(10);
 		bodytxt.setBackground(Color.WHITE);
-		bodytxt.setBounds(0, 131, 452, 150);
+		bodytxt.setBounds(10, 131, 442, 150);
 		panel.add(bodytxt);
 		bodytxt.setEditable(false);
 		
 		JLabel lblbody_1 = new JLabel("Rep");
-		lblbody_1.setForeground(SystemColor.textHighlight);
+		lblbody_1.setForeground(new Color(0, 0, 0));
 		lblbody_1.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
 		lblbody_1.setBackground(Color.WHITE);
 		lblbody_1.setBounds(10, 287, 60, 15);
@@ -134,13 +134,13 @@ public class rep extends JFrame{
 		reptxt.setFont(new Font("Sitka Text", Font.ITALIC, 13));
 		reptxt.setColumns(10);
 		reptxt.setBackground(Color.WHITE);
-		reptxt.setBounds(0, 308, 452, 159);
+		reptxt.setBounds(10, 308, 442, 159);
 		panel.add(reptxt);
 		
 		sendBtn = new Button("Send");
-		sendBtn.setForeground(new Color(30, 144, 255));
+		sendBtn.setForeground(new Color(0, 0, 0));
 		sendBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		sendBtn.setBackground(new Color(240, 248, 255));
+		sendBtn.setBackground(new Color(255, 255, 255));
 		sendBtn.setBounds(80, 500, 96, 23);
 		panel.add(sendBtn);
 		sendBtn.addActionListener(new ActionListener() {
@@ -152,9 +152,9 @@ public class rep extends JFrame{
 		});
 		
 		Button cancelBtn = new Button("Cancel");
-		cancelBtn.setForeground(new Color(30, 144, 255));
+		cancelBtn.setForeground(new Color(0, 0, 0));
 		cancelBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		cancelBtn.setBackground(new Color(240, 248, 255));
+		cancelBtn.setBackground(new Color(255, 255, 255));
 		cancelBtn.setBounds(249, 500, 96, 23);
 		panel.add(cancelBtn);
 		

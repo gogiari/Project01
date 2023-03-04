@@ -20,6 +20,7 @@ import gosu.data.userVo;
 import javax.swing.ImageIcon;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
+import javax.swing.JSeparator;
 
 public class findUser extends JFrame {
 
@@ -45,9 +46,12 @@ public class findUser extends JFrame {
 	private JPanel panel_1;
 	private JLabel lblFindId;
 	private JLabel lblFindPw;
+	private JSeparator separator;
+	private JSeparator separator_1;
+	private JSeparator separator_2;
 
 	public findUser() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(findUser.class.getResource("/img/user.png")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(findUser.class.getResource("/img/user.png")));
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Find User");
 
@@ -56,9 +60,9 @@ public class findUser extends JFrame {
 		getContentPane().setLayout(null);
 
 		searchId = new Button("Search  ID");
-		searchId.setForeground(new Color(255, 255, 0));
-		searchId.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		searchId.setBackground(new Color(135, 206, 250));
+		searchId.setForeground(new Color(0, 0, 0));
+		searchId.setFont(new Font("D2Coding", Font.PLAIN, 14));
+		searchId.setBackground(new Color(204, 204, 255));
 		searchId.setBounds(73, 209, 101, 23);
 		getContentPane().add(searchId);
 
@@ -84,9 +88,9 @@ public class findUser extends JFrame {
 		});
 
 		searchPw = new Button("Search  PW");
-		searchPw.setForeground(new Color(255, 255, 0));
-		searchPw.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		searchPw.setBackground(new Color(135, 206, 250));
+		searchPw.setForeground(new Color(0, 0, 0));
+		searchPw.setFont(new Font("D2Coding", Font.PLAIN, 14));
+		searchPw.setBackground(new Color(204, 204, 255));
 		searchPw.setBounds(71, 531, 101, 23);
 		getContentPane().add(searchPw);
 
@@ -123,44 +127,44 @@ public class findUser extends JFrame {
 		getContentPane().add(nametxt2);
 		
 		lblEmail2 = new JLabel("Email");
-		lblEmail2.setForeground(SystemColor.textHighlight);
+		lblEmail2.setForeground(new Color(0, 0, 0));
 		lblEmail2.setFont(new Font("D2Coding", Font.ITALIC, 15));
 		lblEmail2.setBounds(12, 462, 81, 15);
 		getContentPane().add(lblEmail2);
 		
 		lblPhone_1 = new JLabel("Phone");
-		lblPhone_1.setForeground(SystemColor.textHighlight);
+		lblPhone_1.setForeground(new Color(0, 0, 0));
 		lblPhone_1.setFont(new Font("D2Coding", Font.ITALIC, 15));
 		lblPhone_1.setBounds(12, 412, 81, 15);
 		getContentPane().add(lblPhone_1);
 		
 		lblUserName2 = new JLabel("Name");
-		lblUserName2.setForeground(SystemColor.textHighlight);
+		lblUserName2.setForeground(new Color(0, 0, 0));
 		lblUserName2.setFont(new Font("D2Coding", Font.ITALIC, 15));
 		lblUserName2.setBounds(12, 362, 81, 15);
 		getContentPane().add(lblUserName2);
 		
 		lblId_1 = new JLabel("ID ");
-		lblId_1.setForeground(SystemColor.textHighlight);
+		lblId_1.setForeground(new Color(0, 0, 0));
 		lblId_1.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 15));
 		lblId_1.setBackground(Color.WHITE);
 		lblId_1.setBounds(12, 314, 81, 15);
 		getContentPane().add(lblId_1);
 		
 		lblEmail = new JLabel("Email");
-		lblEmail.setForeground(SystemColor.textHighlight);
+		lblEmail.setForeground(new Color(0, 0, 0));
 		lblEmail.setFont(new Font("D2Coding", Font.ITALIC, 15));
 		lblEmail.setBounds(12, 152, 81, 15);
 		getContentPane().add(lblEmail);
 		
 		lblPhone = new JLabel("Phone");
-		lblPhone.setForeground(SystemColor.textHighlight);
+		lblPhone.setForeground(new Color(0, 0, 0));
 		lblPhone.setFont(new Font("D2Coding", Font.ITALIC, 15));
 		lblPhone.setBounds(12, 101, 81, 15);
 		getContentPane().add(lblPhone);
 		
 		lblUserName = new JLabel("Name");
-		lblUserName.setForeground(SystemColor.textHighlight);
+		lblUserName.setForeground(new Color(0, 0, 0));
 		lblUserName.setFont(new Font("D2Coding", Font.ITALIC, 15));
 		lblUserName.setBounds(12, 51, 81, 15);
 		getContentPane().add(lblUserName);
@@ -191,8 +195,8 @@ public class findUser extends JFrame {
 		
 		panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(250, 0, 199, 574);
+		panel.setBackground(new Color(204, 204, 255));
+		panel.setBounds(251, 0, 199, 574);
 		getContentPane().add(panel);
 		
 		lblNewLabel = new JLabel("X");
@@ -201,60 +205,77 @@ public class findUser extends JFrame {
 		panel.add(lblNewLabel);
 		
 		cancelBtn = new Button("Cancel");
-		cancelBtn.setForeground(new Color(255, 255, 0));
-		cancelBtn.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
-		cancelBtn.setBackground(new Color(135, 206, 250));
+		cancelBtn.setForeground(new Color(0, 0, 0));
+		cancelBtn.setFont(new Font("D2Coding", Font.PLAIN, 14));
+		cancelBtn.setBackground(new Color(204, 204, 255));
 		cancelBtn.setBounds(48, 529, 83, 23);
 		panel.add(cancelBtn);
 		
 		lblId = new JLabel("ID ");
-		lblId.setForeground(SystemColor.textHighlight);
+		lblId.setForeground(new Color(0, 0, 0));
 		lblId.setFont(new Font("D2Coding", Font.ITALIC, 15));
-		lblId.setBounds(23, 81, 81, 15);
+		lblId.setBounds(12, 118, 29, 15);
 		panel.add(lblId);
 		
 		idArea = new TextField();
 		idArea.setForeground(new Color(0, 0, 255));
 		idArea.setBackground(new Color(255, 255, 255));
 		idArea.setEditable(false);
-		idArea.setBounds(23, 102, 110, 21);
+		idArea.setBounds(48, 112, 110, 21);
 		panel.add(idArea);
 		
 		pwArea = new TextField();
 		pwArea.setForeground(new Color(0, 0, 255));
 		pwArea.setBackground(new Color(255, 255, 255));
 		pwArea.setEditable(false);
-		pwArea.setBounds(23, 400, 110, 21);
+		pwArea.setBounds(48, 399, 110, 21);
 		panel.add(pwArea);
 		
-		lblPw = new JLabel("PassWord");
-		lblPw.setForeground(SystemColor.textHighlight);
+		lblPw = new JLabel("PW");
+		lblPw.setForeground(new Color(0, 0, 0));
 		lblPw.setFont(new Font("D2Coding", Font.ITALIC, 15));
-		lblPw.setBounds(23, 379, 115, 15);
+		lblPw.setBounds(12, 405, 115, 15);
 		panel.add(lblPw);
 		
 		Label label = new Label("Share Ability");
-		label.setBackground(new Color(135, 206, 250));
-		label.setBounds(0, 241, 199, 33);
+		label.setBackground(new Color(204, 204, 255));
+		label.setBounds(-2, 233, 199, 28);
 		panel.add(label);
-		label.setForeground(Color.YELLOW);
-		label.setFont(new Font("Comic Sans MS", Font.ITALIC, 32));
+		label.setForeground(new Color(0, 0, 0));
+		label.setFont(new Font("Arial Black", Font.ITALIC, 20));
 		label.setAlignment(Label.CENTER);
 		
+		separator = new JSeparator();
+		separator.setForeground(Color.WHITE);
+		separator.setBackground(Color.WHITE);
+		separator.setBounds(33, 145, 136, 6);
+		panel.add(separator);
+		
+		separator_1 = new JSeparator();
+		separator_1.setForeground(Color.WHITE);
+		separator_1.setBackground(Color.WHITE);
+		separator_1.setBounds(33, 427, 139, 5);
+		panel.add(separator_1);
+		
+		separator_2 = new JSeparator();
+		separator_2.setForeground(Color.WHITE);
+		separator_2.setBounds(26, 263, 149, 6);
+		panel.add(separator_2);
+		
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(102, 204, 255));
+		panel_1.setBackground(new Color(204, 204, 255));
 		panel_1.setBounds(-11, 241, 460, 33);
 		getContentPane().add(panel_1);
 		
 		lblFindId = new JLabel("< Find ID >");
-		lblFindId.setForeground(SystemColor.textHighlight);
-		lblFindId.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 18));
+		lblFindId.setForeground(new Color(0, 0, 0));
+		lblFindId.setFont(new Font("D2Coding", Font.PLAIN, 18));
 		lblFindId.setBounds(75, 10, 113, 31);
 		getContentPane().add(lblFindId);
 		
 		lblFindPw = new JLabel("< Find PW >");
-		lblFindPw.setForeground(SystemColor.textHighlight);
-		lblFindPw.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 18));
+		lblFindPw.setForeground(new Color(0, 0, 0));
+		lblFindPw.setFont(new Font("D2Coding", Font.PLAIN, 18));
 		lblFindPw.setBounds(59, 284, 113, 31);
 		getContentPane().add(lblFindPw);
 		setSize(466, 613);
