@@ -80,6 +80,7 @@ public class AcceptPage extends JFrame{
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JLabel lblNewLabel = new JLabel("\uAC70\uB798\uB97C \uC218\uB77D\uD569\uB2C8\uB2E4.");
 		lblNewLabel.setFont(new Font("궁서", Font.BOLD | Font.ITALIC, 35));
@@ -255,7 +256,8 @@ public class AcceptPage extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.setVisible(false);
+				
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				
 			}
 		});

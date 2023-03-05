@@ -13,7 +13,7 @@ public class updateVo {
 	public updateVo() {
 		super();
 	}
- 
+	
 	public updateVo(String g_code, String g_message, String g_check3) {
 		super();
 		this.g_code3 = g_code;
@@ -39,7 +39,7 @@ public class updateVo {
 	}
 
 	public updateVo(String g_code32) {
-		// TODO Auto-generated constructor stub
+		this.g_code3 = g_code32;
 	}
 
 	public String getG_code() {
