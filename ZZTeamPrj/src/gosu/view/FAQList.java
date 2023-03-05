@@ -2,6 +2,8 @@ package gosu.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
@@ -28,11 +30,12 @@ public class FAQList extends JFrame implements MouseListener{
 
 	
 	private JFrame frame;
-	JButton       btnInsert,  btnRefresh, btnToExcel;
+	JButton       btnInsert,  btnRefresh, btnToExcel,btn1;
 	JPanel        topPane;
 	JTable        jTable;
 	JScrollPane   pane; 
 	JLabel        JLabel;
+	
 	
 	FAQ                faq = null;  
     static FAQList    fList = null;																	
@@ -80,15 +83,27 @@ public class FAQList extends JFrame implements MouseListener{
 		
 		pane  = new JScrollPane( jTable );
 		this.add( pane );
-				
+		
+		btn1 = new JButton("문의 사항 등록");
+		this.add(btn1, BorderLayout.SOUTH);
+
+		
 		//----------------------------------------------		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(600, 500);
 		setLocation(200, 200);
 		setVisible(true);
+	btn1.addActionListener(new ActionListener() {
 		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new FAQ();
+			
+		}
+	});	
 		
 	}
+	
 
 	private Vector<?> getColumnList() {
 		Vector<String>  cols = new Vector<>();
@@ -164,6 +179,7 @@ public class FAQList extends JFrame implements MouseListener{
 		
 		jTable.repaint();  // jtable을 새로 그린다
 	}
+       
 }
 
 		
