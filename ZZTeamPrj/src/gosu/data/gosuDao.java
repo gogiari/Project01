@@ -312,8 +312,11 @@ public class gosuDao {
 				String sido = rs.getString("U_SIDO");
 				String gugun = rs.getString("U_GUGUN");
 
-				//				vo = new userVo(uid, pw, pw2 ,name, email, gender, phone, sido, gugun);
-				vo = new userVo();
+				vo = new userVo(uid, pw, pw2 ,name, phone, email, gender,sido, gugun);
+//				System.out.println(email);
+//				System.out.println(phone);
+//				System.out.println(gender);
+//				vo = new userVo();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -815,7 +818,7 @@ public class gosuDao {
 		sql       += " ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
 		sql       += " ON    ML.BI_NUM = BL.BI_NUM LEFT JOIN EVALUATION EV ";
 		sql       += " ON    GS.G_NUM = EV.G_NUM ";
-		if(select == "회원") {
+		if(select.equals("회원")) {
 			sql       += " WHERE GS.U_ID = ? ";////////////////////// 뭘 넣어야함?
 		} else {
 			sql       += " WHERE UL.U_ID = ? ";////////////////////// 뭘 넣어야함?
@@ -1367,6 +1370,53 @@ public class gosuDao {
 			} catch (SQLException e) {			
 			}
 		}		
+		return aftcnt;
+	}
+	// 회원수정
+	public int updateMember(String u_id, String u_pw, String u_name, String u_phone, String u_email, String u_gender,
+			String u_sido, String u_gugun) {
+		String sql = "UPDATE SET USERLIST " + " (U_ID,USERPW,USERNAME,PHONE,EMAIL,GENDER,U_SIDO,U_GUGUN)" + " VALUES "
+				+ "  (?,?,?,?,?,?,?,?)   ";
+
+		int aftcnt = 0;
+
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, u_id);
+			pstmt.setString(2, u_pw);
+			pstmt.setString(3, u_name);
+			pstmt.setString(4, u_phone);
+			pstmt.setString(5, u_email);
+			pstmt.setString(6, u_gender);
+			pstmt.setString(7, u_sido);
+			pstmt.setString(8, u_gugun);
+
+			aftcnt = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (pstmt != null)
+				pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return aftcnt;
+	}
+
+	public int updateMember(userVo vo) {
+
+		String id = vo.getId();
+		String pw = vo.getPw();
+		String name = vo.getName();
+		String phone = vo.getPhone();
+		String email = vo.getEmail();
+		String gender = vo.getGender();
+		String sido = vo.getSido();
+		String gugun = vo.getGugun();
+
+		int aftcnt = updateMember(id, pw, name, phone, email, gender, sido, gugun);
 		return aftcnt;
 	}
 }			 

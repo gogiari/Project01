@@ -692,7 +692,13 @@ public class MainView extends JFrame implements ActionListener{
 			break;
 		case "회원 정보 수정 / 삭제" :
 			System.out.println("회원 정보 수정 / 삭제");
-//			new UserEdit(uid);
+			System.out.println("ㅈㅂ"+loginpage.pwU.getText());
+			String input = JOptionPane.showInputDialog("기존 비밀번호 입력");
+			if(input.equals(loginpage.pwU.getText())) {
+				new UserEdit(uid);
+			} else {
+				JOptionPane.showMessageDialog(null, "비밀번호를 다시 확인해주세요", "비밀번호 불일치", JOptionPane.ERROR_MESSAGE);
+			}
 			break;
 		case "FAQ" :
 			System.out.println("FAQ버튼");

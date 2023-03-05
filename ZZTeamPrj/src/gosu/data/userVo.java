@@ -7,7 +7,6 @@ public class userVo {
 	public userVo() {}
 	public userVo(String id, String pw, String pw2, String name, String phone, String email, String gender, String sido,
 			String gugun) {
-		super();
 		this.id = id;
 		this.pw = pw;
 		this.pw2 = pw2;
