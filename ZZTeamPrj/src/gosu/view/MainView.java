@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
@@ -40,6 +42,7 @@ public class MainView extends JFrame implements ActionListener{
 	AcceptPage acPage = null;
 	loginPage loginpage;
 	ResDetail resdet;
+	Edit edit = null;
 	
 	String sel;
 	String val;
@@ -85,6 +88,8 @@ public class MainView extends JFrame implements ActionListener{
 	private void inite() {
 		setTitle("리스트");
 		getContentPane().setLayout(new BorderLayout());
+		
+		
 		
 		pCenterBack = new JPanel();
 		pCenterBack.setBackground(new Color(255, 255, 255));
@@ -237,6 +242,7 @@ public class MainView extends JFrame implements ActionListener{
 		
 		// 마이페이지 패널생성
 		pCenterMypage = new JPanel();
+		pCenterMypage.setBackground(new Color(255, 255, 255));
 		pCenterMypage.setBounds(0, 5, 1184, 746);
 		pCenterMypage.setLayout(null);
 		
@@ -246,6 +252,27 @@ public class MainView extends JFrame implements ActionListener{
 		lblMyname.setForeground(new Color(0, 128, 192));
 		lblMyname.setFont(new Font("휴먼엑스포", Font.PLAIN, 60));
 		pCenterMypage.add(lblMyname);
+		
+		// 확인 버튼
+		btnOk = new JButton("확인하기");
+		btnOk.setBounds(1049, 703, 102, 17);
+		
+		btnOk.setBorder(lb);
+		btnOk.setBackground(new Color(255, 255, 255));
+		btnOk.setForeground(new Color(0, 128, 192));
+		pCenterMypage.add(btnOk);
+		btnOk.addActionListener(this);
+		
+		// 새로고침 버튼
+		btnRefresh = new JButton("새로고침");
+		btnRefresh.setBounds(935, 703, 102, 17);
+		
+		btnRefresh.setBorder(lb);
+		btnRefresh.setBackground(new Color(255, 255, 255));
+		btnRefresh.setForeground(new Color(0, 128, 192));
+		pCenterMypage.add(btnRefresh);
+		// 새로고침 액션
+		btnRefresh.addActionListener(this);
 		
 		// 마이페이지 대분류
 		cbxMypage = new JComboBox();
@@ -336,7 +363,7 @@ public class MainView extends JFrame implements ActionListener{
 		});
 		
 		tabMypage.addMouseListener(new MouseListener() {
-			//뷁
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 마우스를 클릭하면
@@ -353,6 +380,8 @@ public class MainView extends JFrame implements ActionListener{
 						tradeGosu = new GearaeGosu(sel, mainview);
 					if(val.equals("거래중"))
 						acPage = new AcceptPage(sel, mainview);
+					if(val.equals("업무대기중"))
+						new Edit(uid);
 
 				}
 			}
@@ -369,7 +398,7 @@ public class MainView extends JFrame implements ActionListener{
 			public void mouseEntered(MouseEvent e) {
 			}
 		});
-
+		
 		return pCenterMypage;
 	}
 
@@ -380,6 +409,7 @@ public class MainView extends JFrame implements ActionListener{
 		
 		// 메시지리스트 패널 생성
 		pCenterMsg = new JPanel();
+		pCenterMsg.setBackground(new Color(255, 255, 255));
 		pCenterMsg.setBounds(0, 5, 1184, 746);
 		pCenterMsg.setLayout(null);
 		
@@ -389,6 +419,18 @@ public class MainView extends JFrame implements ActionListener{
 		lblMsgname.setForeground(new Color(0, 128, 192));
 		lblMsgname.setFont(new Font("휴먼엑스포", Font.PLAIN, 60));
 		pCenterMsg.add(lblMsgname);
+		
+		// 새로고침 버튼
+		btnRefresh = new JButton("새로고침");
+		btnRefresh.setBounds(935, 703, 102, 17);
+		
+		btnRefresh.setBorder(lb);
+		btnRefresh.setBackground(new Color(255, 255, 255));
+		btnRefresh.setForeground(new Color(0, 128, 192));
+		pCenterMsg.add(btnRefresh);
+		// 새로고침 액션
+		btnRefresh.addActionListener(this);
+		
 		
 		// 메시지 테이블 생성
 		tabMsg = new JTable();
@@ -487,7 +529,7 @@ public class MainView extends JFrame implements ActionListener{
 		
 		
 		// 확인 버튼
-		btnOk = new JButton("\uD655\uC778\uD558\uAE30");
+		btnOk = new JButton("확인하기");
 		btnOk.setBounds(1049, 703, 102, 17);
 		
 		btnOk.setBorder(lb);
@@ -502,7 +544,7 @@ public class MainView extends JFrame implements ActionListener{
 		userVo vo = new userVo();
 		
 		tabGosuList.setModel(
-				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
+				new DefaultTableModel(getSelGosuDataList(), getGosuCoulumnList()  ) {
 
 					@Override
 					public boolean isCellEditable(int row, int column) {
@@ -519,6 +561,7 @@ public class MainView extends JFrame implements ActionListener{
 		btnRefresh.setBackground(new Color(255, 255, 255));
 		btnRefresh.setForeground(new Color(0, 128, 192));
 		pCenterList.add(btnRefresh);
+
 		
 		
 		// 고수 테이블 스크롤 생성
@@ -612,7 +655,7 @@ public class MainView extends JFrame implements ActionListener{
 	// 고수 리스트 선택 테이블 데이터 (이벤트)
 	private Vector<Vector> getSelGosuDataList() {
 		gosuDao dao = new gosuDao();
-		Vector<Vector> list = dao.getSelGosuList(bigSelect);
+		Vector<Vector> list = dao.getSelGosuList(cbxlist.getSelectedItem().toString());
 		return list;
 	}
 
@@ -669,6 +712,27 @@ public class MainView extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) { // 눌러진 버튼의 글자
+		case "확인하기" :
+			if(pCenterList.isVisible()==true) {
+				int row = tabGosuList.getSelectedRow();
+				int col = tabGosuList.getSelectedColumn();
+				String sel = (String) tabGosuList.getValueAt(row, 0);
+				resdet = new ResDetail(sel, uid, mainview);
+			} else if(pCenterMypage.isVisible()==true) {
+				System.out.println("야호");
+				int row = tabMypage.getSelectedRow();
+				int col = tabMypage.getSelectedColumn();
+				sel = (String) tabMypage.getValueAt(row, 0);
+				val = (String) tabMypage.getValueAt(row, 6);
+				if(val.equals("요청중"))
+					tradeGosu = new GearaeGosu(sel, mainview);
+				if(val.equals("거래중"))
+					acPage = new AcceptPage(sel, mainview);
+				if(val.equals("업무대기중"))
+					new Edit(uid);
+			}
+			
+			break;
 		case "상세보기" :
 			System.out.println("상세보기클릭");
 			int row = tabMsg.getSelectedRow();
@@ -729,8 +793,9 @@ public class MainView extends JFrame implements ActionListener{
 	}
 
 	public void gosuRefresh() {
+		if(pCenterList.isVisible() == true) {
 		tabGosuList.setModel(
-				new DefaultTableModel(getGosuDataList(), getGosuCoulumnList()  ) {
+				new DefaultTableModel(getSelGosuDataList(), getGosuCoulumnList()  ) {
 
 					@Override
 					public boolean isCellEditable(int row, int column) {
@@ -739,6 +804,7 @@ public class MainView extends JFrame implements ActionListener{
 
 				});
 		tabGosuList .repaint();
+		} else if(pCenterMsg.isVisible() == true) {
 		tabMsg.setModel(
 				new DefaultTableModel(getMsgDataList(), getMsgCoulumnList()  ) {
 
@@ -750,7 +816,18 @@ public class MainView extends JFrame implements ActionListener{
 
 				});
 		tabMsg.repaint();
-		
+		} else if(pCenterMypage.isVisible() == true) {
+		tabMypage.setModel(
+				new DefaultTableModel(getMyDataList(), getMyCoulumnList()  ) {
+
+					@Override
+					public boolean isCellEditable(int row, int column) {
+						return false;
+					}
+
+				});
+		tabMypage.repaint();
+		}
 		
 		
 	}

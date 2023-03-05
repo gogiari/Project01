@@ -187,7 +187,7 @@ public class gosuDao {
 
 	public Vector<Vector> getSelGosuList(String bigSelect) {
 		Vector<Vector> list = new Vector<Vector>();
-
+		System.out.println(bigSelect);
 		String sql = "";
 		sql += "SELECT W_NUM                             W_NUM , ";
 		sql += "       ML.MID_NAME                       MID_NAME, ";
@@ -199,13 +199,15 @@ public class gosuDao {
 		sql += "  ON   U.U_ID = G.U_ID LEFT JOIN MIDLIST ML ";
 		sql += "  ON GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
 		sql += "  ON ML.BI_NUM = BL.BI_NUM ";
-		sql += "  WHERE BL.BI_NAME = ? ";
+		if(!bigSelect.equals("전체")) 
+			sql += "  WHERE BL.BI_NAME = ? ";
 
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
+			if(!bigSelect.equals("전체"))
 			pstmt.setString(1,  bigSelect); 
 
 			rs = pstmt.executeQuery();
@@ -801,38 +803,38 @@ public class gosuDao {
 	// 마이페이지 테이블 데이터
 	public Vector<Vector> getmylist(String select, String uid) {
 		Vector<Vector> list = new Vector<Vector>( );
-		String sql = "";
-		sql       += "SELECT GR.GEORAE_CODE GEORAE_CODE, ";
-		sql       += "       BL.BI_NAME     BI_NAME, ";
-		sql       += "       ML.MID_NAME    MID_NAME, ";
-		sql       += "       UL.USERNAME    USERNAME, ";
-		sql       += "       GW.GDATE       GDATE, ";
-		sql       += "       GW.PRICE       PRICE, ";
-		sql       += "       GR.G_CHECK     G_CHECK, ";
-		sql       += "       EV.G_SCORE     G_SCORE" ;
-		sql       += " FROM  GEORAE GR LEFT JOIN GWORK GW ";
-		sql       += " ON    GR.W_NUM = GW.W_NUM LEFT JOIN GOSU GS ";
-		sql       += " ON    GW.G_NUM = GS.G_NUM LEFT JOIN USERLIST UL ";
-		sql       += " ON    GS.U_ID = UL.U_ID LEFT JOIN MIDLIST ML ";
-		sql       += " ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL ";
-		sql       += " ON    ML.BI_NUM = BL.BI_NUM LEFT JOIN EVALUATION EV ";
-		sql       += " ON    GS.G_NUM = EV.G_NUM ";
-		if(select.equals("회원")) {
-			sql       += " WHERE GS.U_ID = ? ";////////////////////// 뭘 넣어야함?
-		} else {
-			sql       += " WHERE UL.U_ID = ? ";////////////////////// 뭘 넣어야함?
-		}
+		System.out.println(select+"임당");
+		String sql = " SELECT GR.GEORAE_CODE                GEORAE_CODE, "
+				   + "        BL.BI_NAME                    BI_NAME, "
+				   + "        ML.MID_NAME                   MID_NAME, ";
+				   if(select.equals("고수")) {
+	  	      sql += "        UL.USERNAME                   USERNAME, "; } // 본인이 고수일때
+				   else {
+			  sql += "        UL2.USERNAME                   USERNAME, "; }
+			  sql += "        GR.G_DATE                     GDATE, "
+				   + "        GW.PRICE                      PRICE, "
+				   + "        NVL(GR.G_CHECK, '업무대기중') G_CHECK, "
+				   + "        EV.G_SCORE                    G_SCORE "
+				   + "  FROM  GEORAE GR FULL JOIN GWORK GW "
+				   + "  ON    GR.W_NUM = GW.W_NUM FULL JOIN GOSU GS "
+				   + "  ON    GW.G_NUM = GS.G_NUM LEFT JOIN MIDLIST ML "
+				   + "  ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN BIGLIST BL "
+				   + "  ON    ML.BI_NUM = BL.BI_NUM LEFT JOIN USERLIST UL "
+				   + "  ON    GR.U_ID = UL.U_ID LEFT JOIN EVALUATION EV "
+				   + "  ON    GS.G_NUM = EV.G_NUM LEFT JOIN USERLIST UL2 "
+				   + "  ON    GS.U_ID = UL2.U_ID";
+				   if(select.equals("고수")) {
+      		  sql += "  WHERE UL2.U_ID = ?"; }       //본인이 고수일때
+				   else { 
+			  sql += "  WHERE UL.U_ID = ?";  // 본인이 회원일때
+				   }
+		
 
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
 			psmt = conn.prepareStatement(sql);
-			if(select.equals("회원")) {
-				psmt.setString(1, uid);
-			} else {
-				psmt.setString(1, uid);
-			}
-
+			psmt.setString(1, uid);
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				String georae_code = rs.getString("GEORAE_CODE");

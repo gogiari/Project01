@@ -29,7 +29,7 @@ public class Edit extends JFrame implements ActionListener{
 
 	private JTable table;
 	
-	public Edit() {
+	public Edit(String uid) {
 		initEdit(uid);
 	}
 
@@ -38,7 +38,7 @@ public class Edit extends JFrame implements ActionListener{
 		this.res = res;
 	}
 	
-	private void initEdit(String uid) {
+	public void initEdit(String uid) {
 		table = new JTable();
 		table.setBounds(100, 146, 1000, 450);
 		getContentPane().add(table);
