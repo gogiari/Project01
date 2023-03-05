@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -27,8 +29,6 @@ import javax.swing.table.DefaultTableModel;
 
 import gosu.data.gosuDao;
 import gosu.data.userVo;
-
-import javax.swing.DefaultComboBoxModel;
 
 public class MainView extends JFrame implements ActionListener{
 	JPanel pCenterBack, pCenterList, pCenterMsg, pCenterMypage, pSouth;
@@ -331,7 +331,7 @@ public class MainView extends JFrame implements ActionListener{
 							}
 
 						});
-				pCenterMypage.repaint();
+				tabMypage.repaint();
 			}
 		});
 		
@@ -692,12 +692,30 @@ public class MainView extends JFrame implements ActionListener{
 		case "회원 정보 수정 / 삭제" :
 			System.out.println("회원 정보 수정 / 삭제");
 			System.out.println("ㅈㅂ"+loginpage.pwU.getText());
-			String input = JOptionPane.showInputDialog("기존 비밀번호 입력");
-			if(input.equals(loginpage.pwU.getText())) {
-				new UserEdit(uid);
-			} else {
-				JOptionPane.showMessageDialog(null, "비밀번호를 다시 확인해주세요", "비밀번호 불일치", JOptionPane.ERROR_MESSAGE);
+//			String input = JOptionPane.showInputDialog("기존 비밀번호 입력");
+			
+			// 제이옵션 패스워드필드추가
+			JPanel panel = new JPanel();
+			JLabel label = new JLabel("기존 비밀번호 입력 :");
+			JPasswordField pass = new JPasswordField(10);
+			panel.add(label);
+			panel.add(pass);
+			String[] options = new String[]{"확인", "취소"};
+			int option = JOptionPane.showOptionDialog(null, panel, "비밀번호 확인", 
+			                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+			                         null, options, options[1]);
+
+			if(option == 0) // pressing OK button
+			{
+			    char[] password = pass.getPassword();
+			    System.out.println("Your password is: " + new String(password));
+			    if(new String(password).equals(loginpage.pwU.getText())) {
+			    	new UserEdit(uid, loginpage.pwU.getText());
+			    } else {
+			    	JOptionPane.showMessageDialog(null, "비밀번호를 다시 확인해주세요", "비밀번호 불일치", JOptionPane.ERROR_MESSAGE);
+			    }
 			}
+			
 			break;
 		case "FAQ" :
 			System.out.println("FAQ버튼");
@@ -720,7 +738,21 @@ public class MainView extends JFrame implements ActionListener{
 					}
 
 				});
-		tabGosuList.repaint();
+		tabGosuList .repaint();
+		tabMsg.setModel(
+				new DefaultTableModel(getMsgDataList(), getMsgCoulumnList()  ) {
+
+					@Override
+					public boolean isCellEditable(int row, int column) {
+						return false;
+					}
+					
+
+				});
+		tabMsg.repaint();
+		
+		
+		
 	}
 	
 

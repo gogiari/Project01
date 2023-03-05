@@ -1372,24 +1372,31 @@ public class gosuDao {
 		return aftcnt;
 	}
 	// 회원수정
-	public int updateMember(String u_id, String u_pw, String u_name, String u_phone, String u_email, String u_gender,
-			String u_sido, String u_gugun) {
-		String sql = "UPDATE SET USERLIST " + " (U_ID,USERPW,USERNAME,PHONE,EMAIL,GENDER,U_SIDO,U_GUGUN)" + " VALUES "
-				+ "  (?,?,?,?,?,?,?,?)   ";
+	public int updateMember(userVo vo) {
+		String sql = "UPDATE USERLIST  "
+				+ "SET    USERPW = ?, "
+				+ "       USERNAME = ?, "
+				+ "       EMAIL = ?, "
+				+ "       GENDER = ?, "
+				+ "       PHONE = ?, "
+				+ "       U_SIDO = ?, "
+				+ "       U_GUGUN = ? "
+				+ "WHERE  U_ID = ? ";
 
 		int aftcnt = 0;
 
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, u_id);
-			pstmt.setString(2, u_pw);
-			pstmt.setString(3, u_name);
-			pstmt.setString(4, u_phone);
-			pstmt.setString(5, u_email);
-			pstmt.setString(6, u_gender);
-			pstmt.setString(7, u_sido);
-			pstmt.setString(8, u_gugun);
+			pstmt.setString(1, vo.getPw());
+			pstmt.setString(2, vo.getName());
+			pstmt.setString(3, vo.getEmail());
+			pstmt.setString(4, vo.getGender());
+			pstmt.setString(5, vo.getPhone());
+			pstmt.setString(6, vo.getSido());
+			pstmt.setString(7, vo.getGugun());
+			pstmt.setString(8, vo.getId());
+			System.out.println("안녕??"+vo.getId());
 
 			aftcnt = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -1404,20 +1411,43 @@ public class gosuDao {
 		return aftcnt;
 	}
 
-	public int updateMember(userVo vo) {
-
-		String id = vo.getId();
-		String pw = vo.getPw();
-		String name = vo.getName();
-		String phone = vo.getPhone();
-		String email = vo.getEmail();
-		String gender = vo.getGender();
-		String sido = vo.getSido();
-		String gugun = vo.getGugun();
-
-		int aftcnt = updateMember(id, pw, name, phone, email, gender, sido, gugun);
+	public int ddeleteUser(String uid) {
+		String  sql = "DELETE FROM USERLIST "
+				    + "WHERE U_ID = ? ";
+	
+		
+		PreparedStatement  pstmt  = null ;
+		int                aftcnt = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			
+			aftcnt = pstmt.executeUpdate();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null)  pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
 		return aftcnt;
 	}
+
+//	public int updateMember(userVo vo) {
+//
+//		String id = vo.getId();
+//		String pw = vo.getPw();
+//		String name = vo.getName();
+//		String phone = vo.getPhone();
+//		String email = vo.getEmail();
+//		String gender = vo.getGender();
+//		String sido = vo.getSido();
+//		String gugun = vo.getGugun();
+//
+//		int aftcnt = updateMember(id, pw, name, phone, email, gender, sido, gugun);
+//		return aftcnt;
+//	}
 }			 
 
 

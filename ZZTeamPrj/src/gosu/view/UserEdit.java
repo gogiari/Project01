@@ -35,12 +35,16 @@ public class UserEdit extends JFrame {
 	JComboBox<String> sidoCB,gugunCB;
 	ButtonGroup group;
 	JPasswordField pwtxt, pwcheck;
-	Button cancelBtn, btnEdit, addBtn;
+	Button cancelBtn, btnEdit, addBtn, btnDel;
 	gosuDao dao;
 	String uid;
+	MainView mainview;
+	private String pwd;
 	
-	public UserEdit(String uid) {
+	
+	public UserEdit(String uid, String pwd) {
 		this.uid = uid;
+		this.pwd = pwd;
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
@@ -87,6 +91,7 @@ public class UserEdit extends JFrame {
 		idtxt.setColumns(10);
 		idtxt.setBackground(new Color(255, 255, 255));
 		idtxt.setBounds(24, 87, 147, 23);
+		idtxt.enable(false);
 		panel.add(idtxt);
 
 		pwtxt = new JPasswordField("비밀번호");
@@ -190,7 +195,7 @@ public class UserEdit extends JFrame {
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			}
 		});
 		lblNewLabel_1.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 18));
@@ -234,11 +239,11 @@ public class UserEdit extends JFrame {
 		panel.add(lblNewLabel);
 		lblNewLabel.setIcon(new ImageIcon("img/deal.png"));
 
-		btnEdit = new Button("Find");
+		btnEdit = new Button("Edit");
 		btnEdit.setForeground(new Color(0, 0, 0));
 		btnEdit.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
 		btnEdit.setBackground(new Color(204, 204, 255));
-		btnEdit.setBounds(85, 533, 96, 23);
+		btnEdit.setBounds(24, 533, 96, 23);
 		panel.add(btnEdit);
 		
 		
@@ -247,54 +252,71 @@ public class UserEdit extends JFrame {
 			
 		btnEdit.addActionListener(new ActionListener() {
 
-//			gosuDao dao = new gosuDao();
+			gosuDao dao = new gosuDao();
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				if (idtxt.getText().length() == 0 || idtxt.getText().trim().equals("아이디")) {
-//					JOptionPane.showMessageDialog(null, "아이디를 입력해 주세요.", "아이디 입력", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
-//				if (pwtxt.getText().trim().length() == 0 || pwtxt.getText().trim().equals("비밀번호")) {
-//					JOptionPane.showMessageDialog(null, "비밀번호를 입력해 주세요.", "비밀번호 입력", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
-//				if (pwcheck.getText().trim().length() == 0 || pwcheck.getText().trim().equals("비밀번호 확인")) {
-//					JOptionPane.showMessageDialog(null, "비밀번호 확인을 입력해 주세요.", "비밀번호 확인 입력", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
-//				if (!(pwtxt.getText().trim().equals(pwcheck.getText().trim()))) {
-//					JOptionPane.showMessageDialog(null, "비밀번호가 같지 않습니다.!!", "비밀번호 확인", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
-//				if (nametxt.getText().trim().length() == 0 || nametxt.getText().trim().equals("이름")) {
-//					JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "이름 입력", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
-//				if (phonetxt.getText().trim().length() == 0 || phonetxt.getText().trim().equals("ex:  010-0000-0000")) {
-//					JOptionPane.showMessageDialog(null, "전화번호를 입력해 주세요.", "전화번호 입력", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
-//				if (emailtxt.getText().trim().length() == 0 || emailtxt.getText().trim().equals("이메일")) {
-//					JOptionPane.showMessageDialog(null, "이메일을 입력해 주세요.", "이메일 입력", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
-//				if (sidoCB.getSelectedItem() == null || gugunCB.getSelectedItem() == null ) {
-//					JOptionPane.showMessageDialog(null, "지역을 선택해주세요", "지역 선택", JOptionPane.WARNING_MESSAGE);
-//					return;
-//				}
-//				String id = idtxt.getText();
+				if (idtxt.getText().length() == 0 || idtxt.getText().trim().equals("아이디")) {
+					JOptionPane.showMessageDialog(null, "아이디를 입력해 주세요.", "아이디 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (pwtxt.getText().trim().length() == 0 || pwtxt.getText().trim().equals("비밀번호")) {
+					JOptionPane.showMessageDialog(null, "비밀번호를 입력해 주세요.", "비밀번호 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (pwcheck.getText().trim().length() == 0 || pwcheck.getText().trim().equals("비밀번호 확인")) {
+					JOptionPane.showMessageDialog(null, "비밀번호 확인을 입력해 주세요.", "비밀번호 확인 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (!(pwtxt.getText().trim().equals(pwcheck.getText().trim()))) {
+					JOptionPane.showMessageDialog(null, "비밀번호가 같지 않습니다.!!", "비밀번호 확인", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (nametxt.getText().trim().length() == 0 || nametxt.getText().trim().equals("이름")) {
+					JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "이름 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (phonetxt.getText().trim().length() == 0 || phonetxt.getText().trim().equals("ex:  010-0000-0000")) {
+					JOptionPane.showMessageDialog(null, "전화번호를 입력해 주세요.", "전화번호 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (emailtxt.getText().trim().length() == 0 || emailtxt.getText().trim().equals("이메일")) {
+					JOptionPane.showMessageDialog(null, "이메일을 입력해 주세요.", "이메일 입력", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (sidoCB.getSelectedItem() == null || gugunCB.getSelectedItem() == null ) {
+					JOptionPane.showMessageDialog(null, "지역을 선택해주세요", "지역 선택", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				String id = idtxt.getText();
 //				if (dao.getUser(id) != null) {
 //					JOptionPane.showMessageDialog(null, "중복된 아이디입니다.", "중복된 아이디", JOptionPane.WARNING_MESSAGE);
 //					return;
 //				}
 				
-//				findUser();
-//				addMember();
+				editMember();
 //				clearViewData();
 				
 
 			}
+		});
+		
+		btnDel = new Button("Delete");
+		btnDel.setActionCommand("Delete");
+		btnDel.setForeground(Color.BLACK);
+		btnDel.setFont(new Font("D2Coding", Font.BOLD | Font.ITALIC, 14));
+		btnDel.setBackground(new Color(204, 204, 255));
+		btnDel.setBounds(152, 533, 96, 23);
+		panel.add(btnDel);
+		btnDel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				removeUser();
+				
+			}
+
+			
 		});
 
 		JLabel lblEail = new JLabel("Email");
@@ -322,136 +344,171 @@ public class UserEdit extends JFrame {
 		lblNewLabel_2.setBounds(222, 0, 93, 68);
 		panel.add(lblNewLabel_2);
 		lblNewLabel_2.setFont(new Font("Arial Black", Font.ITALIC, 40));
-		//
+		
 
 		setLayeredPane(getLayeredPane());
 		setUndecorated(true);
 		setVisible(true);
 		setSize(562, 579);
 
-//		FocusEvent();
 		findUser();
+		idtxt.setText(uid + "(변경불가)");
+		FocusEvent();
 
 	}
 
 
-//	private void FocusEvent() {
-//		idtxt.addFocusListener(new FocusListener() {
-//			@Override
-//			public void focusLost(FocusEvent e) {
-//				if (idtxt.getText().trim().length() == 0) {
-//					idtxt.setText("아이디");
-//				}
-//			}
-//
-//			@Override
-//			public void focusGained(FocusEvent e) {
-//				if (idtxt.getText().trim().equals("아이디")) {
-//					idtxt.setText("");
-//				}
-//			}
-//		});
-//		pwtxt.addFocusListener(new FocusListener() {
-//			@Override
-//			public void focusLost(java.awt.event.FocusEvent e) {
-//				if (pwtxt.getText().trim().length() == 0) {
-//					pwtxt.setText("비밀번호");
-//				}
-//			}
-//
-//			@Override
-//			public void focusGained(java.awt.event.FocusEvent e) {
-//				if (pwtxt.getText().trim().equals("비밀번호")) {
-//					pwtxt.setText("");
-//				}
-//			}
-//		});
-//		pwcheck.addFocusListener(new FocusListener() {
-//			@Override
-//			public void focusLost(java.awt.event.FocusEvent e) {
-//				if (pwcheck.getText().trim().length() == 0) {
-//					pwcheck.setText("비밀번호");
-//				}
-//			}
-//
-//			@Override
-//			public void focusGained(java.awt.event.FocusEvent e) {
-//				if (pwcheck.getText().trim().equals("비밀번호")) {
-//					pwcheck.setText("");
-//				}
-//			}
-//		});
-//		nametxt.addFocusListener(new FocusListener() {
-//			@Override
-//			public void focusLost(java.awt.event.FocusEvent e) {
-//				if (nametxt.getText().trim().length() == 0) {
-//					nametxt.setText("이름");
-//				}
-//			}
-//
-//			@Override
-//			public void focusGained(java.awt.event.FocusEvent e) {
-//				if (nametxt.getText().trim().equals("이름")) {
-//					nametxt.setText("");
-//				}
-//			}
-//		});
-//		phonetxt.addFocusListener(new FocusListener() {
-//			@Override
-//			public void focusLost(java.awt.event.FocusEvent e) {
-//				if (phonetxt.getText().trim().length() == 0) {
-//					phonetxt.setText("");
-//				}
-//			}
-//
-//			@Override
-//			public void focusGained(java.awt.event.FocusEvent e) {
-//				if (phonetxt.getText().trim().equals("ex:  010-0000-0000")) {
-//					phonetxt.setText("");
-//				}
-//			}
-//		});
-//		emailtxt.addFocusListener(new FocusListener() {
-//			@Override
-//			public void focusLost(java.awt.event.FocusEvent e) {
-//				if (emailtxt.getText().trim().length() == 0) {
-//					emailtxt.setText("이메일");
-//				}
-//			}
-//
-//			@Override
-//			public void focusGained(java.awt.event.FocusEvent e) {
-//				if (emailtxt.getText().trim().equals("이메일")) {
-//					emailtxt.setText("");
-//				}
-//			}
-//		});
-//
-//	}
-//
-//	protected void clearViewData() {
-//		this.idtxt.setText("아이디");
-//		this.pwtxt.setText("비밀번호");
-//		this.pwcheck.setText("비밀번호");
-//		this.nametxt.setText("이름");
-//		this.phonetxt.setText("ex 010-0000-0000");
-//		this.emailtxt.setText("이메일");
-//		this.man.setSelected(false);
-//		this.woman.setSelected(false);
-//		this.sidoCB.getSelectedIndex();
-//		this.gugunCB.getSelectedIndex();
-//	}
+	private void FocusEvent() {
+		userVo vo =  getViewData();
+		idtxt.addFocusListener(new FocusListener() {
+			
+			
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (idtxt.getText().trim().length() == 0) {
+					idtxt.setText(vo.getId());
+				}
+			}
 
-//	protected void editMember() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (idtxt.getText().trim().equals(vo.getId())) {
+					idtxt.setText("");
+				}
+			}
+		});
+		pwtxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (pwtxt.getText().trim().length() == 0) {
+					pwtxt.setText(vo.getPw());
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (pwtxt.getText().trim().equals(vo.getPw())) {
+					pwtxt.setText("");
+				}
+			}
+		});
+		pwcheck.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (pwcheck.getText().trim().length() == 0) {
+					pwcheck.setText(vo.getPw());
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (pwcheck.getText().trim().equals(vo.getPw())) {
+					pwcheck.setText("");
+				}
+			}
+		});
+		nametxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (nametxt.getText().trim().length() == 0) {
+					nametxt.setText(vo.getName());
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (nametxt.getText().trim().equals(vo.getName())) {
+					nametxt.setText("");
+				}
+			}
+		});
+		phonetxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (phonetxt.getText().trim().length() == 0) {
+					phonetxt.setText(vo.getPhone());
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (phonetxt.getText().trim().equals(vo.getPhone())) {
+					phonetxt.setText("");
+				}
+			}
+		});
+		emailtxt.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (emailtxt.getText().trim().length() == 0) {
+					emailtxt.setText(vo.getEmail());
+				}
+			}
+
+			@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (emailtxt.getText().trim().equals(vo.getEmail())) {
+					emailtxt.setText("");
+				}
+			}
+		});
+
+	}
+
+//		protected void clearViewData() {
+//			this.idtxt.setText("아이디");
+//			this.pwtxt.setText("비밀번호");
+//			this.pwcheck.setText("비밀번호");
+//			this.nametxt.setText("이름");
+//			this.phonetxt.setText("ex 010-0000-0000");
+//			this.emailtxt.setText("이메일");
+//			this.man.setSelected(false);
+//			this.woman.setSelected(false);
+//			this.sidoCB.getSelectedIndex();
+//			this.gugunCB.getSelectedIndex();
+//		}
+
+	protected void editMember() {
+		
+		
+		gosuDao   gDao    =  new gosuDao();
+		
+		int choice  =   JOptionPane.showConfirmDialog(null, 
+				uid + "를 수정하시겠습니까?",
+				"수정확인",
+				JOptionPane.OK_CANCEL_OPTION);
+		int     aftcnt = 0 ;
+		String  msg    = "";
+		if( choice == 0) {
+			userVo vo =  getViewData();
+			aftcnt      =  gDao.updateMember( vo );
+			if( aftcnt > 0 )
+				msg     =  uid + "님의 정보가 수정되었습니다";
+			else
+				msg     =  uid + "님의 정보가 수정되지 않았습니다";
+		} else {
+			msg = "취소를 선택하였습니다";
+		}
+		JOptionPane.showMessageDialog(null, 
+				msg,
+				"수정",
+				JOptionPane.OK_OPTION);		
+		
+		// MemberList 새로고침
+//		memberList.jTableRefresh();
+		
+		this.dispose();  // 창닫기
 //		gosuDao gDao = new gosuDao();
 //		userVo vo = getViewData();
+//		
 //		int aftcnt = gDao.updateMember(vo);
 //		if(aftcnt == 0)
-//			JOptionPane.showMessageDialog(null, "회원가입 실패 \n입력사항이 올바르지않습니다.", "입력사항 확인", JOptionPane.WARNING_MESSAGE);
+//			JOptionPane.showMessageDialog(null, "회원수정 실패 \n입력사항이 올바르지않습니다.", "입력사항 확인", JOptionPane.WARNING_MESSAGE);
 //		else
-//		JOptionPane.showMessageDialog(null, "회원 가입이 완료 되었습니다.", "회원 가입 완료.", JOptionPane.WARNING_MESSAGE);
+//		JOptionPane.showMessageDialog(null, "회원 수정이 완료 되었습니다.", "회원 수정 완료.", JOptionPane.WARNING_MESSAGE);
 //		setVisible(false);
-//	}
+	}
 
 	protected void findUser() {
 		String id = uid;
@@ -462,6 +519,41 @@ public class UserEdit extends JFrame {
 		userVo vo = dao.getUser(id);
 		setViewData(vo);
 		
+	}
+	
+	private void removeUser() {
+		gosuDao dao = new gosuDao();
+		
+		// 제이옵션 패스워드필드추가
+					JPanel panel = new JPanel();
+					JLabel label = new JLabel("비밀번호 입력 :");
+					JPasswordField pass = new JPasswordField(10);
+					panel.add(label);
+					panel.add(pass);
+					String[] options = new String[]{"확인", "취소"};
+					int option = JOptionPane.showOptionDialog(null, panel, "비밀번호 확인", 
+					                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+					                         null, options, options[1]);
+
+					if(option == 0) // pressing OK button
+					{
+						char[] password = pass.getPassword();
+						System.out.println("Your password is: " + new String(password));
+						if(new String(password).equals(pwd)) {
+							int choice = JOptionPane.showConfirmDialog(null, "정말 ID(" + uid + ")를 삭제 하겠습니까?", "계정삭제", JOptionPane.OK_CANCEL_OPTION);
+							if(choice == 0) {
+								int aftcnt = dao.ddeleteUser(uid);
+								JOptionPane.showMessageDialog(null, "계정이 삭제 되었습니다. 프로그램을 종료합니다","계정삭제", JOptionPane.OK_OPTION);
+								System.exit(0);
+							} else {
+
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "비밀번호를 다시 확인해주세요", "비밀번호 불일치", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+
+
 	}
 // 뷁
 	private void setViewData(userVo vo) {
@@ -516,6 +608,6 @@ public class UserEdit extends JFrame {
 		return vo;
 	}
 	public static void main(String[] args) {
-		new UserEdit(null);
+		new UserEdit(null, null);
 	}
 }
