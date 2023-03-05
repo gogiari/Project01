@@ -9,8 +9,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
@@ -26,9 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import api.webview.Web;
 import gosu.data.gosuDao;
 import gosu.data.userVo;
 
@@ -51,8 +51,9 @@ public class MainView extends JFrame implements ActionListener{
 	JLabel lblListname;
 	JComboBox cbxlist;
 	JScrollPane scrGosu;
-	JButton btnOk, btnRefresh;
+	JButton btnOk, btnRefresh, btnAdrSuch;
 	JTable tabGosuList;
+	JTextField txtAdrSuch1, txtAdrSuch2;
 	
 	// 메시지 리스트 변수
 	JLabel lblMsgname;
@@ -538,6 +539,26 @@ public class MainView extends JFrame implements ActionListener{
 		pCenterList.add(btnOk);
 		btnOk.addActionListener(this);
 		
+		btnAdrSuch = new JButton("주소찾기");
+		btnAdrSuch.setBounds(698, 700, 97, 23);
+		btnAdrSuch.addActionListener(this);
+		
+		btnAdrSuch.setBorder(lb);
+		btnAdrSuch.setBackground(new Color(255, 255, 255));
+		btnAdrSuch.setForeground(new Color(0, 128, 192));
+		pCenterList.add(btnAdrSuch);
+		gosuDao dao = new gosuDao();
+		System.out.println("뷁"+dao.getUserAddress(uid));
+		txtAdrSuch1 = new JTextField(dao.getUserAddress(uid));
+		txtAdrSuch1.setBounds(440, 701, 116, 21);
+		pCenterList.add(txtAdrSuch1);
+		txtAdrSuch1.setColumns(10);
+		
+		txtAdrSuch2 = new JTextField("고수업무 클릭시 자동 입력");
+		txtAdrSuch2.setColumns(10);
+		txtAdrSuch2.setBounds(568, 701, 116, 21);
+		pCenterList.add(txtAdrSuch2);
+		
 		// 고수 테이블
 		tabGosuList = new JTable();
 		
@@ -712,6 +733,11 @@ public class MainView extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) { // 눌러진 버튼의 글자
+		case "주소찾기" :
+			if(txtAdrSuch1.getText() == null)
+				JOptionPane.showMessageDialog(null, "주소를 입력해주세요", "주소찾기", JOptionPane.INFORMATION_MESSAGE);
+			new Web(txtAdrSuch1.getText().trim());
+			break;
 		case "확인하기" :
 			if(pCenterList.isVisible()==true) {
 				int row = tabGosuList.getSelectedRow();

@@ -1436,6 +1436,35 @@ public class gosuDao {
 		return aftcnt;
 	}
 
+	public String getUserAddress(String uid) {
+		String addr = null;
+		String  sql = " SELECT U_SIDO||U_GUGUN "
+				    + "  FROM  USERLIST "
+				    + "  WHERE U_ID = ? ";
+
+	
+	PreparedStatement  pstmt  = null ;
+	ResultSet rs = null;
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, uid);
+		rs = pstmt.executeQuery();
+		while (rs.next()) {
+		addr = rs.getString(1);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		try {
+			if(rs != null) rs.close();
+			if(pstmt != null) pstmt.close();
+		} catch (SQLException e) {
+		}
+	}
+	return addr;
+	}
+
 //	public int updateMember(userVo vo) {
 //
 //		String id = vo.getId();
