@@ -42,7 +42,6 @@ public class ResDetail extends JFrame implements ActionListener{
 	ArrayList<String> comboTime ,comboTimeG2 ;
 	JComboBox<String> sidoCB, gugunCB;
 
-	// RoundedButton btnG2 = new RoundedButton();
 	Design comDe = new Design();
 
 	LineBorder bb = new LineBorder(new Color(190, 190, 190), 1, true);
@@ -56,7 +55,8 @@ public class ResDetail extends JFrame implements ActionListener{
 	String uid;
 
 
-	public ResDetail(String sel, String uid, MainView mainview) {
+
+	public ResDetail(String sel,String uid, MainView mainview) {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
 
@@ -399,7 +399,6 @@ public class ResDetail extends JFrame implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("거래메세지");
-				//addMember();
 			}
 		});
 
@@ -446,7 +445,7 @@ public class ResDetail extends JFrame implements ActionListener{
 		if (textFieldG1 != null) {
 			Dao Dao = new Dao();
 			Vo vo = getViewData();
-			int aftcnt = Dao.insertGWORK(vo);
+			int aftcnt = Dao.insertGWORK(vo, uid);
 		} else {
 			System.out.println(textFieldG1 + "입력하지 않았습니다");
 		}
@@ -496,14 +495,15 @@ public class ResDetail extends JFrame implements ActionListener{
 		dateEnd = combo6;
 		dateEnd = mod2 + " " + dateEnd.replace("오전", " ").replace("오후", " ").replace("시", ":").replace("분", " ").trim();
 		System.out.println(dateEnd + "dfd");
-		vo = new Vo(combo1, combo2, mod1, mod2, combo5, combo6, textf, combo3, combo4, texta, dateStr, dateEnd);
+		vo = new Vo(uid, combo1, combo2, mod1, mod2, combo5, combo6, textf, combo3, combo4, texta, dateStr, dateEnd  );
 		return vo;
 	}
 	
 	private void getMainDataDetail(String getSel) {
 		Dao dao = new Dao();
 		Vector<String> list = dao.getMainDataDetail(getSel);
-		
+		System.out.println(getSel);
+		System.out.println(list);
 		String stDateAll = list.get(2);
 		String edDateAll = list.get(3);
 		
@@ -522,19 +522,25 @@ public class ResDetail extends JFrame implements ActionListener{
 		
 		//------------
 		String combo1 = list.get(0);
-		System.out.println("함수 확인"+ combo1);
 		String combo2 = list.get(1);
-		System.out.println("함수 확인"+ combo2);
 
 		String textf = list.get(4);
-		String texta = list.get(6);
-		String userid = list.get(7);
-		String username = list.get(8);
+		String sido = list.get(5);
+		String gugum = list.get(6);
+		String texta = list.get(7);
+		String userid = list.get(8);
+		String username = list.get(9);
+		//평균값 String username = list.get(9);
 
 		this.comboBoxG1.setSelectedItem(combo1);
 		this.comboBoxG2.setSelectedItem(combo2);
+		
+		this.sidoCB.setSelectedItem(sido);
+		this.gugunCB.setSelectedItem(gugum);
+		
 		this.textFieldG1.setText(textf);
 		this.textArea1.setText(texta);
+		
 		this.labG5_3.setText(userid);
 		this.labG5_1.setText(username);
 	}

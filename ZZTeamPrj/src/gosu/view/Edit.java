@@ -18,37 +18,37 @@ import javax.swing.table.TableModel;
 import model.Dao;
 import model.Vo;
 
-public class Edit extends JFrame implements MouseListener, ActionListener{
+public class Edit extends JFrame implements ActionListener{
 
 	res res = null;
 	
 	JPanel        topPane, bodyPane, footerPane;
 	JTable        jTable;
-	JScrollPane   pane; 
+	JScrollPane   pane;
+	String uid;
+
 	private JTable table;
 	
 	public Edit() {
-		initEdit();
+		initEdit(uid);
 	}
 
-	public Edit(res res) {
-		initEdit();
+	public Edit(res res, String uid) {
+		initEdit(uid);
 		this.res = res;
 	}
 	
-	private void initEdit() {
-		
+	private void initEdit(String uid) {
 		table = new JTable();
 		table.setBounds(100, 146, 1000, 450);
 		getContentPane().add(table);
 		
-		table.setModel(new DefaultTableModel( getDataList() , getColumnList() ) {				
+		table.setModel(new DefaultTableModel( getDataList(uid), getColumnList() ) {				
 			@Override
 			public boolean isCellEditable(int row, int column) {		
 				return false;   
 			}				
 		});
-		table.addMouseListener(this);
 		
 		JButton btnUpdate  = new JButton("\uC218\uC815 \uBC0F \uC870\uD68C");
 		btnUpdate.setBounds(494, 647, 101, 23);
@@ -62,7 +62,7 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 		btnDelete.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				removePrvGoList("G01");
+				removePrvGoList(uid);
 			}
 		});
 		
@@ -78,14 +78,13 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 		
 	}
 
-	protected void removePrvGoList(String gNum) {
+	protected void removePrvGoList(String uid) {
 		Dao dao = new Dao();
 		int row = table.getSelectedRow();
 		
 		TableModel data = table.getModel();
 		String tableTime = (String)data.getValueAt(row,2);
 		
-		System.out.println(tableTime);
 		
 		int choice = JOptionPane.showConfirmDialog(
 				null,
@@ -119,15 +118,16 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 				if(text2 == 0) {
 					 dateD =  dateD.substring(0,2).replace("0", "");
 				}
-				tableTime1 = dateY + "-" + dateM + "-" + dateD;
+				tableTime1 = dateY + "-" + dateM + "-" + dateD + " " + time;
 			}else {
-				tableTime1 = dateY + "-" + dateM + "-" + dateD;				
+				tableTime1 = dateY + "-" + dateM + "-" + dateD + " " + time;				
 			}
 			
-			int aftcnt = dao.removePrvGoList(gNum, tableTime1);
-			
+			int aftcnt = dao.removePrvGoList(uid, tableTime1);
 			if(aftcnt > 0) { 
 				msg = aftcnt + "건 삭제되었습니다";
+				this.dispose();
+				//새로고침 넣기
 			}else {
 				msg = "삭제 되지 않았습니다";
 			}
@@ -150,9 +150,9 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 	}
 
 	//-----------------------------------------------------------------
-	private Vector<? extends Vector> getDataList() {
+	private Vector<? extends Vector> getDataList(String uid) {
 		Dao dao = new Dao();
-		Vector<Vector> list = dao.getEditList("HONG");
+		Vector<Vector> list = dao.getEditList(uid);
 		return list;
 	}
 
@@ -168,38 +168,6 @@ public class Edit extends JFrame implements MouseListener, ActionListener{
 	
 	
 	//--------------------------------------------------------------------
-	@Override
-	public void mouseClicked(MouseEvent e) {
-//		int row = table.getSelectedRow();
-//		TableModel data = table.getModel();
-//		String tableTime = (String)data.getValueAt(row,2);
-		
-		//res = new res( this );
-		//MemberDTO selectUser = new MemberDTO(tableTime);
-		
-		//DataInfo frame = new DataInfo(selectUser);
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-	}
-	
-	
-	public static void main(String[] args) {
-		new Edit();
-	}
   
     //action
 	@Override

@@ -44,7 +44,6 @@ public class MainView extends JFrame implements ActionListener{
 	String sel;
 	String val;
 	
-	
 	// 고수리스트 변수
 	JLabel lblListname;
 	JComboBox cbxlist;
@@ -569,7 +568,7 @@ public class MainView extends JFrame implements ActionListener{
 				if(tradeGosu != null)
 					tradeGosu.dispose();
 				if(e.getClickCount() == 2 ) {
-					resdet = new ResDetail(sel, mainview);
+					resdet = new ResDetail(sel, uid, mainview);
 				}
 			}
 			@Override

@@ -59,7 +59,6 @@ public class res extends JFrame implements ActionListener {
 
 	public res(Edit edit, String getDateStr) {
 		this(uid);
-
 		JButton btn4 = new JButton("수정");
 		btn4.setFont(new Font("굴림", Font.PLAIN, 14));
 		btn4.setBackground(new Color(0, 175, 212));
@@ -389,7 +388,7 @@ public class res extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("추가버튼 클릭....");
-				addMember();
+				addMember(uid);
 			}
 		});
 
@@ -450,22 +449,19 @@ public class res extends JFrame implements ActionListener {
 	}
 	
 	// --------------------------------------------------------------------------
-	private void addMember() {
-		if (textField1 != null) {
-			Dao Dao = new Dao();
-			Vo vo = getViewData();
-			int aftcnt = Dao.insertGWORK(vo);
-		} else {
-			System.out.println(textField1 + "입력하지 않았습니다");
-		}
+	private void addMember(String uid) {
+		Dao dao = new Dao();
+		Vo vo = getViewData();
+		int aftcnt = dao.insertGWORK(vo, uid );
 	}
+	
 	
 	//수정
 	private void updateInfo() {
 			Dao Dao = new Dao();
 			Vo vo = getViewData();
 			System.out.println(vo);
-			Dao.updateInfo(vo, "G01");
+			Dao.updateInfo(vo, uid);
 	}
 
 	private void setViewData(Vo vo) {
@@ -505,6 +501,8 @@ public class res extends JFrame implements ActionListener {
 		String combo4 = (String) this.gugunR.getSelectedItem();
 		String textf = this.textField1.getText();
 		String texta = this.textArea1.getText();
+		String uid = this.uid;
+		System.out.println(uid + "dddddddddfd");
 
 		dateStr = combo5;
 		dateStr = mod1 + " " + dateStr.replace("오전", " ").replace("오후", " ").replace("시", ":").replace("분", " ").trim();
@@ -512,14 +510,15 @@ public class res extends JFrame implements ActionListener {
 		dateEnd = combo6;
 		dateEnd = mod2 + " " + dateEnd.replace("오전", " ").replace("오후", " ").replace("시", ":").replace("분", " ").trim();
 		System.out.println(dateEnd + "dfd");
-		vo = new Vo(combo1, combo2, mod1, mod2, combo5, combo6, textf, combo3, combo4, texta, dateStr, dateEnd);
+		vo = new Vo(uid, combo1, combo2, mod1, mod2, combo5, combo6, textf, combo3, combo4, texta, dateStr, dateEnd);
 		return vo;
 	}
 
 	// 수정조회 및 상세보기-------------------------------------------
 	private void getDataDetail(String getDateStr) {
+		System.out.println(getDateStr);
 		Dao dao = new Dao();
-		Vector<String> list = dao.getDataDetail("HONG", getDateStr);
+		Vector<String> list = dao.getDataDetail(uid, getDateStr);
 		
 		String stDateAll = list.get(2);
 		String edDateAll = list.get(3);
@@ -626,9 +625,9 @@ public class res extends JFrame implements ActionListener {
 		line.setHorizontalAlignment(JLabel.CENTER);
 	}
 
-	public static void main(String[] args) {
-		new res(null);
-	}
+//	public static void main(String[] args) {
+//		new res(null);
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -637,7 +636,7 @@ public class res extends JFrame implements ActionListener {
 			System.out.println("수정 조회");
 			if (edit != null)
 				edit.dispose();
-			edit = new Edit(this);
+			edit = new Edit(this, uid);
 			break;
 		}
 	}

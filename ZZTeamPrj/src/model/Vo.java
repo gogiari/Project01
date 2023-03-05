@@ -22,10 +22,11 @@ public class Vo {
 	String endDate;
 	String staDate;
 	String dateStr, dateEnd; // 데이터 날짜 값으로 변환 변수
+	String uid;
 	
 	public Vo() {}
 
-	public Vo(String bigList, String midList, String staDate, String endDate, String staTime, String endTime,
+	public Vo(String uid, String bigList, String midList, String staDate, String endDate, String staTime, String endTime,
 			String price, String sido, String gugun, String prMes, String dateStr, String dateEnd) {
 		super();
 		this.bigList = bigList;
@@ -40,6 +41,7 @@ public class Vo {
 		this.prMes = prMes;
 		this.dateStr = dateStr;	
 		this.dateEnd = dateEnd;
+		this.uid = uid;
 	}
 
 	public String getBigList() {
@@ -138,14 +140,21 @@ public class Vo {
 		this.dateEnd = dateEnd;
 	}
 
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
 	@Override
 	public String toString() {
 		return "Vo [bigList=" + bigList + ", midList=" + midList + ", staTime=" + staTime + ", endTime=" + endTime
 				+ ", price=" + price + ", sido=" + sido + ", gugun=" + gugun + ", prMes=" + prMes + ", endDate="
-				+ endDate + ", staDate=" + staDate + ", dateStr=" + dateStr + ", dateEnd=" + dateEnd + "]";
+				+ endDate + ", staDate=" + staDate + ", dateStr=" + dateStr + ", dateEnd=" + dateEnd + ", uid=" + uid
+				+ "]";
 	}
-
-
 	
 	
 }
