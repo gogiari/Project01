@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import gosu.data.gosuDao;
 import gosu.data.gosuVo2;
 import gosu.data.messageDao;
+import gosu.data.updateVo;
 
 
 
@@ -227,6 +228,7 @@ public class PaymentPage extends JFrame{
 				
 				addGereo();
 				payment();
+				mess3();
 				// 메인화면으로 돌아가게하면될듯?
 				 
 			}
@@ -330,6 +332,20 @@ public class PaymentPage extends JFrame{
 		gosuVo2    vo2             =  new gosuVo2(georae_code);	
 		
 		return     vo2;
+	}
+	private void mess3() {
+		messageDao   mDao    =  new messageDao();
+		updateVo     vo      =  getViewData2();
+		int       aftcnt     =  mDao.mess3( vo );
+		
+	}
+	
+	public updateVo getViewData2() {
+		String   g_code3    =  this.txtGr.getText();
+		
+		updateVo   vo       = new updateVo(g_code3);
+		
+		return vo;
 	}
 
 
