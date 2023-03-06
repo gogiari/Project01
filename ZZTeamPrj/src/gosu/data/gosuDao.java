@@ -1342,7 +1342,7 @@ public class gosuDao {
 				+ "       PHONE = ?, "
 				+ "       U_SIDO = ?, "
 				+ "       U_GUGUN = ? "
-				+ "WHERE  U_ID = ? ";
+				+ "WHERE  U_ID = ?";
 
 		int aftcnt = 0;
 
@@ -1358,18 +1358,18 @@ public class gosuDao {
 			pstmt.setString(7, vo.getGugun());
 			pstmt.setString(8, vo.getId());
 			System.out.println("안녕??"+vo.getId());
+			System.out.println("안녕??"+vo.getGugun());
 
 			aftcnt = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		try {
-			if (pstmt != null)
-				pstmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return aftcnt;
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}return aftcnt;
 	}
 
 	public int ddeleteUser(String uid) {

@@ -353,6 +353,7 @@ public class UserEdit extends JFrame {
 
 		findUser();
 		idtxt.setText(uid + "(변경불가)");
+		
 		FocusEvent();
 
 	}
@@ -589,7 +590,7 @@ public class UserEdit extends JFrame {
 
 	// 회원가입
 	private userVo getViewData() {
-		String id = this.idtxt.getText();
+		String id = uid;
 		String pw = this.pwtxt.getText();
 		String pw2 = this.pwtxt.getText();
 		String name = this.nametxt.getText();
