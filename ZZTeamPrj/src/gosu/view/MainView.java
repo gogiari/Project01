@@ -739,7 +739,7 @@ public class MainView extends JFrame implements ActionListener{
 		case "주소찾기" :
 			if(txtAdrSuch1.getText() == null)
 				JOptionPane.showMessageDialog(null, "주소를 입력해주세요", "주소찾기", JOptionPane.INFORMATION_MESSAGE);
-			new Web(txtAdrSuch1.getText().trim());
+			new Web(txtAdrSuch1.getText().trim(),txtAdrSuch2.getText().trim());
 			break;
 		case "확인하기" :
 			if(pCenterList.isVisible()==true) {

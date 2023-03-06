@@ -15,7 +15,7 @@ import javax.swing.WindowConstants;
 
 public class Web {
 
-	public Web(String Adr) {
+	public Web(String adr1, String adr2) {
 		// Creating and running Chromium engine
 		EngineOptions options =
 				EngineOptions.newBuilder(HARDWARE_ACCELERATED)
@@ -40,7 +40,8 @@ public class Web {
 				}
 			});
 			frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			JTextField addressBar = new JTextField("https://map.kakao.com/?map_type=TYPE_MAP&q=%EB%B6%80%EC%82%B0%EA%B7%B8%EB%A6%B0%EC%BB%B4%ED%93%A8%ED%84%B0+%EC%84%9C%EB%A9%B4&urlLevel=4&urlX=972427&urlY=466374");
+			JTextField addressBar = new JTextField(
+					"https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=970411%2C465367%2C969167%2C465346&rt1=" + adr1.trim() + "&rt2=" + adr2.trim() + "&rtIds=1515261788%2C9661998&rtTypes=PLACE%2CPLACE");
 			addressBar.addActionListener(e ->
 			browser.navigation().loadUrl(addressBar.getText()));
 			frame.add(addressBar, BorderLayout.NORTH);
