@@ -198,7 +198,7 @@ public class gosuDao {
 		String sql = "";
 		sql += "SELECT W_NUM                             W_NUM , ";
 		sql += "       ML.MID_NAME                       MID_NAME, ";
-		sql += "       USERNAME                          USERNAME, ";
+		sql += "       U.USERNAME                          USERNAME, ";
 		sql += "       PRICE                             PRICE, ";
 		sql += "       U.U_SIDO || ' ' ||  U. U_GUGUN    ADDR  ";
 		sql += "  FROM GWORK GW LEFT JOIN GOSU G ";

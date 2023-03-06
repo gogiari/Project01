@@ -436,11 +436,11 @@ protected void removeGosu() {
 	private Vector<String> getGosuColumnList() {
 		Vector<String> cols = new Vector<>();
 		cols.add("업무번호");
-		cols.add("중분류번호");
-		cols.add("ID");
-		cols.add("고수번호");
-		cols.add("Price");
-		cols.add("구군");
+		cols.add("중분류");
+		cols.add("고수/이름");
+		cols.add("가격");
+		cols.add("주소");
+		
 		return cols;
 	}
 
