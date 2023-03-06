@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 import com.Design;
 
@@ -56,8 +57,6 @@ public class ResDetail extends JFrame implements ActionListener{
 	String dateStr, dateEnd;
 	MainView mainview;	
 	String uid;
-
-
 
 	public ResDetail(String sel,String uid, MainView mainview) {
 		getContentPane().setBackground(new Color(255, 255, 255));
@@ -512,8 +511,9 @@ public class ResDetail extends JFrame implements ActionListener{
 	private void getMainDataDetail(String getSel) {
 		Dao dao = new Dao();
 		Vector<String> list = dao.getMainDataDetail(getSel);
-		System.out.println(getSel);
-		System.out.println(list);
+		Vector<String> list2 = dao.getMainDataDetail2(getSel);
+//		System.out.println(getSel);
+//		System.out.println("dfd" + list2);
 		String stDateAll = list.get(2);
 		String edDateAll = list.get(3);
 		
@@ -540,6 +540,7 @@ public class ResDetail extends JFrame implements ActionListener{
 		String texta = list.get(7);
 		String userid = list.get(8);
 		String username = list.get(9);
+		//String gscore = list2.get(0);
 		//평균값 String username = list.get(9);
 
 		this.comboBoxG1.setSelectedItem(combo1);
@@ -553,6 +554,8 @@ public class ResDetail extends JFrame implements ActionListener{
 		
 		this.labG5_3.setText(userid);
 		this.labG5_1.setText(username);
+		
+		//this.labG5_5.setText(gscore);
 	}
 	
 	private void getDate(String inputDate, UtilDateModel inputModel ) {

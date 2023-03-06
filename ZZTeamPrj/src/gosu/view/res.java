@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -80,6 +81,7 @@ public class res extends JFrame implements ActionListener {
 		btn4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateInfo();
+				
 				System.out.println("수정클릭");
 			}
 		});
@@ -478,7 +480,35 @@ public class res extends JFrame implements ActionListener {
 			Dao Dao = new Dao();
 			Vo vo = getViewData();
 			System.out.println(vo);
-			Dao.updateInfo(vo, uid);
+			int aftcnt = 0;
+			
+			int choice = JOptionPane.showConfirmDialog(
+					null,
+					"수정하시겠습니까?",
+					"수정확인",
+					JOptionPane.OK_CANCEL_OPTION
+			);
+			
+			String msg = "";
+
+			if(choice == 0) { //ok 클릭
+				aftcnt = Dao.updateInfo(vo, uid);
+				if(aftcnt > 0) { 
+					msg =  " 수정되었습니다";
+					this.dispose();
+				}else {
+					msg = "수정 되지 않았습니다";
+				}
+				}else {
+					msg = "취소를 클릭하였습니다";
+				}
+			
+			JOptionPane.showMessageDialog(
+					null,
+					msg,
+					"수정",
+					JOptionPane.OK_OPTION
+			);
 	}
 
 	private void setViewData(Vo vo) {

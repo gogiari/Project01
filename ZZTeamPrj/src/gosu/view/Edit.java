@@ -1,5 +1,7 @@
 package gosu.view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -17,6 +19,7 @@ import javax.swing.table.TableModel;
 
 import model.Dao;
 import model.Vo;
+import java.awt.Color;
 
 public class Edit extends JFrame implements ActionListener{
 
@@ -33,9 +36,13 @@ public class Edit extends JFrame implements ActionListener{
 		initEdit(uid);
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public Edit(res res, String uid) {
 		initEdit(uid);
 		this.res = res;
+		//Refresh();
 	}
 	
 	public void initEdit(String uid) {
@@ -49,15 +56,18 @@ public class Edit extends JFrame implements ActionListener{
 				return false;   
 			}				
 		});
-		//jTableRefresh();
-		//table.addMouseListener(this);
+
 		JButton btnUpdate  = new JButton("\uC218\uC815 \uBC0F \uC870\uD68C");
-		btnUpdate.setBounds(494, 647, 101, 23);
+		btnUpdate.setForeground(new Color(255, 255, 255));
+		btnUpdate.setBackground(new Color(0, 128, 192));
+		btnUpdate.setBounds(494, 647, 123, 23);
 		getContentPane().add(btnUpdate);
 		btnUpdate.addActionListener(this);
 		
 		JButton btnDelete = new JButton("삭제");
-		btnDelete.setBounds(615, 647, 97, 23);
+		btnDelete.setForeground(new Color(0, 0, 0));
+		btnDelete.setBackground(new Color(128, 128, 128));
+		btnDelete.setBounds(658, 647, 97, 23);
 		getContentPane().add(btnDelete);
 		
 		btnDelete.addActionListener( new ActionListener() {
@@ -75,7 +85,34 @@ public class Edit extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(1200,800);
 		getContentPane().setLayout(null);
+		
+		JButton btnDelete_1 = new JButton("새로고침");
+		btnDelete_1.setBounds(1003, 647, 97, 23);
+		getContentPane().add(btnDelete_1);
 		setVisible(true);
+		
+		 btnDelete_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("새로고침버튼 클릭....");
+				Refresh();
+				
+				table.setModel(new DefaultTableModel( getDataList(uid), getColumnList() ) {				
+					@Override
+					public boolean isCellEditable(int row, int column) {		
+						return false;   
+					}				
+				});
+			}
+		});
+		
+		 
+		 
+		 
+		Dimension frameSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
+
+		this.setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2); // 화면 중앙
 		
 	}
 
@@ -126,7 +163,7 @@ public class Edit extends JFrame implements ActionListener{
 			
 			int aftcnt = dao.removePrvGoList(uid, tableTime1);
 			if(aftcnt > 0) { 
-				msg = aftcnt + "건 삭제되었습니다";
+				msg = "삭제 되었습니다";
 				this.dispose();
 				//새로고침 넣기
 			}else {
@@ -180,6 +217,27 @@ public class Edit extends JFrame implements ActionListener{
 //		jTable.repaint(); 
 //	}
 	
+	
+	public void Refresh() {
+		table.setModel(
+		new DefaultTableModel(getDataList(uid),getColumnList()  ) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+
+		});
+		table.repaint();
+		
+		table.setModel(
+		new DefaultTableModel(getDataList(uid),getColumnList()  ) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+
+		});
+	}
 	
 	//--------------------------------------------------------------------
   

@@ -432,20 +432,32 @@ public class Dao {
 		Vector<String> comlist = new Vector<String>();
 
 		String sql = "";
-		sql += "SELECT B.BI_NAME, M.MID_NAME, W.SDATE, W.EDATE, W.PRICE, W.WSIDO, W.PRMESSAGE, G.U_ID, U.USERNAME ,W.WGUGUN";
+		sql += "SELECT B.BI_NAME, M.MID_NAME, W.SDATE, W.EDATE, W.PRICE, W.WSIDO, W.PRMESSAGE, G.U_ID, U.USERNAME ,W.WGUGUN ";
 		sql += " FROM USERLIST U INNER JOIN GOSU G ON U.U_ID = G.U_ID INNER JOIN GWORK W ON G.G_NUM = W.G_NUM INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM INNER JOIN BIGLIST B ON B.BI_NUM = M.BI_NUM ";
 		sql += " WHERE W_NUM = ? ";
+		
+		String sql2 = "";
+		sql2 += " SELECT E.G_SCORE ";
+		sql2 += " FROM GWORK W INNER JOIN GOSU G ON W.G_NUM = G.G_NUM INNER JOIN EVALUATION E ON G.G_NUM = E.G_NUM ";
+		sql2 += " WHERE W_NUM = ? ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs2 = null;
 
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt2 = conn.prepareStatement(sql2);
 
 			pstmt.setString(1, sel);
 			rs = pstmt.executeQuery();
-
+			
+			pstmt2.setString(1, sel);
+			rs2 = pstmt2.executeQuery();
+			
 			if (rs.next()) {
+				System.out.println("gs1 " + rs.getString("BI_NAME"));
 				String biName = rs.getString("BI_NAME");
 				String midName = rs.getString("MID_NAME");
 				String sDate = rs.getString("SDATE");
@@ -470,9 +482,21 @@ public class Dao {
 				v.add(8,userid);
 				v.add(9,username);
 				//평균값 v.add(username);
-
+				
 				comlist.addAll(v);
+				System.out.println(v);
 			}
+			
+//			if (rs2.next()) {
+//				System.out.println("gs1 " + rs2.getString("G_SCORE"));
+//				String GScore = rs2.getString("G_SCORE");
+//				
+//				System.out.println("gs " + GScore);
+//				
+//				comlist.add(10, GScore);
+//				System.out.print(comlist);
+//			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -481,6 +505,54 @@ public class Dao {
 					rs.close();
 				if (pstmt != null)
 					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		System.out.println("상세보기 출력" + comlist);
+		return comlist;
+	}
+	
+	// 메인 상세보기2
+	public Vector<String> getMainDataDetail2(String sel) {
+
+		Vector<String> comlist = new Vector<String>();
+		
+		String sql2 = "";
+		sql2 += " SELECT E.G_SCORE ";
+		sql2 += " FROM GWORK W INNER JOIN GOSU G ON W.G_NUM = G.G_NUM INNER JOIN EVALUATION E ON G.G_NUM = E.G_NUM ";
+		sql2 += " WHERE W_NUM = ? ";
+
+		PreparedStatement pstmt2 = null;
+		ResultSet rs2 = null;
+		
+		
+		try {
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			pstmt2.setString(1, sel);
+			rs2 = pstmt2.executeQuery();
+			
+			
+			if (rs2.next()) {
+				String GScore = rs2.getString("G_SCORE");
+				
+				System.out.println("gs " + GScore);
+				
+				Vector v = new Vector();
+
+				v.add(GScore);
+				
+				comlist.addAll(v);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs2 != null)
+					rs2.close();
+				if (pstmt2 != null)
+					pstmt2.close();
 			} catch (SQLException e) {
 			}
 		}
