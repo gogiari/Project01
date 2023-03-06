@@ -739,10 +739,9 @@ public class gosuDao {
 		public georaeVo getGeorae(String g_code) {
 
 			georaeVo  vo = null;
-
-			String  sql = "";
+			String sql = ""; 
 			sql += " SELECT G.GEORAE_CODE, M.MID_NAME, ";
-			sql += "        GW.SDATE || '~' || GW.EDATE,   G.G_START,   G.G_END,    GW.WSIDO, ";
+			sql += "        GW.G_START || '~' || GW.G_END,   G.G_START,   G.G_END,    GW.WSIDO, ";
 			sql += "        GW.WGUGUN,  G.U_ID, G.M_MESSAGE";
 			sql += " FROM   GEORAE G ";
 			sql += " JOIN   GWORK GW ON G.W_NUM = GW.W_NUM ";
@@ -788,7 +787,7 @@ public class gosuDao {
 
 
 		}
-	
+
 	// 고수 거래요청서 답장에서 거래리스트에 저장(수정)
 	public int surakgeorae(updateVo vo) {
 		System.out.println("수정전:" + vo);	
@@ -923,7 +922,7 @@ public class gosuDao {
 	  	      sql += "        UL.USERNAME                   USERNAME, "; } // 본인이 고수일때
 				   else {
 			  sql += "        UL2.USERNAME                   USERNAME, "; }
-			  sql += "        GR.G_DATE                     GDATE, "
+			  sql += "        GR.G_START || '~' || GR.G_END                     GDATE, "
 				   + "        GW.PRICE                      PRICE, "
 				   + "        NVL(GR.G_CHECK, '업무대기중') G_CHECK, "
 				   + "        EV.G_SCORE                    G_SCORE "

@@ -559,6 +559,7 @@ public class MainView extends JFrame implements ActionListener{
 		txtAdrSuch2.setBounds(568, 701, 116, 21);
 		pCenterList.add(txtAdrSuch2);
 		
+		
 		// 고수 테이블
 		tabGosuList = new JTable();
 		
@@ -627,6 +628,8 @@ public class MainView extends JFrame implements ActionListener{
 				int row = tabGosuList.getSelectedRow();
 				int col = tabGosuList.getSelectedColumn();
 				String sel = (String) tabGosuList.getValueAt(row, 0);
+				String sel2 = (String) tabGosuList.getValueAt(row, 4);
+				txtAdrSuch2.setText(sel2);
 				System.out.println(sel +" 상황클릭값 + ㅇ");
 				System.out.println(e);
 				if(tradeGosu != null)
