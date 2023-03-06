@@ -141,8 +141,7 @@ public class AcceptPage extends JFrame{
 		
 		txtDd = new JTextField();
 		txtDd.setBackground(new Color(255, 255, 255));
-		txtDd.setText("");
-		//txtDd.setEditable(false);
+		txtDd.setEditable(false);
 		txtDd.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
 		txtDd.setBounds(131, 100, 268, 31);
 		frame.getContentPane().add(txtDd);
@@ -206,6 +205,7 @@ public class AcceptPage extends JFrame{
 		frame.getContentPane().add(btnFind);
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setBounds(150, 60, 141, 27);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -245,6 +245,7 @@ public class AcceptPage extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				findGereo();
 				
 			}
