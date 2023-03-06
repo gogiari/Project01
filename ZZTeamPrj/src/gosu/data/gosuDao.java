@@ -928,7 +928,7 @@ public class gosuDao {
 	public int insertGereo(String gereo_code,String review, String score,String u_id) {
 
 		String sql = "INSERT INTO EVALUATION(REVIEW_CODE,GEORAE_CODE, REVIEW,G_SCORE,U_ID) VALUES (\r\n"
-				+ "REVIEW_CODE.NEXTVAL,?   ,?,TO_NUMBER(?),? )" ;
+				+ "REVIEW_CODE.NEXTVAL,?   ,?,TO_NUMBER(?),? ) " ;
 				
 
 		PreparedStatement pstmt = null;

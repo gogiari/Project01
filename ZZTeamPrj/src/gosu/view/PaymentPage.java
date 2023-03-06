@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -226,9 +228,10 @@ public class PaymentPage extends JFrame{
 				pay = new PaymentCompletePage( id, ppp );
 				*/
 				
-				addGereo();
 				payment();
+				addGereo();
 				mess3();
+				frame.setVisible(false);
 				// 메인화면으로 돌아가게하면될듯?
 				 
 			}
@@ -242,9 +245,27 @@ public class PaymentPage extends JFrame{
 				frame.setVisible(false);
 			}
 		});
+		FocusEvent();
 	}
+	
+	private void FocusEvent() {
+		textArea.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textArea.getText().trim().length() == 0) {
+					textArea.setText("20\uC790 \uC774\uB0B4\uB85C \uC785\uB825\uD558\uC2DC\uC624.");
+				}
+			}
 
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (textArea.getText().trim().equals("20\uC790 \uC774\uB0B4\uB85C \uC785\uB825\uD558\uC2DC\uC624.")) {
+					textArea.setText("");
+				}
+			}
+		});
 
+	}
 	protected void addGereo() {
 		gosuDao   gDao      =  new gosuDao();
 		gosuVo2    vo        =  getViewData();
