@@ -504,7 +504,7 @@ public class gosuDao {
 		}
 	}
 
-
+/*
 	// 회원 거래요청서에서 거래리스트에 저장
 			public int addgeorae(String g_code, String g_num, String g_start, String g_end, String m_message, String g_message, String g_check)
 
@@ -557,7 +557,65 @@ public class gosuDao {
 				int aftcnt = addgeorae(g_code, g_num, g_start, g_end, m_message, g_message, g_check);
 				return aftcnt;				
 			}	
+*/
+	// 회원 거래요청서에서 거래리스트에 저장
+				public int addgeorae(String g_code, String g_num, String g_start, String g_end,  String m_message, String g_message, String g_check)
+				
+				{				String sql = "INSERT INTO GEORAE "
+						+ "   ( GEORAE_CODE, W_NUM, G_START, G_END, M_MESSAGE, G_MESSAGE, G_CHECK, U_ID ) "
+						+ "     VALUES( 'GR'|| LPAD(G_SEQ.nextval,4,0),"
+						+ "      (SELECT GW.W_NUM FROM GOSU GS JOIN GWORK GW ON GS.G_NUM = GW.G_NUM"		
+						+ "       WHERE GS.U_ID = ? ),"
+						+ "               ?, ?, ?, '-', '요청중', ?) ";
+				
+			    
+				int aftcnt = 0;
 
+				
+				PreparedStatement pstmt1 = null;
+
+
+				try {
+
+					pstmt1 = conn.prepareStatement(sql);
+								
+					pstmt1.setString(1, g_num);
+					pstmt1.setString(2, g_start);
+					pstmt1.setString(3, g_end);
+					pstmt1.setString(4, m_message);
+					pstmt1.setString(5, g_code);
+					
+					aftcnt = pstmt1.executeUpdate();	
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						
+						if(pstmt1 != null) pstmt1.close();
+
+					} catch (SQLException e) {
+
+					}
+				}
+				return  aftcnt;
+
+
+				}
+				public int addgeorae(georaeVo2 vo) {		
+					
+					String   g_code     = vo.getG_code();
+					String   g_num      = vo.getG_num();
+					String   g_start    = vo.getG_start();
+					String   g_end      = vo.getG_end();
+					String   m_message  = vo.getM_message();
+					String   g_message  = vo.getG_message();
+					String   g_check    = vo.getG_check();
+				
+
+					int aftcnt = addgeorae(g_code, g_num, g_start, g_end, m_message, g_message, g_check);				
+					return aftcnt;				
+				}
 	// 회원 거래요청서에서 메시지 리스트에 저장
 	public int select(String g_code, String messnum, String mread, String m_date, String title) {
 
@@ -624,7 +682,7 @@ public class gosuDao {
 		return afcnt;
 
 	}
-
+/*
 
 	// 고수 거래요청서에 뜨는 내용
 	public georaeVo getGeorae(String g_code) {
@@ -674,9 +732,63 @@ public class gosuDao {
 		}		
 
 		return    vo;
+		}
+
+*/
+	// 고수 거래요청서에 뜨는 내용
+		public georaeVo getGeorae(String g_code) {
+
+			georaeVo  vo = null;
+
+			String  sql = "";
+			sql += " SELECT G.GEORAE_CODE, M.MID_NAME, ";
+			sql += "        GW.SDATE || '~' || GW.EDATE,   G.G_START,   G.G_END,    GW.WSIDO, ";
+			sql += "        GW.WGUGUN,  G.U_ID, G.M_MESSAGE";
+			sql += " FROM   GEORAE G ";
+			sql += " JOIN   GWORK GW ON G.W_NUM = GW.W_NUM ";
+			sql += " JOIN   GOSU GS ON GS.G_NUM = GW.G_NUM ";
+			//sql += " JOIN   USERLIST GU ON GU.U_ID = GS.U_ID ";
+			sql += " JOIN   MIDLIST M ON GW.MID_NUM = M.MID_NUM ";
+			sql += " WHERE  G.GEORAE_CODE = '"+ g_code +"'";
+
+			PreparedStatement pstmt  =  null;
+			ResultSet         rs     =  null;
+
+			try {
+				pstmt =  conn.prepareStatement(sql);
+				rs    =  pstmt.executeQuery();
+
+				if( rs.next() ) {	
+					String  g_code2   = rs.getString(1);
+					String  mid_name  = rs.getString(2);
+					String  gdate     = rs.getString(3);
+					String  g_start   = rs.getString(4);
+					String  g_end     = rs.getString(5);
+					String  wsido     = rs.getString(6);
+					String  wgugun    = rs.getString(7);
+					String  g_name    = rs.getString(8);
+					String  m_message = rs.getString(9);
+					
+					
+
+					vo = new georaeVo(g_code2, mid_name, gdate, g_start, g_end, wsido, wgugun, g_name, m_message);				
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if(rs    != null)   rs.close();
+					if(pstmt != null)   pstmt.close();
+				} catch (SQLException e) {		
+				}
+			}		
+
+			return    vo;
 
 
-	}
+		}
+	
 	// 고수 거래요청서 답장에서 거래리스트에 저장(수정)
 	public int surakgeorae(updateVo vo) {
 		System.out.println("수정전:" + vo);	

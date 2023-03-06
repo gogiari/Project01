@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import gosu.data.georaeVo;
+import gosu.data.georaeVo2;
 import gosu.data.gosuDao;
 import model.Vo;
 
@@ -232,7 +233,7 @@ public class Gearae extends JFrame {
 					JOptionPane.showMessageDialog(null, "시간을 선택해주세요", "시간 선택하기", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-	
+			
 				addgeorae();
 			    new message();
 			}
@@ -272,12 +273,12 @@ public class Gearae extends JFrame {
    
 		protected void addgeorae() {
 			gosuDao  gDao     =  new gosuDao();
-			georaeVo    vo    =  getViewData();
+			georaeVo2    vo    =  getViewData();
 			int       aftcnt  =  gDao.addgeorae( vo );					
 		}
 			
 
-		private void setViewData(georaeVo vo) {
+		private void setViewData(georaeVo2 vo) {
 			String   uid       =  vo.getUid(); 
 			
 			String   mid_name  =  vo.getMid_name(); 
@@ -303,7 +304,7 @@ public class Gearae extends JFrame {
 
 		}
 
-		private georaeVo getViewData() {
+		private georaeVo2 getViewData() {
 			String   uid        =  this.txtuid.getText(); 
 			
 			String   mid_name   =  this.txtwo.getText(); 
@@ -316,7 +317,7 @@ public class Gearae extends JFrame {
 			String   g_num      =  this.txtgname.getText(); 
 			String   m_message  =  this.txtm_message.getText();
 
-			georaeVo   vo       = new georaeVo(
+			georaeVo2   vo       = new georaeVo2(
 					uid, mid_name, gdate, g_start, g_end, wsido, wgugun, g_num, m_message);
 
 			return vo;

@@ -42,13 +42,19 @@ public class GearaeGosu extends JFrame {
 	JTextField txtgname;
 	JTextField txtg_message;
 	String sel;
+	String uid;
 	
 	BorderLayout gb;
 	JLabel lbltitle, lbluserid;
-
+	
+	
 	
 	public GearaeGosu(String sel, MainView mainview) {
+		
 		this.sel = sel;
+		
+		
+		System.out.println(sel);
 		init();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("거래요청서가 도착했습니다");
@@ -94,8 +100,8 @@ public class GearaeGosu extends JFrame {
 		Pane.add(txtgcode);
 		
 		
-		// 거래요청자 이름
-		lblusername = new JLabel("거래요청자 이름");
+		// 거래요청자 
+		lblusername = new JLabel("거래요청자 ID");
 		lblusername.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		lblusername.setForeground(SystemColor.textHighlight);
 		lblusername.setBackground(SystemColor.text);
@@ -172,13 +178,13 @@ public class GearaeGosu extends JFrame {
 		Pane.add(txtlgugun);
 		
 		// 고수이름
-		lblgosuname = new JLabel("고수 이름");
+		lblgosuname = new JLabel("고수 ID");
 		lblgosuname.setForeground(SystemColor.textHighlight);
 		lblgosuname.setBackground(SystemColor.text);
 		lblgosuname.setBounds(450, 145, 200, 20);
 		lblgosuname.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblgosuname);
-		txtgname = new JTextField("이름불러오기");
+		txtgname = new JTextField("ID불러오기");
 		txtgname.setBounds(560, 140, 200, 30);
 		txtgname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtgname);
@@ -413,7 +419,7 @@ public class GearaeGosu extends JFrame {
 		this.txtend.setText(g_end);
 		this.txtlsido.setText(wsido); 
 		this.txtlgugun.setText(wgugun); 
-		this.txtgname.setText(g_name);
+		this.txtuname.setText(g_name);
 		this.txtm_message.setText(m_message);	
 		this.txtg_message.setText(g_message);	
 	}
@@ -427,7 +433,7 @@ public class GearaeGosu extends JFrame {
 		String   g_end     =  this.txtend.getText();
 		String   wsido     =  this.txtlsido.getText(); 
 		String   wgugun    =  this.txtlgugun.getText(); 
-		String   g_name    =  this.txtgname.getText();
+		String   g_name    =  this.txtuname.getText();
 		String   m_message =  this.txtm_message.getText();
 		String   g_message =  this.txtg_message.getText();
 
