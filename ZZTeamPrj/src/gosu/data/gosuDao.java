@@ -1397,7 +1397,7 @@ public class gosuDao {
 
 	public String getUserAddress(String uid) {
 		String addr = null;
-		String  sql = " SELECT U_SIDO||U_GUGUN "
+		String  sql = " SELECT U_SIDO|| ' ' || U_GUGUN "
 				    + "  FROM  USERLIST "
 				    + "  WHERE U_ID = ? ";
 

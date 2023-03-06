@@ -6,6 +6,8 @@ import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -44,9 +46,10 @@ public class Web {
 					"https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=970411%2C465367%2C969167%2C465346&rt1=" + adr1.trim() + "&rt2=" + adr2.trim() + "&rtIds=1515261788%2C9661998&rtTypes=PLACE%2CPLACE");
 			addressBar.addActionListener(e ->
 			browser.navigation().loadUrl(addressBar.getText()));
-			frame.add(addressBar, BorderLayout.NORTH);
+//			frame.add(addressBar, BorderLayout.NORTH);
 			frame.add(view, BorderLayout.CENTER);
-			frame.setSize(800, 500);
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // 모니터 사이즈
+			frame.setSize(screenSize.width, screenSize.height);
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 
