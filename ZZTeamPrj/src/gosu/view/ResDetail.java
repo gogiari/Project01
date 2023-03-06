@@ -42,6 +42,9 @@ public class ResDetail extends JFrame implements ActionListener{
 	ArrayList<String> comboTime ,comboTimeG2 ;
 	JComboBox<String> sidoCB, gugunCB;
 
+	SidoComboBoxModel SidoCom = new SidoComboBoxModel();
+	GugunComboBoxModel GugunCom;
+	
 	Design comDe = new Design();
 
 	LineBorder bb = new LineBorder(new Color(190, 190, 190), 1, true);
@@ -300,22 +303,22 @@ public class ResDetail extends JFrame implements ActionListener{
 		line_6.setBounds(37, 121, 300, 15);
 		panel_G4.add(line_6);
 		line_6.setHorizontalAlignment(SwingConstants.CENTER);
-
-		sidoCB = new JComboBox<String>();
+		
+		sidoCB = new JComboBox<String>(SidoCom);
 		sidoCB.setForeground(new Color(128, 128, 128));
 		sidoCB.setBounds(37, 141, 125, 26);
 		panel_G4.add(sidoCB);
 		sidoCB.setToolTipText("\uC2DC");
 		sidoCB.setBackground(new Color(255, 255, 255));
-		sidoCB.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					String sido = (String) sidoCB.getSelectedItem();
-					gugunCB.setModel(new GugunComboBoxModel(sido));
-				}
-			}
-		});
+//		sidoCB.addItemListener(new ItemListener() {
+//			@Override
+//			public void itemStateChanged(ItemEvent e) {
+//				if (e.getStateChange() == ItemEvent.SELECTED) {
+//					String sido = (String) sidoCB.getSelectedItem();
+//					gugunCB.setModel(new GugunComboBoxModel(sido));
+//				}
+//			}
+//		});
 
 		gugunCB = new JComboBox<String>();
 		gugunCB.setForeground(new Color(128, 128, 128));
@@ -408,6 +411,18 @@ public class ResDetail extends JFrame implements ActionListener{
 				cancelMember();
 			}
 		});
+		
+		sidoCB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SidoCom = new SidoComboBoxModel();
+				String cb = (String) sidoCB.getSelectedItem();
+				Vector<String> list = getDataGu(cb);
+				//gugunR.setModel(new DefaultComboBoxModel(list));
+
+				GugunCom = new GugunComboBoxModel(cb);
+				gugunCB.setModel(GugunCom);
+			}
+		});
 
 		// -----------------------------------------------------------------
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -437,6 +452,12 @@ public class ResDetail extends JFrame implements ActionListener{
 		System.out.println(bigCom);
 		Dao dao = new Dao();
 		Vector<String> exlist = dao.getExList2(String.valueOf(index));
+		return exlist;
+	}
+	
+	private Vector<String> getDataGu(String si) {
+		Dao dao = new Dao();
+		Vector<String> exlist = dao.getExGu(String.valueOf(si));
 		return exlist;
 	}
 	// --------------------------------------------------------------------------
