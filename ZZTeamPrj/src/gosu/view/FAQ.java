@@ -201,7 +201,7 @@ public class FAQ extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addFAQ();
-				
+				frame.setVisible(false);
 			}
 		});
 		
@@ -304,12 +304,9 @@ public class FAQ extends JFrame {
 		JOptionPane.showMessageDialog(null, 
 			aftcnt + "건 저장되었습니다",
 			"추가",
-			JOptionPane.OK_OPTION);
-		
-		
-		
-	    // 현재 창닫기
-		this.dispose();
+			JOptionPane.OK_CANCEL_OPTION);
+		  
+     		
 		
 	}
 	
