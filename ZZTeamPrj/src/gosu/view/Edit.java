@@ -49,7 +49,8 @@ public class Edit extends JFrame implements ActionListener{
 				return false;   
 			}				
 		});
-		
+		//jTableRefresh();
+		//table.addMouseListener(this);
 		JButton btnUpdate  = new JButton("\uC218\uC815 \uBC0F \uC870\uD68C");
 		btnUpdate.setBounds(494, 647, 101, 23);
 		getContentPane().add(btnUpdate);
@@ -142,12 +143,10 @@ public class Edit extends JFrame implements ActionListener{
 				JOptionPane.OK_OPTION
 		);
 		
-		jTableRefresh();
+//		jTableRefresh();
 	}
 
-	public void jTableRefresh() {
-		table.repaint();
-	}
+	
 
 	//-----------------------------------------------------------------
 	private Vector<? extends Vector> getDataList(String uid) {
@@ -156,15 +155,30 @@ public class Edit extends JFrame implements ActionListener{
 		return list;
 	}
 
-	private Vector<?> getColumnList() {
+	private Vector<String> getColumnList() {
 		Vector<String>  cols = new Vector<>(); 
 		cols.add("아이디");
 		cols.add("이름");
 		cols.add("직업");
 		cols.add("성별");
-		cols.add("가입일");
 		return  cols;
 	}
+	
+//	public void jTableRefresh() {
+//		
+//		jTable.setModel(
+//			new DefaultTableModel(  getDataList(uid),  getColumnList()  ) {
+//
+//				@Override
+//				public boolean isCellEditable(int row, int column) {					
+//					return false;
+//				}
+//				
+//			}
+//		);  
+//		
+//		jTable.repaint(); 
+//	}
 	
 	
 	//--------------------------------------------------------------------

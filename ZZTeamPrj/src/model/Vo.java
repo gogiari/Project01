@@ -23,6 +23,7 @@ public class Vo {
 	String staDate;
 	String dateStr, dateEnd; // 데이터 날짜 값으로 변환 변수
 	String uid;
+
 	
 	public Vo() {}
 
@@ -155,6 +156,6 @@ public class Vo {
 				+ endDate + ", staDate=" + staDate + ", dateStr=" + dateStr + ", dateEnd=" + dateEnd + ", uid=" + uid
 				+ "]";
 	}
-	
+
 	
 }

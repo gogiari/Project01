@@ -263,7 +263,6 @@ public class ResDetail extends JFrame implements ActionListener{
 			}
 		}
 		
-		//System.out.println(comboTime.contains("오전8시50분"));
 		comboBoxG5 = new JComboBox<String>(comboTime.toArray(new String[comboTime.size()]));
 		comboBoxG5.setForeground(new Color(128, 128, 128));
 		comboBoxG5.setBounds(310, 366, 190, 26);
@@ -441,15 +440,6 @@ public class ResDetail extends JFrame implements ActionListener{
 		return exlist;
 	}
 	// --------------------------------------------------------------------------
-	private void addMember() {
-		if (textFieldG1 != null) {
-			Dao Dao = new Dao();
-			Vo vo = getViewData();
-			int aftcnt = Dao.insertGWORK(vo, uid);
-		} else {
-			System.out.println(textFieldG1 + "입력하지 않았습니다");
-		}
-	}
 
 	private void setViewData(Vo vo) {
 		String combo1 = vo.getBigList();
@@ -465,8 +455,7 @@ public class ResDetail extends JFrame implements ActionListener{
 
 		this.comboBoxG1.setSelectedItem(combo1);
 		this.comboBoxG2.setSelectedItem(combo2);
-//		this.model1.setValue(mod1);
-//		this.model1.setValue(mod2);
+
 		this.comboBoxG5.setSelectedItem(combo5);
 		this.comboBoxG6.setSelectedItem(combo6);
 		this.textFieldG1.setText(textf);

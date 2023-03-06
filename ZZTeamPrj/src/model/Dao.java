@@ -76,7 +76,6 @@ public class Dao {
 		sql += "SELECT  M.MID_NAME ";
 		sql += "FROM MIDLIST M INNER JOIN BIGLIST B ON M.BI_NUM = B.BI_NUM ";
 		sql += " WHERE  M.BI_NUM like ?";
-		// sql += " WHERE M.BI_NUM like '%'+ ? +'%' ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -115,8 +114,8 @@ public class Dao {
 		Vector<String> comlist = new Vector<String>();
 
 		String sql = "";
-		sql += " SELECT SI_NAME";
-		sql += " FROM SI";
+		sql += " SELECT SIDO_NAME";
+		sql += " FROM SIDO";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -127,7 +126,7 @@ public class Dao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String exSi = rs.getString("SI_NAME");
+				String exSi = rs.getString("SIDO_NAME");
 
 				System.out.print(exSi);
 
@@ -153,14 +152,12 @@ public class Dao {
 	// 구군 데이터 출력
 	public Vector<String> getExGu(String si) {
 
-		// ExVo exvo = null;
 		Vector<String> comlist = new Vector<String>();
 
 		String sql = "";
-		sql += "SELECT G.GU_NAME ";
-		sql += "FROM GU G INNER JOIN SI S ON G.SI_NUM = S.SI_NUM ";
-		sql += " WHERE  S.SI_NAME like ?";
-		// sql += " WHERE M.BI_NUM like '%'+ ? +'%' ";
+		sql += "SELECT G.GUGUN ";
+		sql += "FROM GUGUN G INNER JOIN SIDO S ON G.SIDO_NUM = S.SIDO_NUM ";
+		sql += " WHERE  S.SIDO_NAME like ?";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -172,7 +169,7 @@ public class Dao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String exgu = rs.getString("GU_NAME");
+				String exgu = rs.getString("GUGUN");
 
 				Vector v = new Vector();
 				v.add(exgu);
@@ -192,145 +189,7 @@ public class Dao {
 
 		return comlist;
 	}
-	
-	// 고수 업무 
-//	public int idCheck(String uid) {
-//		String sql = "";
-//		sql += "INSERT INTO GOSU (";
-//		sql += "    G_NUM, U_ID ) ";
-//		sql += " VALUES ";
-//		sql += " ( seq_GOSU.NEXTVAL, ? ) ";
-//
-//		String sql2 = "";
-//		sql2 += "SELECT U_ID ,G_NUM";
-//		sql2 += "FROM GOSU ";
-//		sql2 += " WHERE U_ID like ? ";
-//		
-//
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		PreparedStatement pstmt2 = null;
-//		ResultSet rs2 = null;
-//		int aftcnt = 0;
-//		try {
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt2 = conn.prepareStatement(sql2);
-//
-//			String names = "%" + uid + "%";
-//			pstmt2.setString(1, names);
-//			rs2 = pstmt2.executeQuery();
-//
-//			
-//			String user = null;
-//			if (rs.next()) {
-//				user = rs2.getString("G_NUM");
-//			}
-//			
-//			System.out.println("dd"+ user);
-//			
-//			//String goso = null;
-//			if(user == null) {
-//				pstmt.setString(1, uid );
-//				aftcnt = 1;
-//			}
-//
-//
-//			aftcnt = pstmt.executeUpdate();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (pstmt != null)
-//					pstmt.close();
-//				if (pstmt2 != null)
-//					pstmt2.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		return aftcnt;
-//	}
-//	
-//	//2
-//	public String idCheck2(String uid) {
-//		String sql2 = "";
-//		sql2 += "SELECT U_ID ,G_NUM";
-//		sql2 += "FROM GOSU ";
-//		sql2 += " WHERE U_ID like ? ";
-//		sql2 += " ORDER BY G_NUM ";
-//		
-//		String user = null;
-//		PreparedStatement pstmt2 = null;
-//		ResultSet rs2 = null;
-//		try {
-//			pstmt2 = conn.prepareStatement(sql2);
-//
-//			String names = "%" + uid + "%";
-//			pstmt2.setString(1, names);
-//			rs2 = pstmt2.executeQuery();
-//
-//			if (rs2.next()) {
-//				user = rs2.getString("G_NUM");
-//			}
-//		
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (pstmt2 != null)
-//					pstmt2.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		return user;
-//	}
-//	
-//	//3
-//	public String idCheck3(String uid) {
-//		String sql2 = "";
-//		sql2 += "SELECT U_ID ,G_NUM";
-//		sql2 += "FROM GOSU ";
-//		sql2 += " WHERE U_ID like ? ";
-//		sql2 += " ORDER BY G_NUM ";
-//		
-//		String user = null;
-//		PreparedStatement pstmt2 = null;
-//		ResultSet rs2 = null;
-//		try {
-//			pstmt2 = conn.prepareStatement(sql2);
-//
-//			String names = "%" + uid + "%";
-//			pstmt2.setString(1, names);
-//			rs2 = pstmt2.executeQuery();
-//
-//			if (rs2.next()) {
-//				user = rs2.getString("G_NUM");
-//			}
-//		
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (pstmt2 != null)
-//					pstmt2.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		return user;
-//	}
-//	
-	
-//	public int pulse(int num) {
-//		//int num = pulse() + 1;
-//		int i =+ num;
-//		return i;
-//	}
-	
+		
 	// 고수 업무 리스트 데이터 추가
 	public int insertGWORK(String uid, String midList, String price, String wsido, String prMes, String staDate, String endDate,
 							String staTime, String endTime, String dateStr, String dateEnd, String wsido2, String idCheck) {
@@ -349,7 +208,7 @@ public class Dao {
 		String sql3 = "";
 		sql3 += "SELECT G_NUM ";
 		sql3 += "FROM GOSU";
-		sql3 += " WHERE U_ID like ? ";
+		sql3 += " WHERE U_ID = ? ";
 
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -374,8 +233,7 @@ public class Dao {
 			}
 			
 			//G_NUM
-			String gnum = "%" + uid + "%";
-			pstmt3.setString(1, gnum);
+			pstmt3.setString(1, uid);
 			rs3 = pstmt3.executeQuery();
 			
 			String gNum = null;
@@ -385,8 +243,6 @@ public class Dao {
 			
 				
 			pstmt.setString(1, gNum);
-			System.out.println("오라클dfdf" + uid + " " +  midList + " " + price+ " " + wsido+ " " +prMes+ " " +staDate+ " " + endDate+ " " +
-					staTime+ " " +  endTime+ " " +dateStr+ " " +dateEnd+ " " + wsido2+ " " + idCheck);
 			pstmt.setString(2, midnum);
 			pstmt.setString(3, price);
 			pstmt.setString(4, prMes);
@@ -423,7 +279,7 @@ public class Dao {
 		sql += " FROM GWORK W INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM ";
 		sql += " WHERE G_NUM IN ( SELECT G_NUM ";
 		sql += "		  FROM GOSU ";
-		sql += "	      WHERE U_ID like ? ) ";
+		sql += "	      WHERE U_ID = ? ) ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -431,8 +287,8 @@ public class Dao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			String names = "%" + userID + "%";
-			pstmt.setString(1, names);
+			//String names = "%" + userID + "%";
+			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -478,7 +334,7 @@ public class Dao {
 		sql += " FROM GWORK W INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM INNER JOIN BIGLIST B ON B.BI_NUM = M.BI_NUM ";
 		sql += " WHERE G_NUM IN ( SELECT G_NUM ";
 		sql += "		  FROM GOSU ";
-		sql += "	      WHERE U_ID like ? )AND W.SDATE = ? ";
+		sql += "	      WHERE U_ID = ? )AND W.SDATE = ? ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -486,8 +342,8 @@ public class Dao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			String names = "%" + userID + "%";
-			pstmt.setString(1, names);
+			//String names = "%" + userID + "%";
+			pstmt.setString(1, userID);
 			pstmt.setString(2, edStDate);
 			rs = pstmt.executeQuery();
 
