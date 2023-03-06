@@ -114,8 +114,8 @@ public class Dao {
 		Vector<String> comlist = new Vector<String>();
 
 		String sql = "";
-		sql += " SELECT SIDO_NAME";
-		sql += " FROM SIDO";
+		sql += " SELECT SIDO";
+		sql += " FROM POST";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -126,7 +126,7 @@ public class Dao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String exSi = rs.getString("SIDO_NAME");
+				String exSi = rs.getString("SIDO");
 
 				System.out.print(exSi);
 
@@ -148,6 +148,47 @@ public class Dao {
 
 		return comlist;
 	}
+	
+	//시 데이터 출력
+//	public Vector<String> getExSi() {
+//
+//		Vector<String> comlist = new Vector<String>();
+//
+//		String sql = "";
+//		sql += " SELECT SIDO_NAME";
+//		sql += " FROM SIDO";
+//
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				String exSi = rs.getString("SIDO_NAME");
+//
+//				System.out.print(exSi);
+//
+//				Vector v = new Vector();
+//				v.add(exSi);
+//				comlist.addAll(v);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (rs != null)
+//					rs.close();
+//				if (pstmt != null)
+//					pstmt.close();
+//			} catch (SQLException e) {
+//			}
+//		}
+//
+//		return comlist;
+//	}
 	
 	// 구군 데이터 출력
 	public Vector<String> getExGu(String si) {
@@ -418,16 +459,16 @@ public class Dao {
 
 				Vector v = new Vector();
 
-				v.add(biName);
-				v.add(midName);
-				v.add(sDate);
-				v.add(eDate);
-				v.add(price);
-				v.add(wSido);
-				v.add(wgugun);
-				v.add(prMess);
-				v.add(userid);
-				v.add(username);
+				v.add(0,biName);
+				v.add(1,midName);
+				v.add(2,sDate);
+				v.add(3,eDate);
+				v.add(4,price);
+				v.add(5,wSido);
+				v.add(6,wgugun);
+				v.add(7,prMess);
+				v.add(8,userid);
+				v.add(9,username);
 				//평균값 v.add(username);
 
 				comlist.addAll(v);

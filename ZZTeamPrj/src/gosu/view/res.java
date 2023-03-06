@@ -47,7 +47,9 @@ public class res extends JFrame implements ActionListener {
 	private ArrayList<String> comboTime ,comboTime2 ;
 	JComboBox<String> sidoR, gugunR;
 
-	// RoundedButton btn2 = new RoundedButton();
+	SidoComboBoxModel SidoCom = new SidoComboBoxModel();
+	GugunComboBoxModel GugunCom;
+	
 	Design comDe = new Design();
 
 	LineBorder bb = new LineBorder(new Color(190, 190, 190), 1, true);
@@ -285,14 +287,17 @@ public class res extends JFrame implements ActionListener {
 		panel_4.add(line_6);
 		line_6.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		sidoR = new JComboBox(new DefaultComboBoxModel(getDataSi()));
+		SidoCom = new SidoComboBoxModel();
+		//sidoR = new JComboBox(new DefaultComboBoxModel(getDataSi()));
+		sidoR = new JComboBox(SidoCom);
 		sidoR.setForeground(new Color(128, 128, 128));
 		sidoR.setBounds(37, 141, 125, 26);
 		panel_4.add(sidoR);
 		sidoR.setToolTipText("\uC2DC");
 		sidoR.setBackground(new Color(255, 255, 255));
 
-
+		//GugunCom = new GugunComboBoxModel(sidoR);
+		//gugunR = new JComboBox<String>(GugunCom);
 		gugunR = new JComboBox<String>();
 		gugunR.setForeground(new Color(128, 128, 128));
 		gugunR.setBounds(187, 141, 125, 26);
@@ -400,12 +405,16 @@ public class res extends JFrame implements ActionListener {
 		
 		sidoR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				SidoCom = new SidoComboBoxModel();
 				String cb = (String) sidoR.getSelectedItem();
-				
 				Vector<String> list = getDataGu(cb);
-				gugunR.setModel(new DefaultComboBoxModel(list));
+				//gugunR.setModel(new DefaultComboBoxModel(list));
+
+				GugunCom = new GugunComboBoxModel(cb);
+				gugunR.setModel(GugunCom);
 			}
 		});
+		
 
 		// -----------------------------------------------------------------
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -551,6 +560,7 @@ public class res extends JFrame implements ActionListener {
 
 		String textf = list.get(4);
 		String sido = list.get(5);
+		System.out.println(sido);
 		String gugum = list.get(6);
 		String texta = list.get(7);
 
