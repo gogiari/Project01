@@ -103,7 +103,15 @@ public class FAQList extends JFrame implements MouseListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new FAQ();
+			//new FAQ();
+			
+			String  id2  = uid;
+			System.out.println( e );	
+			if ( faq != null)
+				faq.dispose();
+			FAQList fff = FAQList.this;
+			faq = new FAQ( id2, fff );
+			
 			
 		}
 	});	

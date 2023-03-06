@@ -61,13 +61,22 @@ public class FAQ extends JFrame {
 		
 	}
 
-	public FAQ(String id, FAQList faqList) {
+	public FAQ(String id, String id2, FAQList faqList) {
 		this();
 		this.faqList = faqList;
 		
 		// 넘어온 아이디를 txtId 에 넣고 find 버튼 클릭하면
 		textField_2.setText( id );
 		btnFind.doClick();
+		textField_1.setText(id2);
+	}
+
+	
+	public FAQ(String id2,FAQList faqList ) {
+		this();
+		this.faqList = faqList;
+		
+		textField_1.setText(id2);
 	}
 
 	/**
@@ -275,7 +284,7 @@ public class FAQ extends JFrame {
 		String   reply       =  vo2.getReply();  
 		String   faq_code    =  vo2.getFaq_code();
 
-		this.textField_1.setText( u_id );
+		this.textField_1.setText( uid );
 		this.textField.setText( f_head );
 		this.txtrbyte.setText( f_body );
 		this.textArea.setText( reply );
