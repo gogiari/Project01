@@ -476,7 +476,7 @@ public class UserEdit extends JFrame {
 		gosuDao   gDao    =  new gosuDao();
 		
 		int choice  =   JOptionPane.showConfirmDialog(null, 
-				uid + "를 수정하시겠습니까?",
+				"ID(" +uid + ")를 수정하시겠습니까?",
 				"수정확인",
 				JOptionPane.OK_CANCEL_OPTION);
 		int     aftcnt = 0 ;
@@ -485,16 +485,16 @@ public class UserEdit extends JFrame {
 			userVo vo =  getViewData();
 			aftcnt      =  gDao.updateMember( vo );
 			if( aftcnt > 0 )
-				msg     =  uid + "님의 정보가 수정되었습니다";
+				msg     =  "ID(" +uid + ")님의 정보가 수정되었습니다";
 			else
-				msg     =  uid + "님의 정보가 수정되지 않았습니다";
+				msg     =  "ID(" +uid + ")님의 정보가 수정되지 않았습니다";
 		} else {
 			msg = "취소를 선택하였습니다";
 		}
 		JOptionPane.showMessageDialog(null, 
 				msg,
 				"수정",
-				JOptionPane.OK_OPTION);		
+				JOptionPane.INFORMATION_MESSAGE);		
 		
 		// MemberList 새로고침
 //		memberList.jTableRefresh();
@@ -527,7 +527,7 @@ public class UserEdit extends JFrame {
 		
 		// 제이옵션 패스워드필드추가
 					JPanel panel = new JPanel();
-					JLabel label = new JLabel("비밀번호 입력 :");
+					JLabel label = new JLabel("정말 삭제 하실거면  :");
 					JPasswordField pass = new JPasswordField(10);
 					panel.add(label);
 					panel.add(pass);
