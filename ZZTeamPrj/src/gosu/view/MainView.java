@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
@@ -74,6 +76,7 @@ public class MainView extends JFrame implements ActionListener{
 	
 	String bigSelect;
 	String titleMsg;
+	String sel2;
 	
 	public MainView(String uid, loginPage loginPage) {
 		this.loginpage = loginPage;
@@ -226,6 +229,8 @@ public class MainView extends JFrame implements ActionListener{
 		setVisible(true);
 		setSize(1200, 900);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		focusEvent();
 
 		
 		
@@ -628,9 +633,9 @@ public class MainView extends JFrame implements ActionListener{
 				int row = tabGosuList.getSelectedRow();
 				int col = tabGosuList.getSelectedColumn();
 				String sel = (String) tabGosuList.getValueAt(row, 0);
-				String sel2 = (String) tabGosuList.getValueAt(row, 4);
+				sel2 = (String) tabGosuList.getValueAt(row, 4);
 				txtAdrSuch2.setText(sel2);
-				System.out.println(sel +" 상황클릭값 + ㅇ");
+				System.out.println(sel2 +" 상황클릭값 + ㅇ");
 				System.out.println(e);
 				if(tradeGosu != null)
 					tradeGosu.dispose();
@@ -740,6 +745,8 @@ public class MainView extends JFrame implements ActionListener{
 			if(txtAdrSuch1.getText() == null)
 				JOptionPane.showMessageDialog(null, "주소를 입력해주세요", "주소찾기", JOptionPane.INFORMATION_MESSAGE);
 			new Web(txtAdrSuch1.getText().trim(),txtAdrSuch2.getText().trim());
+			
+			System.out.println(sel2);
 			break;
 		case "확인하기" :
 			if(pCenterList.isVisible()==true) {
@@ -817,6 +824,47 @@ public class MainView extends JFrame implements ActionListener{
 
 		}
 	}
+	private void focusEvent() {
+		txtAdrSuch1.addFocusListener(new FocusListener() {
+			gosuDao dao = new gosuDao();
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtAdrSuch1.getText().trim().length() == 0) {
+					txtAdrSuch1.setText(dao.getUserAddress(uid));
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtAdrSuch1.getText().equals(dao.getUserAddress(uid))) {
+					txtAdrSuch1.setText("");
+				}
+				
+			}
+		});
+		txtAdrSuch2.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtAdrSuch2.getText().length() == 0) {
+					txtAdrSuch2.setText(sel2);
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtAdrSuch2.getText().equals(sel2) || txtAdrSuch2.getText().equals("고수업무 클릭시 자동 입력")) {
+					System.out.println(txtAdrSuch2.getText());
+					System.out.println(sel2);
+					txtAdrSuch2.setText("");
+				}
+				
+			}
+		});
+	}
+
+
+
 	public static void main(String[] args) {
 		new MainView(null, null);
 	}
