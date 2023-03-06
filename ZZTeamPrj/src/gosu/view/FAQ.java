@@ -86,7 +86,7 @@ public class FAQ extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(200, 200, 850, 546);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 		
@@ -163,6 +163,7 @@ public class FAQ extends JFrame {
 		
 		textField_1 = new JTextField();
 		textField_1.setText(uid);
+		textField_1.setEnabled(false);
 		textField_1.setBackground(new Color(255, 255, 204));
 		textField_1.setBounds(180, 82, 146, 26);
 		panel.add(textField_1);
@@ -192,7 +193,8 @@ public class FAQ extends JFrame {
 		lblNewLabel_5.setForeground(new Color(204, 0, 0));
 		lblNewLabel_5.setBounds(335, 87, 219, 15);
 		panel.add(lblNewLabel_5);
-
+		
+		FocusEvent();
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			
@@ -221,8 +223,8 @@ public class FAQ extends JFrame {
 				frame.setVisible(false);
 			}
 		});
-				
-		FocusEvent();
+		
+		
 		
 	}
 		
@@ -234,33 +236,34 @@ public class FAQ extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (textField.getText().trim().length() == 0) {
-					textField.setText("제목을 입력해주세요");
+					textField.setText("\uC81C\uBAA9\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.");
 				}
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (textField.getText().trim().equals(""
-						+ "제목을 입력해주세요")) {
+				if (textField.getText().trim().equals("\uC81C\uBAA9\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.")) {
 					textField.setText("");
 				}
 			}
 		});
 		txtrbyte.addFocusListener(new FocusListener() {
 			@Override
-			public void focusLost(java.awt.event.FocusEvent e) {
+			public void focusLost(FocusEvent e) {
 				if (txtrbyte.getText().trim().length() == 0) {
-					txtrbyte.setText("4000byte 이내로 입력해주세요");
+					txtrbyte.setText("4000byte \uC774\uB0B4\uB85C \uC785\uB825\uD574\uC8FC\uC138\uC694.");
 				}
-			}	@Override
-			public void focusGained(java.awt.event.FocusEvent e) {
-				if (txtrbyte.getText().trim().equals("4000byte 이내로 입력해주세요")) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtrbyte.getText().trim().equals("4000byte \uC774\uB0B4\uB85C \uC785\uB825\uD574\uC8FC\uC138\uC694.")) {
 					txtrbyte.setText("");
 				}
 			}
 		});
-		
 	}
+	
 
 	protected void FindFAQ() {
 		String      faq_code  =  this.textField_2.getText();
