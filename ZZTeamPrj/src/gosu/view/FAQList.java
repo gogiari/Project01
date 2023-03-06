@@ -36,7 +36,7 @@ public class FAQList extends JFrame implements MouseListener{
 	JScrollPane   pane; 
 	JLabel        JLabel;
 	
-	
+	FAQList           faqlist = null;
 	FAQ                faq = null;  
     static FAQList    fList = null;																	
 	
@@ -45,8 +45,13 @@ public class FAQList extends JFrame implements MouseListener{
 		initComponent();
 	}
 	
+	public FAQList() {
+		
+	}
+
 	// 부품(component) 배치, 배치방법(layout), 기능연결(addaction event 지정)
 	private  void initComponent() {
+		frame = new JFrame();
 		
 		topPane      =  new JPanel();
 	 //   image1 = new ImageIcon("")
@@ -86,6 +91,7 @@ public class FAQList extends JFrame implements MouseListener{
 		
 		btn1 = new JButton("문의 사항 등록");
 		this.add(btn1, BorderLayout.SOUTH);
+		frame.setVisible(true);
 
 		
 		//----------------------------------------------		

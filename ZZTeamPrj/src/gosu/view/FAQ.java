@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,10 +29,11 @@ public class FAQ extends JFrame {
     private JTextArea txtrbyte;
     private JButton btnFind;
     
-    
+    FAQ      faq = null;
     FAQList  faqList = null;
     private JTextField textField_1;
     private JTextField textField_2;
+    String uid;
 	/**
 	 * Launch the application.
 	 */
@@ -53,7 +56,9 @@ public class FAQ extends JFrame {
 	 * Create the application.
 	 */
 	public FAQ() {
+		this.uid = uid;
 		initialize();
+		
 	}
 
 	public FAQ(String id, FAQList faqList) {
@@ -148,6 +153,7 @@ public class FAQ extends JFrame {
 		panel.add(lblNewLabel_4);
 		
 		textField_1 = new JTextField();
+		textField_1.setText(uid);
 		textField_1.setBackground(new Color(255, 255, 204));
 		textField_1.setBounds(180, 82, 146, 26);
 		panel.add(textField_1);
@@ -177,6 +183,7 @@ public class FAQ extends JFrame {
 		lblNewLabel_5.setForeground(new Color(204, 0, 0));
 		lblNewLabel_5.setBounds(335, 87, 219, 15);
 		panel.add(lblNewLabel_5);
+
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			
@@ -186,22 +193,69 @@ public class FAQ extends JFrame {
 				
 			}
 		});
-			
+		
 		btnFind.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				FindFAQ();
-
+				
 			}
 		});
+		
+		btnNewButton_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				new FAQList();
+				frame.setVisible(false);
+			}
+		});
+				
+		FocusEvent();
+		
+	}
+		
 
+
+	
+	private void FocusEvent() {
+		textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (textField.getText().trim().length() == 0) {
+					textField.setText("제목을 입력해주세요");
+				}
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (textField.getText().trim().equals(""
+						+ "제목을 입력해주세요")) {
+					textField.setText("");
+				}
+			}
+		});
+		txtrbyte.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(java.awt.event.FocusEvent e) {
+				if (txtrbyte.getText().trim().length() == 0) {
+					txtrbyte.setText("4000byte 이내로 입력해주세요");
+				}
+			}	@Override
+			public void focusGained(java.awt.event.FocusEvent e) {
+				if (txtrbyte.getText().trim().equals("4000byte 이내로 입력해주세요")) {
+					txtrbyte.setText("");
+				}
+			}
+		});
+		
 	}
 
-	
-	
 	protected void FindFAQ() {
 		String      faq_code  =  this.textField_2.getText();
+	 
 		if( faq_code.trim().equals("") )
 			return;
 		
@@ -246,7 +300,9 @@ public class FAQ extends JFrame {
 		this.dispose();
 		
 	}
+	
 
+	
 	private gosuVo3 getViewFAQ() {
 		
 		String   u_id      =  this.textField_1.getText();
@@ -261,4 +317,6 @@ public class FAQ extends JFrame {
 		return   vo;
 				
 	}
+	
+	
 }
