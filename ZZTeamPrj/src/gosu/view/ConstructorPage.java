@@ -383,20 +383,15 @@ protected void removeGosu() {
 	// 삭제
 	protected void removeUser() {
 		int row = userTable.getSelectedRow();
-		String name = (String) userTable.getValueAt(row, 2);
-		String g_num = "";		
+		String name = (String) userTable.getValueAt(row, 2);	
 		String id = this.idtxt.getText();
-		if( row > 0) {	
-			g_num = (String) gosuTable.getValueAt(row, 3);
-			return;
-		}
 		gosuDao dao = new gosuDao();
 		
 		// 삭제 확인
 		int choice = JOptionPane.showConfirmDialog(null, "ID: "+id+" \n이름:"+name+"\n삭제하시겠습니까?", "삭제확인", JOptionPane.OK_CANCEL_OPTION);
 		String msg = "";
 		if (choice == 0) { // Ok 클릭
-			int aftcnt = dao.deleteUser(id, g_num);
+			int aftcnt = dao.deleteUser(id);
 			if (aftcnt > 0) {
 				msg = aftcnt + "건 삭제되었습니다";
 			} else {

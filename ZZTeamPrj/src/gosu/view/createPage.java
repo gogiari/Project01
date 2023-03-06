@@ -187,7 +187,9 @@ public class createPage extends JFrame {
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				
+				dispose();
+				
 			}
 		});
 		lblNewLabel_1.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 18));

@@ -37,30 +37,37 @@ public class gosuDao {
 	// 회원가입
 	public int insertMember(String u_id, String u_pw, String u_name, String u_phone, String u_email, String u_gender,
 			String u_sido, String u_gugun) {
-		String sql = "INSERT INTO USERLIST " + " (U_ID,USERPW,USERNAME,PHONE,EMAIL,GENDER,U_SIDO,U_GUGUN)" + " VALUES "
-				+ "  (?,?,?,?,?,?,?,?)   ";
+		String sql1 = "INSERT INTO USERLIST (U_ID,USERPW,USERNAME,PHONE,EMAIL,GENDER,U_SIDO,U_GUGUN)"
+				+ "    VALUES (?,?,?,?,?,?,?,?) ";
+		String sql2 = "   INSERT INTO GOSU (G_NUM,U_ID) VALUES ('G'||GOSU_SEQ.NEXTVAL,?) ";
 
 		int aftcnt = 0;
 
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2= null;
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, u_id);
-			pstmt.setString(2, u_pw);
-			pstmt.setString(3, u_name);
-			pstmt.setString(4, u_phone);
-			pstmt.setString(5, u_email);
-			pstmt.setString(6, u_gender);
-			pstmt.setString(7, u_sido);
-			pstmt.setString(8, u_gugun);
+			pstmt1 = conn.prepareStatement(sql1);
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt1.setString(1, u_id);
+			pstmt1.setString(2, u_pw);
+			pstmt1.setString(3, u_name);
+			pstmt1.setString(4, u_phone);
+			pstmt1.setString(5, u_email);
+			pstmt1.setString(6, u_gender);
+			pstmt1.setString(7, u_sido);
+			pstmt1.setString(8, u_gugun);
+			pstmt2.setString(1, u_id);
 
-			aftcnt = pstmt.executeUpdate();
+			aftcnt = pstmt1.executeUpdate();
+			aftcnt = pstmt2.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		try {
-			if (pstmt != null)
-				pstmt.close();
+			if (pstmt1 != null)
+				if (pstmt2 != null)
+				pstmt1.close();
+			pstmt2.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -880,13 +887,10 @@ public class gosuDao {
 
 		gosuVo2 vo2 = null;
 
-		String sql = " SELECT GR.GEORAE_CODE, UL.USERNAME, ML.MID_NAME, GR.G_DATE, GW.SDATE, GW.WGUGUN, GW.PRICE, GS.U_ID\r\n"
-				+ "FROM   GEORAE GR LEFT JOIN GWORK GW \r\n"
-				+ "ON    GR.W_NUM = GW.W_NUM LEFT JOIN MIDLIST ML\r\n"
-				+ "ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN GOSU GS\r\n"
-				+ "ON    GW.G_NUM = GS.G_NUM LEFT JOIN USERLIST UL\r\n"
-				+ "ON    GS.U_ID = UL.U_ID\r\n"
-				+ "WHERE   GR.GEORAE_CODE = ? " ;
+		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.U_ID \r\n"
+				+ "FROM   GEORAE GE , GOSU GO, MIDLIST M, GWORK GW, USERLIST U\r\n" + "WHERE  U.U_ID = GO.U_ID\r\n"
+				+ "AND    GO.G_NUM = GW.G_NUM\r\n" + "AND    GW.MID_NUM = M.MID_NUM\r\n"
+				+ "AND    GW.W_NUM  = GE.W_NUM\r\n" + "AND    GE.GEORAE_CODE = ? ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -898,14 +902,14 @@ public class gosuDao {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				String ogeorae_code = rs.getString(1);
-				String username = rs.getString(2);
-				String mid_name = rs.getString(3);
-				String g_date = rs.getString(4);
-				String sdate = rs.getString(5);
-				String g_check = rs.getString(6);
-				String price = rs.getString(7);
-				String u_id = rs.getString(8);
+				String ogeorae_code = rs.getString("GEORAE_CODE");
+				String username = rs.getString("USERNAME");
+				String mid_name = rs.getString("MID_NAME");
+				String g_date = rs.getString("G_DATE");
+				String sdate = rs.getString("SDATE");
+				String g_check = rs.getString("G_CHECK");
+				String price = rs.getString("PRICE");
+				String u_id = rs.getString("U_ID");
 				
 
 				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price,u_id);
@@ -928,7 +932,7 @@ public class gosuDao {
 	public int insertGereo(String gereo_code,String review, String score,String u_id) {
 
 		String sql = "INSERT INTO EVALUATION(REVIEW_CODE,GEORAE_CODE, REVIEW,G_SCORE,U_ID) VALUES (\r\n"
-				+ "REVIEW_CODE.NEXTVAL,?   ,?,TO_NUMBER(?),? ) " ;
+				+ "REVIEW_CODE.NEXTVAL,?   ,?,TO_NUMBER(?),? )" ;
 				
 
 		PreparedStatement pstmt = null;
@@ -1180,69 +1184,26 @@ public class gosuDao {
 		return pw;
 	}
 
-	public int deleteUser(String id, String g_num) {
-		String sql1 = "DELETE FROM FAQ "
-				+ "    WHERE U_ID = ? ";
-		String sql2 = "DELETE FROM MESSAGE "
-				+ "    WHERE U_ID = ? ";
-		String sql3 = "DELETE FROM GEORAE A "
-				+ "  WHERE A.W_NUM = ( "
-				+ " SELECT B.W_NUM "
-				+ "   FROM GWORK B "
-				+ "  WHERE A.W_NUM = B.W_NUM "
-				+ "    AND B.G_NUM = ? ) ";
-		String sql4 = "DELETE FROM GWORK "
-				+ "    WHERE G_NUM = ? ";
-		String sql5 = "DELETE FROM GOSU "
-				+ "    WHERE U_ID = ? ";
-		String sql6 = "DELETE FROM USERLIST "
+	public int deleteUser(String id) {
+		String sql1 = "DELETE FROM USERLIST "
 				+ "    WHERE U_ID =  ? ";
 		
 		PreparedStatement pstmt1 = null;
-		PreparedStatement pstmt2 = null;
-		PreparedStatement pstmt3 = null;
-		PreparedStatement pstmt4 = null;
-		PreparedStatement pstmt5 = null;
-		PreparedStatement pstmt6 = null;
 		int aftcnt = 0;
 		try {
 			pstmt1 = conn.prepareStatement(sql1);
-			pstmt2 = conn.prepareStatement(sql2);
-			pstmt3 = conn.prepareStatement(sql3);
-			pstmt4 = conn.prepareStatement(sql4);
-			pstmt5 = conn.prepareStatement(sql5);
-			pstmt6 = conn.prepareStatement(sql6);
 			
 			pstmt1.setString(1, id);
-			pstmt2.setString(1, id);
-			pstmt3.setString(1, g_num);
-			pstmt4.setString(1, g_num);
-			pstmt5.setString(1, id);
-			pstmt6.setString(1, id);
-			
+		
 			aftcnt = pstmt1.executeUpdate();
-			aftcnt = pstmt2.executeUpdate();
-			aftcnt = pstmt3.executeUpdate();
-			aftcnt = pstmt4.executeUpdate();
-			aftcnt = pstmt5.executeUpdate();
-			aftcnt = pstmt6.executeUpdate();
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				if (pstmt1 != null)
-				if (pstmt2 != null)
-				if (pstmt3 != null)
-				if (pstmt4 != null)
-				if (pstmt5 != null)
-				if (pstmt6 != null)
 					pstmt1.close();
-					pstmt2.close();
-					pstmt3.close();
-					pstmt4.close();
-					pstmt5.close();
-					pstmt6.close();
+				
 			} catch (SQLException e) {
 			}
 		}
@@ -1400,7 +1361,7 @@ public class gosuDao {
 
 	public String getUserAddress(String uid) {
 		String addr = null;
-		String  sql = " SELECT U_SIDO|| ' ' || U_GUGUN "
+		String  sql = " SELECT U_SIDO||U_GUGUN "
 				    + "  FROM  USERLIST "
 				    + "  WHERE U_ID = ? ";
 

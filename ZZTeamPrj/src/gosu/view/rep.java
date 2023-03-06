@@ -29,7 +29,7 @@ public class rep extends JFrame{
 	Button sendBtn;
 	
 	public rep() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(rep.class.getResource("/img/comment.png")));
+
 	
 		setVisible(true);
 		setSize(new Dimension(477, 585));
@@ -203,7 +203,7 @@ public class rep extends JFrame{
 		} else {
 			msg = "취소를 선택하였습니다";
 		}
-		JOptionPane.showMessageDialog(null, 
+		JOptionPane.showConfirmDialog(null, 
 				msg,
 				"수정",
 				JOptionPane.OK_OPTION);
