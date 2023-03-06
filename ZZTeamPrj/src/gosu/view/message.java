@@ -11,13 +11,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import gosu.data.georaeVo;
 import gosu.data.gosuDao;
+import gosu.data.updateVo;
 
 public class message extends JFrame {
 	
+	Gearae georae;
 	public message( ) {
 		
 	setBackground(Color.WHITE);
@@ -51,8 +54,32 @@ public class message extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("네 클릭");				
 			select();
+			
+			gosuDao  gDao     =  new gosuDao();
+	    	int choice  =   JOptionPane.showConfirmDialog(null, 
+					"거래하시겠습니까?",
+					"거래확인",
+					JOptionPane.OK_CANCEL_OPTION);
+			int     aftcnt = 0 ;
+			String  msg    = "";
+			if( choice == 0) {
+				georaeVo vo =  getViewData();
+				aftcnt      =  gDao.select( vo );
+				if( aftcnt > 0 )
+					msg     =   "수정되었습니다";
+				else
+					msg     =  "수정되지 않았습니다";
+			} else {
+				msg = "취소를 선택하였습니다";
+			}
+			JOptionPane.showMessageDialog(null, 
+					msg,
+					"수정",
+					JOptionPane.OK_OPTION);		
+			
+			// 마이페이지 새로고침		 		
 			dispose();
-
+			
 		}
 
 		private void select() {
@@ -81,6 +108,29 @@ public class message extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("요청취소");	
 			delete();
+			
+			gosuDao  gDao     =  new gosuDao();
+	    	int choice  =   JOptionPane.showConfirmDialog(null, 
+					"요청을 취소하시겠습니까?",
+					"취소확인",
+					JOptionPane.OK_CANCEL_OPTION);
+			int     aftcnt = 0 ;
+			String  msg    = "";
+			if( choice == 0) {
+				georaeVo vo =  getViewData();
+				aftcnt      =  gDao.delete( vo );
+				if( aftcnt > 0 )
+					msg     =   "수정되었습니다";
+				else
+					msg     =  "수정되지 않았습니다";
+			} else {
+				msg = "취소를 선택하였습니다";
+			}
+			JOptionPane.showMessageDialog(null, 
+					msg,
+					"수정",
+					JOptionPane.OK_OPTION);		
+			
 			dispose();
 
 		}
