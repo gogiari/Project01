@@ -1,8 +1,10 @@
 package gosu.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -36,7 +38,7 @@ public class res extends JFrame implements ActionListener {
 
 	private JPanel panel_1, panel_2, panel_3, panel_4, panel_5;
 	private JLabel logo, title, lab1, lab2, lab3, lab3_1, lab3_2, lab4, lab4_1, lab4_2, lab5, lab6, lab7, line_1,
-			line_2, line_3, line_4, line_5, line_6, line_7;
+			line_2, line_3, line_4, line_5, line_6, lblNewLabel;
 	private JComboBox comboBox1, comboBox2;
 	private JTextField textField1;
 	private JTextArea textArea1;
@@ -57,6 +59,9 @@ public class res extends JFrame implements ActionListener {
 	String dateStr, dateEnd;
 	static String uid;
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public res(Edit edit, String getDateStr) {
 		this(uid);
 		JButton btn4 = new JButton("수정");
@@ -73,7 +78,7 @@ public class res extends JFrame implements ActionListener {
 		btn4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateInfo();
-				System.out.println("수정클랙");
+				System.out.println("수정클릭");
 			}
 		});
 
@@ -286,15 +291,7 @@ public class res extends JFrame implements ActionListener {
 		panel_4.add(sidoR);
 		sidoR.setToolTipText("\uC2DC");
 		sidoR.setBackground(new Color(255, 255, 255));
-//		sidoR.addItemListener(new ItemListener() {
-//			@Override
-//			public void itemStateChanged(ItemEvent e) {
-//				if (e.getStateChange() == ItemEvent.SELECTED) {
-//					String sidoR = (String) sidoR.getSelectedItem();
-//					gugunR.setModel(new GugunComboBoxModel(sidoR));
-//				}
-//			}
-//		});
+
 
 		gugunR = new JComboBox<String>();
 		gugunR.setForeground(new Color(128, 128, 128));
@@ -312,8 +309,7 @@ public class res extends JFrame implements ActionListener {
 		textArea1 = new JTextArea();
 		textArea1.setBounds(37, 230, 347, 204);
 		panel_4.add(textArea1);
-		// JScrollPane scroll = new JScrollPane(textArea_1);
-		// scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
 		textArea1.setBorder(bb);
 
 		// 금액
@@ -367,15 +363,17 @@ public class res extends JFrame implements ActionListener {
 		btn3.setForeground(Color.WHITE);
 		btn3.setFont(new Font("굴림", Font.PLAIN, 14));
 		btn3.setBackground(new Color(0, 175, 212));
-		btn3.setBounds(1061, 10, 100, 30);
+		btn3.setBounds(921, 10, 100, 30);
 		panel_5.add(btn3);
 		btn3.addActionListener(this);
-//		btn2 = new RoundedButton("취소");
-//		btn2.setForeground(new Color(130, 130, 130));
-//		btn2.setBackground(new Color(212, 212, 212));
-//		btn2.setBounds(615, 14, 100, 30);
-//		panel_5.add(btn2);
-
+		
+		lblNewLabel = new JLabel("* 필수 항목입니다");
+		lblNewLabel.setForeground(new Color(255, 0, 128));
+		lblNewLabel.setBounds(540, 679, 169, 35);
+		getContentPane().add(lblNewLabel);
+		
+		
+//이벤트-----------------------------------------------------------
 		comboBox1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int cb = comboBox1.getSelectedIndex() + 1;
@@ -388,7 +386,7 @@ public class res extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("추가버튼 클릭....");
-				addMember(uid);
+				addMember(uid, lblNewLabel);
 			}
 		});
 
@@ -413,6 +411,9 @@ public class res extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(1200, 800);
 		setVisible(true);
+		
+		this.setLocation(700,240);
+
 	}
 
 	// ---------------------------------------------------------------------
@@ -422,12 +423,6 @@ public class res extends JFrame implements ActionListener {
 		return exlist;
 	}
 
-//	private Vector<String> getDataMidList() {
-//		String bigCom = String.valueOf(comboBox1.getSelectedIndex() + 1);
-//		Dao dao = new Dao();
-//		Vector<String> exlist = dao.getExList2(String.valueOf(bigCom));
-//		return exlist;
-//	}
 
 	private Vector<String> getDataMidList(int index) {
 		//String bigCom = String.valueOf(index + 1);
@@ -449,10 +444,23 @@ public class res extends JFrame implements ActionListener {
 	}
 	
 	// --------------------------------------------------------------------------
-	private void addMember(String uid) {
+	private void addMember(String uid ,JLabel lblNewLabel) {
 		Dao dao = new Dao();
 		Vo vo = getViewData();
-		int aftcnt = dao.insertGWORK(vo, uid );
+		
+//		if(vo.getGugun() !=  null) {lblNewLabel.setText("입력해주세요");}
+		
+		
+		
+		int aftcnt = 0 ;
+		aftcnt = dao.insertGWORK(vo, uid );
+		
+		if( aftcnt == 1) {
+			lblNewLabel.setText("등록되었습니다");
+		} else {
+			lblNewLabel.setText("등록 되지 않았습니다");	
+		}
+
 	}
 	
 	
@@ -510,7 +518,7 @@ public class res extends JFrame implements ActionListener {
 		dateEnd = combo6;
 		dateEnd = mod2 + " " + dateEnd.replace("오전", " ").replace("오후", " ").replace("시", ":").replace("분", " ").trim();
 		System.out.println(dateEnd + "dfd");
-		vo = new Vo(uid, combo1, combo2, mod1, mod2, combo5, combo6, textf, combo3, combo4, texta, dateStr, dateEnd);
+		vo = new Vo(uid, combo1, combo2, mod1, mod2, combo5, combo6, textf, combo3, combo4, texta, dateStr, dateEnd );
 		return vo;
 	}
 
@@ -625,9 +633,7 @@ public class res extends JFrame implements ActionListener {
 		line.setHorizontalAlignment(JLabel.CENTER);
 	}
 
-//	public static void main(String[] args) {
-//		new res(null);
-//	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -640,6 +646,4 @@ public class res extends JFrame implements ActionListener {
 			break;
 		}
 	}
-	
-	
 }
