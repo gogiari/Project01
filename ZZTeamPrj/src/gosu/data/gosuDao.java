@@ -880,10 +880,13 @@ public class gosuDao {
 
 		gosuVo2 vo2 = null;
 
-		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.U_ID \r\n"
-				+ "FROM   GEORAE GE , GOSU GO, MIDLIST M, GWORK GW, USERLIST U\r\n" + "WHERE  U.U_ID = GO.U_ID\r\n"
-				+ "AND    GO.G_NUM = GW.G_NUM\r\n" + "AND    GW.MID_NUM = M.MID_NUM\r\n"
-				+ "AND    GW.W_NUM  = GE.W_NUM\r\n" + "AND    GE.GEORAE_CODE = ? ";
+		String sql = " SELECT GR.GEORAE_CODE, UL.USERNAME, ML.MID_NAME, GR.G_DATE, GW.SDATE, GW.WGUGUN, GW.PRICE, GS.U_ID\r\n"
+				+ "FROM   GEORAE GR LEFT JOIN GWORK GW \r\n"
+				+ "ON    GR.W_NUM = GW.W_NUM LEFT JOIN MIDLIST ML\r\n"
+				+ "ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN GOSU GS\r\n"
+				+ "ON    GW.G_NUM = GS.G_NUM LEFT JOIN USERLIST UL\r\n"
+				+ "ON    GS.U_ID = UL.U_ID\r\n"
+				+ "WHERE   GR.GEORAE_CODE = ? " ;
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -895,14 +898,14 @@ public class gosuDao {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				String ogeorae_code = rs.getString("GEORAE_CODE");
-				String username = rs.getString("USERNAME");
-				String mid_name = rs.getString("MID_NAME");
-				String g_date = rs.getString("G_DATE");
-				String sdate = rs.getString("SDATE");
-				String g_check = rs.getString("G_CHECK");
-				String price = rs.getString("PRICE");
-				String u_id = rs.getString("U_ID");
+				String ogeorae_code = rs.getString(1);
+				String username = rs.getString(2);
+				String mid_name = rs.getString(3);
+				String g_date = rs.getString(4);
+				String sdate = rs.getString(5);
+				String g_check = rs.getString(6);
+				String price = rs.getString(7);
+				String u_id = rs.getString(8);
 				
 
 				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price,u_id);

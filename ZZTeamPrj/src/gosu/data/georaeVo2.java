@@ -28,7 +28,7 @@ public class georaeVo2  {
 	}
 		
 	public georaeVo2(String g_code, String mid_name, String gdate, String g_start, String g_end, String wsido,
-			String wgugun, String g_num, String m_message) {
+			String wgugun, String uid, String m_message) {
 		super();
 		this.g_code = g_code;
 		this.mid_name = mid_name;
@@ -37,7 +37,7 @@ public class georaeVo2  {
 		this.g_end = g_end;
 		this.wsido = wsido;
 		this.wgugun = wgugun;
-		this.g_num = g_num;
+		this.uid = uid;
 		this.m_message = m_message;
 
 
