@@ -91,7 +91,7 @@ public class FAQList extends JFrame implements MouseListener{
 		
 		btn1 = new JButton("문의 사항 등록");
 		this.add(btn1, BorderLayout.SOUTH);
-		frame.setVisible(true);
+		//frame.setVisible(true);
 
 		
 		//----------------------------------------------		
