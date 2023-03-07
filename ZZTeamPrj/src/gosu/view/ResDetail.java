@@ -418,7 +418,7 @@ public class ResDetail extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				SidoCom = new SidoComboBoxModel();
 				String cb = (String) sidoCB.getSelectedItem();
-				Vector<String> list = getDataGu(cb);
+				//Vector<String> list = getDataGu(cb);
 				//gugunR.setModel(new DefaultComboBoxModel(list));
 
 				GugunCom = new GugunComboBoxModel(cb);
@@ -457,11 +457,11 @@ public class ResDetail extends JFrame implements ActionListener{
 		return exlist;
 	}
 	
-	private Vector<String> getDataGu(String si) {
-		Dao dao = new Dao();
-		Vector<String> exlist = dao.getExGu(String.valueOf(si));
-		return exlist;
-	}
+//	private Vector<String> getDataGu(String si) {
+//		Dao dao = new Dao();
+//		Vector<String> exlist = dao.getExGu(String.valueOf(si));
+//		return exlist;
+//	}
 	// --------------------------------------------------------------------------
 
 	private void setViewData(Vo vo) {

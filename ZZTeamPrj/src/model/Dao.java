@@ -45,8 +45,6 @@ public class Dao {
 				String exBig = rs.getString("BI_NAME");
 
 				// exBig.substring(0, exBig.length() -1);
-				System.out.print(exBig);
-
 				Vector v = new Vector();
 				v.add(exBig);
 				comlist.addAll(v);
@@ -109,45 +107,43 @@ public class Dao {
 	}
 	
 	//시 데이터 출력
-	public Vector<String> getExSi() {
-
-		Vector<String> comlist = new Vector<String>();
-
-		String sql = "";
-		sql += " SELECT SIDO";
-		sql += " FROM POST";
-
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				String exSi = rs.getString("SIDO");
-
-				System.out.print(exSi);
-
-				Vector v = new Vector();
-				v.add(exSi);
-				comlist.addAll(v);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-			} catch (SQLException e) {
-			}
-		}
-
-		return comlist;
-	}
+//	public Vector<String> getExSi() {
+//
+//		Vector<String> comlist = new Vector<String>();
+//
+//		String sql = "";
+//		sql += " SELECT SIDO";
+//		sql += " FROM POST";
+//
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				String exSi = rs.getString("SIDO");
+//
+//				Vector v = new Vector();
+//				v.add(exSi);
+//				comlist.addAll(v);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (rs != null)
+//					rs.close();
+//				if (pstmt != null)
+//					pstmt.close();
+//			} catch (SQLException e) {
+//			}
+//		}
+//
+//		return comlist;
+//	}
 	
 	//시 데이터 출력
 //	public Vector<String> getExSi() {
@@ -191,31 +187,68 @@ public class Dao {
 //	}
 	
 	// 구군 데이터 출력
-	public Vector<String> getExGu(String si) {
-
-		Vector<String> comlist = new Vector<String>();
-
-		String sql = "";
-		sql += "SELECT G.GUGUN ";
-		sql += "FROM GUGUN G INNER JOIN SIDO S ON G.SIDO_NUM = S.SIDO_NUM ";
-		sql += " WHERE  S.SIDO_NAME like ?";
-
+//	public Vector<String> getExGu(String si) {
+//
+//		Vector<String> comlist = new Vector<String>();
+//
+//		String sql = "";
+//		sql += "SELECT G.GUGUN ";
+//		sql += "FROM GUGUN G INNER JOIN SIDO S ON G.SIDO_NUM = S.SIDO_NUM ";
+//		sql += " WHERE  S.SIDO_NAME like ?";
+//
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			String names = "%" + si + "%";
+//			pstmt.setString(1, names);
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				String exgu = rs.getString("GUGUN");
+//
+//				Vector v = new Vector();
+//				v.add(exgu);
+//				comlist.addAll(v);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (rs != null)
+//					rs.close();
+//				if (pstmt != null)
+//					pstmt.close();
+//			} catch (SQLException e) {
+//			}
+//		}
+//
+//		return comlist;
+//	}
+	
+	//고수등록 시 고수 번호 생성
+	public int gosuNum(String uid) {
+		String sql ="";
+		sql += "SELECT U_ID ";
+		sql += "FROM GOSU WHERE U_ID = ?" ;
+		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+		int aftcnt = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			String names = "%" + si + "%";
-			pstmt.setString(1, names);
+			pstmt.setString(1, uid);
 			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				String exgu = rs.getString("GUGUN");
-
-				Vector v = new Vector();
-				v.add(exgu);
-				comlist.addAll(v);
-			}
+											
+			if(!rs.next()) {
+				sql = "INSERT INTO GOSU(G_NUM, U_ID) VALUES('G-' || GOSU_Num.NEXTVAL, ?) ";
+				pstmt.close();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, uid);
+				aftcnt = pstmt.executeUpdate();
+			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -225,16 +258,40 @@ public class Dao {
 				if (pstmt != null)
 					pstmt.close();
 			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
-
-		return comlist;
+		return aftcnt;
+	}
+	
+	//고수 첫 등록 및 GWORK 고수번호 업데이트
+	public void addGosuUp(String uid) {
+		String sql ="";
+		sql += "UPDATE GWORK ";
+		sql += "SET G_NUM = (select G_NUM from GOSU where U_ID = ?) " ;
+		sql += "WHERE U_ID = ? ";
+		
+		PreparedStatement pstmt = null;
+		int aftcnt = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			pstmt.setString(2, uid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 		
 	// 고수 업무 리스트 데이터 추가
 	public int insertGWORK(String uid, String midList, String price, String wsido, String prMes, String staDate, String endDate,
 							String staTime, String endTime, String dateStr, String dateEnd, String wsido2, String idCheck) {
-		
 		String sql = "";
 		sql += "INSERT INTO GWORK (";
 		sql += "  W_NUM, G_NUM , MID_NUM, PRICE, PRMESSAGE , SDATE, EDATE, WSIDO, WGUGUN, U_ID ) ";
@@ -257,11 +314,11 @@ public class Dao {
 		ResultSet rs = null;
 		ResultSet rs3 = null;
 		int aftcnt = 0;
-		try {
+		try {		
+			//gosuNum(uid);
 			pstmt = conn.prepareStatement(sql);
 			pstmt2 = conn.prepareStatement(sql2);
 			pstmt3 = conn.prepareStatement(sql3);
-			
 			
 			//중분류
 			String names = "%" + midList + "%";
@@ -272,17 +329,14 @@ public class Dao {
 			if (rs.next()) {
 				midnum = rs.getString("MID_NUM");
 			}
-			
 			//G_NUM
 			pstmt3.setString(1, uid);
 			rs3 = pstmt3.executeQuery();
-			
 			String gNum = null;
 			if (rs3.next()) {
 				gNum = rs3.getString("G_NUM");
 			}
 			
-				
 			pstmt.setString(1, gNum);
 			pstmt.setString(2, midnum);
 			pstmt.setString(3, price);
@@ -316,7 +370,7 @@ public class Dao {
 	public Vector<Vector> getEditList(String userID) {
 		Vector<Vector> list = new Vector<Vector>();
 		String sql = "";
-		sql += " SELECT M.MID_NAME, W.PRICE, W.SDATE, W.EDATE, W.WSIDO, W.WGUGUN ";
+		sql += " SELECT W_NUM, M.MID_NAME, W.PRICE, W.SDATE, W.EDATE, W.WSIDO, W.WGUGUN ";
 		sql += " FROM GWORK W INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM ";
 		sql += " WHERE G_NUM IN ( SELECT G_NUM ";
 		sql += "		  FROM GOSU ";
@@ -328,21 +382,21 @@ public class Dao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			//String names = "%" + userID + "%";
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String mName = rs.getString(1);
-				String price = rs.getString(2);
-				String sdate = rs.getString(3);
-				String edate = rs.getString(4);
-				String wsido = rs.getString(5);
-				String wsido2 = rs.getString(6);
+				String wNum = rs.getString(1);
+				String mName = rs.getString(2);
+				String price = rs.getString(3);
+				String sdate = rs.getString(4);
+				String edate = rs.getString(5);
+				String wsido = rs.getString(6);
+				String wsido2 = rs.getString(7);
 				
 				String wsido3 = wsido + wsido2;
-				System.out.println("조회22" + mName);
 				Vector v = new Vector();
+				v.add(wNum);
 				v.add(mName);
 				v.add(price);
 				v.add(sdate);
@@ -366,16 +420,14 @@ public class Dao {
 	}
 
 	// 상세보기
-	public Vector<String> getDataDetail(String userID, String edStDate) {
+	public Vector<String> getDataDetail(String getWnum) {
 
 		Vector<String> comlist = new Vector<String>();
 
 		String sql = "";
 		sql += " SELECT B.BI_NAME, M.MID_NAME, W.SDATE, W.EDATE, W.PRICE, W.WSIDO, W.WGUGUN, W.PRMESSAGE ";
 		sql += " FROM GWORK W INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM INNER JOIN BIGLIST B ON B.BI_NUM = M.BI_NUM ";
-		sql += " WHERE G_NUM IN ( SELECT G_NUM ";
-		sql += "		  FROM GOSU ";
-		sql += "	      WHERE U_ID = ? ) AND W.SDATE = ? ";
+		sql += " WHERE W_NUM = ? ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -383,11 +435,8 @@ public class Dao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 
-			//String names = "%" + userID + "%";
-			pstmt.setString(1, userID);
-			pstmt.setString(2, edStDate);
+			pstmt.setString(1, getWnum);
 			
-			System.out.println(userID);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -424,7 +473,6 @@ public class Dao {
 			} catch (SQLException e) {
 			}
 		}
-		System.out.println("상세보기 출력" + comlist);
 		return comlist;
 	}
 	
@@ -459,7 +507,6 @@ public class Dao {
 			rs2 = pstmt2.executeQuery();
 			
 			if (rs.next()) {
-				System.out.println("gs1 " + rs.getString("BI_NAME"));
 				String biName = rs.getString("BI_NAME");
 				String midName = rs.getString("MID_NAME");
 				String sDate = rs.getString("SDATE");
@@ -486,7 +533,6 @@ public class Dao {
 				//평균값 v.add(username);
 				
 				comlist.addAll(v);
-				System.out.println(v);
 			}
 			
 //			if (rs2.next()) {
@@ -510,7 +556,6 @@ public class Dao {
 			} catch (SQLException e) {
 			}
 		}
-		System.out.println("상세보기 출력" + comlist);
 		return comlist;
 	}
 	
@@ -537,9 +582,6 @@ public class Dao {
 			
 			if (rs2.next()) {
 				String GScore = rs2.getString("G_SCORE");
-				
-				System.out.println("gs " + GScore);
-				
 				Vector v = new Vector();
 
 				v.add(GScore);
@@ -558,12 +600,11 @@ public class Dao {
 			} catch (SQLException e) {
 			}
 		}
-		System.out.println("상세보기 출력" + comlist);
 		return comlist;
 	}
 
 	// 수정
-	public int updateInfo(Vo vo, String uid) {
+	public int updateInfo(Vo vo, String Wnum) {
 		String sql = "";
 		sql += " UPDATE GWORK ";
 		sql += " SET MID_NUM = (SELECT MID_NUM FROM MIDLIST WHERE MID_NAME like ?), "; //1 
@@ -573,7 +614,7 @@ public class Dao {
 		sql += " WSIDO = ?, ";  //5
 		sql += " WGUGUN = ?, ";  //6
 		sql += " PRMESSAGE = ? ";  //7 
-		sql += " WHERE G_NUM = (SELECT G_NUM FROM USERLIST U INNER JOIN GOSU G ON U.U_ID = G.U_ID WHERE U.U_ID = ? ) AND SDATE = TO_DATE(? , 'YYYY-MM-DD HH24:MI') ";  //7 8
+		sql += " WHERE W_NUM = ? ";  //7 8
 
 		PreparedStatement pstmt = null;
 		int  aftcnt  = 0;
@@ -588,8 +629,7 @@ public class Dao {
 			pstmt.setString(6, vo.getGugun());
 			pstmt.setString(7, vo.getPrMes());
 
-			pstmt.setString(8, uid);
-			pstmt.setString(9, vo.getDateStr());
+			pstmt.setString(8, Wnum);
 			
 			aftcnt = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -604,20 +644,18 @@ public class Dao {
 	}
 	
 	//삭제
-	public int removePrvGoList(String GNum, String stDate ) {
+	public int removePrvGoList(String WNum ) {
 		String sql = "";
 		sql += "DELETE FROM GWORK ";
-		sql += " WHERE G_NUM = (SELECT G_NUM FROM GOSU WHERE U_ID = ?) AND SDATE = TO_DATE(? , 'YYYY-MM-DD HH24:MI') ";
+		sql += " WHERE W_NUM = ? ";
 		
 		PreparedStatement pstmt = null;
 		int aftcnt = 0;
 		
-		System.out.println("dfdfnjhjk"+stDate);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, GNum);
-			pstmt.setString(2, stDate);
+			pstmt.setString(1, WNum);
 			
 			aftcnt = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -645,7 +683,6 @@ public class Dao {
 		String dateStr = vo.getDateStr();
 		String dateEnd = vo.getDateEnd();
 		String uid = vo.getUid();
-		System.out.println("dfdf할" + uid);
 		
 		int aftcnt = insertGWORK(uid, midList, price, wsido1, prMes, staDate, endDate, staTime, endTime, dateStr, dateEnd, wsido2 , idCheck);
 		
