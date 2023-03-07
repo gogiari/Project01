@@ -375,7 +375,7 @@ public class Dao {
 		sql += " FROM GWORK W INNER JOIN MIDLIST M ON W.MID_NUM = M.MID_NUM INNER JOIN BIGLIST B ON B.BI_NUM = M.BI_NUM ";
 		sql += " WHERE G_NUM IN ( SELECT G_NUM ";
 		sql += "		  FROM GOSU ";
-		sql += "	      WHERE U_ID = ? )AND W.SDATE = ? ";
+		sql += "	      WHERE U_ID = ? ) AND W.SDATE = ? ";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -386,6 +386,8 @@ public class Dao {
 			//String names = "%" + userID + "%";
 			pstmt.setString(1, userID);
 			pstmt.setString(2, edStDate);
+			
+			System.out.println(userID);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -438,7 +440,7 @@ public class Dao {
 		
 		String sql2 = "";
 		sql2 += " SELECT E.G_SCORE ";
-		sql2 += " FROM GWORK W INNER JOIN GOSU G ON W.G_NUM = G.G_NUM INNER JOIN EVALUATION E ON G.G_NUM = E.G_NUM ";
+		sql2 += " FROM GWORK W INNER JOIN GOSU G ON W.G_NUM = G.G_NUM INNER JOIN EVALUATION E ON G.U_ID = E.U_ID ";
 		sql2 += " WHERE W_NUM = ? ";
 
 		PreparedStatement pstmt = null;
@@ -519,7 +521,7 @@ public class Dao {
 		
 		String sql2 = "";
 		sql2 += " SELECT E.G_SCORE ";
-		sql2 += " FROM GWORK W INNER JOIN GOSU G ON W.G_NUM = G.G_NUM INNER JOIN EVALUATION E ON G.G_NUM = E.G_NUM ";
+		sql2 += " FROM GWORK W INNER JOIN GOSU G ON W.G_NUM = G.G_NUM INNER JOIN EVALUATION E ON G.U_ID = E.U_ID ";
 		sql2 += " WHERE W_NUM = ? ";
 
 		PreparedStatement pstmt2 = null;

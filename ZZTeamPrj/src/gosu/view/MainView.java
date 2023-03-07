@@ -383,7 +383,7 @@ public class MainView extends JFrame implements ActionListener{
 					tradeGosu.dispose();
 				if(e.getClickCount() == 2 ) {
 					if(val.equals("요청중"))
-						tradeGosu = new GearaeGosu(sel, mainview);
+						tradeGosu = new GearaeGosu(sel,uid, mainview);
 					if(val.equals("거래중"))
 						acPage = new AcceptPage(sel, mainview);
 					if(val.equals("업무대기중"))
@@ -485,7 +485,7 @@ public class MainView extends JFrame implements ActionListener{
 					tradeGosu.dispose();
 				if(e.getClickCount() == 2 ) {
 					if(val.equals("요청중"))
-						tradeGosu = new GearaeGosu(sel, mainview);
+						tradeGosu = new GearaeGosu(sel, uid, mainview);
 					if(val.equals("거래중"))
 						acPage = new AcceptPage(sel, mainview);
 
@@ -761,7 +761,7 @@ public class MainView extends JFrame implements ActionListener{
 				sel = (String) tabMypage.getValueAt(row, 0);
 				val = (String) tabMypage.getValueAt(row, 6);
 				if(val.equals("요청중"))
-					tradeGosu = new GearaeGosu(sel, mainview);
+					tradeGosu = new GearaeGosu(sel, uid, mainview);
 				if(val.equals("거래중"))
 					acPage = new AcceptPage(sel, mainview);
 				if(val.equals("업무대기중"))
@@ -776,7 +776,7 @@ public class MainView extends JFrame implements ActionListener{
 			sel = (String) tabMsg.getValueAt(row, 0);
 			val = (String) tabMsg.getValueAt(row, 2);
 			if(val.equals("요청중"))
-				tradeGosu = new GearaeGosu(sel, mainview);
+				tradeGosu = new GearaeGosu(sel, uid, mainview);
 			if(val.equals("거래중"))
 				acPage = new AcceptPage(sel, mainview);
 			break;

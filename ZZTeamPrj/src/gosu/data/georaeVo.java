@@ -12,7 +12,6 @@ public class georaeVo  {
 	String g_name;
 	String m_message;
 	String g_num;
-	
 
 	String g_message;
 	String g_check;
@@ -28,23 +27,20 @@ public class georaeVo  {
 
 	}
 		
-	public georaeVo(String g_code, String mid_name, String gdate, String g_start, String g_end, String wsido,
-			String wgugun, String g_name, String m_message) {
+	public georaeVo(String g_code, String mid_name, String g_start, String g_end, String wsido,
+			String wgugun, String g_num, String m_message) {
 		super();
-		
+		this.g_code = g_code;
 		this.mid_name = mid_name;
-		this.gdate = gdate;
 		this.g_start = g_start;
 		this.g_end = g_end;
 		this.wsido = wsido;
 		this.wgugun = wgugun;
-		this.g_name = g_name;
+		this.g_num = g_num;
 		this.m_message = m_message;
-		this.g_code = g_code;
-		
-		
+
+
 	}
-	
 
 
 	public georaeVo(String g_code4, String messnum4, String mread4, String m_date4) {
@@ -63,6 +59,10 @@ public class georaeVo  {
 		// TODO Auto-generated constructor stub
 	}
 
+	public georaeVo(String u_name2, String mid_name2, String gdate2, String g_start2, String g_end2, String wsido2,
+			String wgugun2, String g_num, String m_message2, String title) {
+		// TODO Auto-generated constructor stub
+	}
 
 
 	public georaeVo(georaeVo vo2) {
@@ -72,10 +72,18 @@ public class georaeVo  {
 		
 	}
 
-
 	public georaeVo(String g_code2, String mid_name2, String gdate2, String g_start2, String g_end2, String wsido2,
-			String wgugun2, String g_name2, String m_message2, String g_message2) {
-		// TODO Auto-generated constructor stub
+			String wgugun2, String g_name2, String m_message2) {
+		this.g_code = g_code2;
+		this.mid_name = mid_name2;
+		this.gdate   = gdate2;
+		this.g_start = g_start2;
+		this.g_end = g_end2;
+		this.wsido = wsido2;
+		this.wgugun = wgugun2;
+		this.g_name = g_name2;
+		this.m_message = m_message2;
+
 	}
 
 	public String getU_name() {

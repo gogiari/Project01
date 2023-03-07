@@ -49,11 +49,9 @@ public class GearaeGosu extends JFrame {
 	
 	
 	
-	public GearaeGosu(String sel, MainView mainview) {
+	public GearaeGosu(String sel, String uid, MainView mainview) {
 		
 		this.sel = sel;
-		
-		
 		System.out.println(sel);
 		init();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -62,6 +60,7 @@ public class GearaeGosu extends JFrame {
 		setSize(800, 580);
 		setLocation(600, 200);	
 		txtgcode.setText(sel);
+
 		if(sel!=null)
 		btn3.doClick();
 		
@@ -177,6 +176,7 @@ public class GearaeGosu extends JFrame {
 		txtlgugun.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtlgugun);
 		
+		/*
 		// 고수이름
 		lblgosuname = new JLabel("고수 ID");
 		lblgosuname.setForeground(SystemColor.textHighlight);
@@ -188,6 +188,7 @@ public class GearaeGosu extends JFrame {
 		txtgname.setBounds(560, 140, 200, 30);
 		txtgname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtgname);
+		*/
 				
 		// 추가 메시지
 		lblmessage = new JLabel("거래요청 메시지");
@@ -462,7 +463,7 @@ public class GearaeGosu extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new GearaeGosu(null,null);
+		new GearaeGosu(null,null,null);
 
 	}
 }

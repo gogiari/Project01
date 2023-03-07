@@ -56,25 +56,28 @@ public class message extends JFrame {
 			select();
 			
 			gosuDao  gDao     =  new gosuDao();
+			
 	    	int choice  =   JOptionPane.showConfirmDialog(null, 
 					"거래하시겠습니까?",
 					"거래확인",
-					JOptionPane.OK_CANCEL_OPTION);
-			int     aftcnt = 0 ;
+					JOptionPane.OK_OPTION);
+			
+	    	int     aftcnt = 0 ;
+			
 			String  msg    = "";
 			if( choice == 0) {
 				georaeVo vo =  getViewData();
 				aftcnt      =  gDao.select( vo );
 				if( aftcnt > 0 )
-					msg     =   "수정되었습니다";
+					msg     =   "전송되었습니다";
 				else
-					msg     =  "수정되지 않았습니다";
+					msg     =  "전송되지 않았습니다";
 			} else {
 				msg = "취소를 선택하였습니다";
 			}
 			JOptionPane.showMessageDialog(null, 
 					msg,
-					"수정",
+					"전송",
 					JOptionPane.OK_OPTION);		
 			
 			// 마이페이지 새로고침		 		
@@ -113,7 +116,7 @@ public class message extends JFrame {
 	    	int choice  =   JOptionPane.showConfirmDialog(null, 
 					"요청을 취소하시겠습니까?",
 					"취소확인",
-					JOptionPane.OK_CANCEL_OPTION);
+					JOptionPane.OK_OPTION);
 			int     aftcnt = 0 ;
 			String  msg    = "";
 			if( choice == 0) {

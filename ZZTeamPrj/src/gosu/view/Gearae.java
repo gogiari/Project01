@@ -30,6 +30,7 @@ public class Gearae extends JFrame {
 	loginPage lg;
 	MainView mainview;
 	String uid;
+	private String sel;
 	
 	JPanel Pane;
 	JLabel lblusername, lblgosuname, lblwork, lbldate, lblstarttime, lblendtime, lblprice, lbllocation, lblmessage;
@@ -40,6 +41,7 @@ public class Gearae extends JFrame {
 	
 	BorderLayout gb;
 	JLabel lbltitle, lbluserid;
+	Gearae georae;
 	
 	public Gearae() {	
 		init();
@@ -49,18 +51,22 @@ public class Gearae extends JFrame {
 
 	public Gearae(String uid, ResDetail rd) {
 		init();
+		
 		this.rd  =  rd;
 		this.uid = uid;
 		System.out.println("거래:"+ uid);
+		
 		txtuid.setText(rd.uid);
 		
 		txtwo.setText(rd.comboBoxG2.getSelectedItem().toString());
-	//	txtda.setText(rd.model1.getYear()+ "-" + (rd.model1.getMonth() + 1) + "-" + rd.model1.getDay() +
-	//	             " ~ " + rd.model2.getYear()+ "-" + (rd.model2.getMonth() + 1) + "-" + rd.model2.getDay());
+		txtda.setText(rd.model1.getYear()+ "-" + (rd.model1.getMonth() + 1) + "-" + rd.model1.getDay() +
+		             " ~ " + rd.model2.getYear()+ "-" + (rd.model2.getMonth() + 1) + "-" + rd.model2.getDay());
 		txtgname.setText(rd.labG5_3.getText().toString());
 		txtlsido.setText(rd.sidoCB.getSelectedItem().toString());
 		txtlgugun.setText(rd.gugunCB.getSelectedItem().toString());
 	}
+
+
 
 
 
@@ -272,9 +278,12 @@ public class Gearae extends JFrame {
 
    
 		protected void addgeorae() {
-			gosuDao  gDao     =  new gosuDao();
-			georaeVo2    vo    =  getViewData();
-			int       aftcnt  =  gDao.addgeorae( vo );					
+			gosuDao  gDao      =  new gosuDao();
+			georaeVo2    vo    =  getViewData();	
+		//	String sel = georae.getSel();
+			//System.out.println(getSel());
+		//	System.out.println("1:" + sel);
+			int       aftcnt   =  gDao.addgeorae( vo);					
 		}
 			
 
@@ -316,6 +325,7 @@ public class Gearae extends JFrame {
 			
 			String   g_num      =  this.txtgname.getText(); 
 			String   m_message  =  this.txtm_message.getText();
+		
 
 			georaeVo2   vo       = new georaeVo2(
 					uid, mid_name, gdate, g_start, g_end, wsido, wgugun, g_num, m_message);
@@ -328,5 +338,7 @@ public class Gearae extends JFrame {
 		new Gearae();
 		
 	}
+
+
 
 }

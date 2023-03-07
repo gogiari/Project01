@@ -57,6 +57,7 @@ public class ResDetail extends JFrame implements ActionListener{
 	String dateStr, dateEnd;
 	MainView mainview;	
 	String uid;
+	String sel;
 
 	public ResDetail(String sel,String uid, MainView mainview) {
 		getContentPane().setBackground(new Color(255, 255, 255));
@@ -64,6 +65,8 @@ public class ResDetail extends JFrame implements ActionListener{
 
 		this.mainview = mainview;
 		this.uid = uid;
+		this.sel = sel;
+		System.out.println(sel);
 
 		
 		// comDesign(JFrame frame, JLabel label, JComboBox combobox, JTextField textf,
