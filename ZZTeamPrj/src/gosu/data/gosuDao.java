@@ -895,7 +895,7 @@ public class gosuDao {
 
 		gosuVo2 vo2 = null;
 
-		String sql = " SELECT GR.GEORAE_CODE, UL.USERNAME, ML.MID_NAME, GR.G_DATE, GR.G_START ||'~'||GR.G_END TIME, GW.WSIDO || GW.WGUGUN LOCATION, GW.PRICE, GS.U_ID\r\n"
+		String sql = " SELECT GR.GEORAE_CODE, UL.USERNAME, ML.MID_NAME, SUBSTR(TO_CHAR(GW.SDATE),1,8) || '~' || SUBSTR(TO_CHAR(GW.EDATE),1,8) NAL, GR.G_START ||'~'||GR.G_END TIME, GW.WSIDO || GW.WGUGUN LOCATION, GW.PRICE, GS.U_ID\r\n"
 				+ "FROM   GEORAE GR LEFT JOIN GWORK GW \r\n"
 				+ "ON    GR.W_NUM = GW.W_NUM LEFT JOIN MIDLIST ML\r\n"
 				+ "ON    GW.MID_NUM = ML.MID_NUM LEFT JOIN GOSU GS\r\n"
@@ -915,7 +915,7 @@ public class gosuDao {
 				String ogeorae_code = rs.getString("GEORAE_CODE");
 				String username = rs.getString("USERNAME");
 				String mid_name = rs.getString("MID_NAME");
-				String g_date   = rs.getString("G_DATE");
+				String g_date   = rs.getString("NAL");
 				String sdate    = rs.getString("TIME");
 				String loction  = rs.getString("LOCATION");
 				String price    = rs.getString("PRICE");

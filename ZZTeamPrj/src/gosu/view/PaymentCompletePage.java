@@ -28,6 +28,7 @@ public class PaymentCompletePage extends JFrame{
 	private JTextField textField_6;
 	private JButton    btnFind;
 	
+	MainView mainview = null;
 	PaymentPage    paymentPage        = null;
 	private JTextField txtGr;
 	/**
@@ -53,15 +54,16 @@ public class PaymentCompletePage extends JFrame{
 		initialize();
 	}
 
-	public PaymentCompletePage( String id, PaymentPage paymentPage  ) {
+	public PaymentCompletePage( String sel, MainView mainview  ) {
 		this();
-		this.paymentPage = paymentPage;
+		this.mainview = mainview;
 		
 		// 넘어온 아이디를 txtId 에 넣고 find 버튼 클릭하면
-		txtGr.setText( id );
+		txtGr.setText( sel );
 		btnFind.doClick();
 	}
 	
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
