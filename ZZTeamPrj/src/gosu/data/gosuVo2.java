@@ -179,7 +179,7 @@ public class gosuVo2 {
 				+ ", f_body=" + f_body + ", reply=" + reply + ", f_check=" + f_check + "]";
 	}
 	
-	
+	  
 	
 	
 	

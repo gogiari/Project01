@@ -215,7 +215,7 @@ public class PaymentCompletePage extends JFrame{
 		String   sdate     =  vo2.getSdate();  // "남", "여", ""  
 		String   location  =  vo2.getLoction();
 		String   price     =  vo2.getPrice();
-		
+		  
 		this.txtGr.setText( georae_code );
 		this.textField_1.setText( uname );
 		this.textField_2.setText( midname );

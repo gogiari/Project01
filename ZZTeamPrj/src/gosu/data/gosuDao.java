@@ -902,7 +902,7 @@ public class gosuDao {
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+  
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, georae_code);
