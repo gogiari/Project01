@@ -382,9 +382,9 @@ public class MainView extends JFrame implements ActionListener{
 				if(tradeGosu != null)
 					tradeGosu.dispose();
 				if(e.getClickCount() == 2 ) {
-					if(val.equals("요청중"))
+					if(val.equals("거래요청서"))
 						tradeGosu = new GearaeGosu(sel,uid, mainview);
-					if(val.equals("거래중"))
+					if(val.equals("거래 수락"))
 						acPage = new AcceptPage(sel, mainview);
 					if(val.equals("업무대기중"))
 						new Edit(uid);
@@ -484,9 +484,9 @@ public class MainView extends JFrame implements ActionListener{
 				if(tradeGosu != null)
 					tradeGosu.dispose();
 				if(e.getClickCount() == 2 ) {
-					if(val.equals("요청중"))
+					if(val.equals("거래요청서"))
 						tradeGosu = new GearaeGosu(sel, uid, mainview);
-					if(val.equals("거래중"))
+					if(val.equals("거래 수락"))
 						acPage = new AcceptPage(sel, mainview);
 
 				}
@@ -760,9 +760,9 @@ public class MainView extends JFrame implements ActionListener{
 				int col = tabMypage.getSelectedColumn();
 				sel = (String) tabMypage.getValueAt(row, 0);
 				val = (String) tabMypage.getValueAt(row, 6);
-				if(val.equals("요청중"))
+				if(val.equals("거래요청서"))
 					tradeGosu = new GearaeGosu(sel, uid, mainview);
-				if(val.equals("거래중"))
+				if(val.equals("거래 수락"))
 					acPage = new AcceptPage(sel, mainview);
 				if(val.equals("업무대기중"))
 					new Edit(uid);
@@ -775,9 +775,9 @@ public class MainView extends JFrame implements ActionListener{
 			int col = tabMsg.getSelectedColumn();
 			sel = (String) tabMsg.getValueAt(row, 0);
 			val = (String) tabMsg.getValueAt(row, 2);
-			if(val.equals("요청중"))
+			if(val.equals("거래요청서"))
 				tradeGosu = new GearaeGosu(sel, uid, mainview);
-			if(val.equals("거래중"))
+			if(val.equals("거래 수락"))
 				acPage = new AcceptPage(sel, mainview);
 			break;
 		case "새로고침" :

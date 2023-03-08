@@ -758,7 +758,7 @@ public class gosuDao {
 		Vector<Vector> list = new Vector<Vector>();
 		String sql = "SELECT ME.GEORAE_CODE GEORAE_CODE, " 
 		 +		" UL.USERNAME    USERNAME,  "
-		 +      " GR.G_CHECK     G_CHECK,  "
+		 +      " ME.TITLE      G_CHECK,  "
 	 	 +		" ME.M_DATE      M_DATE " 
 		 +		" FROM  MESSAGE ME JOIN GEORAE GR " 
 		 +		" ON    ME.GEORAE_CODE = GR.GEORAE_CODE "
@@ -770,7 +770,7 @@ public class gosuDao {
 		 +		" UNION "
 		 +		" SELECT ME.GEORAE_CODE GEORAE_CODE, "
 		 +		" UL2.USERNAME    USERNAME,  "
-		 +		" GR.G_CHECK     G_CHECK,  "
+		 +		" ME.TITLE     G_CHECK,  "
 		 +		" ME.M_DATE      M_DATE  "
 		 +		" FROM  MESSAGE ME JOIN GEORAE GR  "
 		 +		" ON    ME.GEORAE_CODE = GR.GEORAE_CODE "
