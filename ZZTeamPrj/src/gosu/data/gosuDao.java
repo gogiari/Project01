@@ -895,7 +895,7 @@ public class gosuDao {
 
 		gosuVo2 vo2 = null;
 
-		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GE.G_DATE, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.U_ID \r\n"
+		String sql = " SELECT GE.GEORAE_CODE, U.USERNAME, M.MID_NAME, GW.WSIDO||GW.WGUGUN, GW.SDATE, GE.G_CHECK, GW.PRICE, GO.U_ID \r\n"
 				+ "FROM   GEORAE GE , GOSU GO, MIDLIST M, GWORK GW, USERLIST U\r\n" + "WHERE  U.U_ID = GO.U_ID\r\n"
 				+ "AND    GO.G_NUM = GW.G_NUM\r\n" + "AND    GW.MID_NUM = M.MID_NUM\r\n"
 				+ "AND    GW.W_NUM  = GE.W_NUM\r\n" + "AND    GE.GEORAE_CODE = ? ";
@@ -915,12 +915,12 @@ public class gosuDao {
 				String mid_name = rs.getString("MID_NAME");
 				String g_date = rs.getString("G_DATE");
 				String sdate = rs.getString("SDATE");
-				String g_check = rs.getString("G_CHECK");
+				String loction = rs.getString("WSIDO||WGUGUN");
 				String price = rs.getString("PRICE");
 				String u_id = rs.getString("U_ID");
 				
 
-				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, g_check, price,u_id);
+				vo2 = new gosuVo2(ogeorae_code, username, mid_name, g_date, sdate, loction, price,u_id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -13,6 +13,7 @@ public class gosuVo2 {
 	String score;
 	String u_id;
 	String g_num;
+	String loction;
 	
 	String faq_code;
 	String f_date;
@@ -22,7 +23,7 @@ public class gosuVo2 {
 	String f_check;
 	    
 	public gosuVo2() {}
-	public gosuVo2(String georae_code, String u_name, String mid_name, String g_date, String sdate, String g_check,
+	public gosuVo2(String georae_code, String u_name, String mid_name, String g_date, String sdate, String loction,
 			String price,String u_id) {
 		
 		this.georae_code = georae_code;
@@ -30,7 +31,7 @@ public class gosuVo2 {
 		this.mid_name = mid_name;
 		this.g_date = g_date;
 		this.sdate = sdate;
-		this.g_check = g_check; 
+		this.loction= loction; 
 		this.price = price;  
 		this.u_id = u_id;
 		
@@ -50,6 +51,12 @@ public class gosuVo2 {
 
 	
 	
+	public String getLoction() {
+		return loction;
+	}
+	public void setLoction(String loction) {
+		this.loction = loction;
+	}
 	public gosuVo2(String georae_code) {
 		this.georae_code = georae_code;
 	}
@@ -168,9 +175,11 @@ public class gosuVo2 {
 		return "gosuVo2 [georae_code=" + georae_code + ", gereo_code2=" + gereo_code2 + ", u_name=" + u_name
 				+ ", mid_name=" + mid_name + ", g_date=" + g_date + ", sdate=" + sdate + ", g_check=" + g_check
 				+ ", price=" + price + ", review=" + review + ", score=" + score + ", u_id=" + u_id + ", g_num=" + g_num
-				+ ", faq_code=" + faq_code + ", f_date=" + f_date + ", f_head=" + f_head + ", f_body=" + f_body
-				+ ", reply=" + reply + ", f_check=" + f_check + "]";
+				+ ", loction=" + loction + ", faq_code=" + faq_code + ", f_date=" + f_date + ", f_head=" + f_head
+				+ ", f_body=" + f_body + ", reply=" + reply + ", f_check=" + f_check + "]";
 	}
+	
+	
 	
 	
 	

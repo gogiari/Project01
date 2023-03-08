@@ -213,7 +213,7 @@ public class PaymentCompletePage extends JFrame{
 		String   midname   =  vo2.getMid_name();
 		String   gdate     =  vo2.getG_date();     // "회사원", ...
 		String   sdate     =  vo2.getSdate();  // "남", "여", ""  
-		String   gcheck    =  vo2.getG_check();
+		String   location  =  vo2.getLoction();
 		String   price     =  vo2.getPrice();
 		
 		this.txtGr.setText( georae_code );
@@ -221,7 +221,7 @@ public class PaymentCompletePage extends JFrame{
 		this.textField_2.setText( midname );
 		this.textField_3.setText( gdate );
 		this.textField_4.setText( sdate );
-		this.textField_5.setText( gcheck );
+		this.textField_5.setText( location );
 		this.textField_6.setText( price );
 		
 	}
