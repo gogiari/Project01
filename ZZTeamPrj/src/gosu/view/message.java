@@ -61,7 +61,7 @@ public class message extends JFrame {
 					"거래하시겠습니까?",
 					"거래확인",
 					JOptionPane.OK_OPTION);
-			
+			/*
 	    	int     aftcnt = 0 ;
 			
 			String  msg    = "";
@@ -79,7 +79,7 @@ public class message extends JFrame {
 					msg,
 					"전송",
 					JOptionPane.OK_OPTION);		
-			
+			*/
 			// 마이페이지 새로고침		 		
 			dispose();
 			
