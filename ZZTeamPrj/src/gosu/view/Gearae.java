@@ -30,7 +30,7 @@ public class Gearae extends JFrame {
 	loginPage lg;
 	MainView mainview;
 	String uid;
-	private String sel;
+	String sel;
 	
 	JPanel Pane;
 	JLabel lblusername, lblgosuname, lblwork, lbldate, lblstarttime, lblendtime, lblprice, lbllocation, lblmessage;
@@ -49,10 +49,11 @@ public class Gearae extends JFrame {
 	}
 
 
-	public Gearae(String uid, ResDetail rd) {
+	public Gearae(String sel, String uid, ResDetail rd) {
 		init();
 		
 		this.rd  =  rd;
+		this.sel = sel;
 		this.uid = uid;
 		System.out.println("거래:"+ uid);
 		
@@ -65,7 +66,6 @@ public class Gearae extends JFrame {
 		txtlsido.setText(rd.sidoCB.getSelectedItem().toString());
 		txtlgugun.setText(rd.gugunCB.getSelectedItem().toString());
 	}
-
 
 
 
@@ -240,7 +240,7 @@ public class Gearae extends JFrame {
 					return;
 				}
 			
-				addgeorae();
+				addgeorae(sel);
 			    new message();
 			}
 	
@@ -277,13 +277,14 @@ public class Gearae extends JFrame {
 	   }
 
    
-		protected void addgeorae() {
+	
+
+
+		protected void addgeorae(String sel) {
 			gosuDao  gDao      =  new gosuDao();
 			georaeVo2    vo    =  getViewData();	
-		//	String sel = georae.getSel();
-			//System.out.println(getSel());
-		//	System.out.println("1:" + sel);
-			int       aftcnt   =  gDao.addgeorae( vo);					
+		   
+			int       aftcnt   =  gDao.addgeorae( vo );					
 		}
 			
 
@@ -325,10 +326,10 @@ public class Gearae extends JFrame {
 			
 			String   g_num      =  this.txtgname.getText(); 
 			String   m_message  =  this.txtm_message.getText();
-		
-
+			String   w_num      =  this.sel;
+			
 			georaeVo2   vo       = new georaeVo2(
-					uid, mid_name, gdate, g_start, g_end, wsido, wgugun, g_num, m_message);
+					uid, mid_name, gdate, g_start, g_end, wsido, wgugun, g_num, m_message, w_num);
 
 			return vo;
 		}

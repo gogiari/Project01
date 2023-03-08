@@ -514,15 +514,15 @@ public class gosuDao {
 	}
 
 	// 회원 거래요청서에서 거래리스트에 저장
-				public int addgeorae(String g_code, String g_num, String g_start, String g_end,  String m_message, String g_message, String g_check)
+				public int addgeorae(String g_code, String g_num, String g_start, String g_end,  String m_message, String g_message, String g_check, String w_num)
 				
 				{	
-					String sql = "INSERT INTO GEORAE "
+			      	 String sql = "INSERT INTO GEORAE "
 						+ "   ( GEORAE_CODE, W_NUM, G_START, G_END, M_MESSAGE, G_MESSAGE, G_CHECK, U_ID ) "
 						+ "     VALUES( 'GR'|| LPAD(G_SEQ.nextval,4,0),"
-						+ "      (SELECT GW.W_NUM FROM GOSU GS JOIN GWORK GW ON GS.G_NUM = GW.G_NUM"		
-						+ "       WHERE GS.U_ID = ? ),"
-						+ "               ?, ?, ?, '-', '요청중', ?) ";
+				//		+ "      (SELECT GW.W_NUM FROM GOSU GS JOIN GWORK GW ON GS.G_NUM = GW.G_NUM"		
+				//		+ "       WHERE GS.U_ID = ? ),"
+						+ "      ? , ?, ?, ?, '-', '요청중', ?) ";
 				
 			  
 				int aftcnt = 0;
@@ -533,8 +533,8 @@ public class gosuDao {
 				try {
 
 					pstmt1 = conn.prepareStatement(sql);
-								
-					pstmt1.setString(1, g_num);
+										
+					pstmt1.setString(1, w_num);
 					pstmt1.setString(2, g_start);
 					pstmt1.setString(3, g_end);
 					pstmt1.setString(4, m_message);
@@ -566,9 +566,10 @@ public class gosuDao {
 					String   g_end      = vo.getG_end();
 					String   m_message  = vo.getM_message();
 					String   g_message  = vo.getG_message();
-					String   g_check    = vo.getG_check();					
+					String   g_check    = vo.getG_check();	
+					String   w_num      = vo.getW_num();
 
-					int aftcnt = addgeorae(g_code, uid, g_start, g_end, m_message, g_message, g_check);				
+					int aftcnt = addgeorae(g_code, uid, g_start, g_end, m_message, g_message, g_check, w_num);				
 					System.out.println(vo);
 					return aftcnt;				
 				}

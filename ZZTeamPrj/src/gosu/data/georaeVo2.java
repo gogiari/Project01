@@ -12,6 +12,7 @@ public class georaeVo2  {
 	String g_name;
 	String m_message;
 	String g_num;
+	String w_num;
 
 	String g_message;
 	String g_check;
@@ -28,7 +29,7 @@ public class georaeVo2  {
 	}
 		
 	public georaeVo2(String g_code, String mid_name, String gdate, String g_start, String g_end, String wsido,
-			String wgugun, String uid, String m_message) {
+			String wgugun, String uid, String m_message, String w_num) {
 		super();
 		this.g_code = g_code;
 		this.mid_name = mid_name;
@@ -39,11 +40,12 @@ public class georaeVo2  {
 		this.wgugun = wgugun;
 		this.uid = uid;
 		this.m_message = m_message;
-
+		this.w_num = w_num;
 
 	}
 
 
+	
 	public String getU_name() {
 		return u_name;
 	}
@@ -149,7 +151,7 @@ public class georaeVo2  {
 		return uid;
 	}
 	public void setU_id(String u_id) {
-		this.uid = uid;
+		this.uid = u_id;
 	}
 
 	public String getMread() {
@@ -178,17 +180,22 @@ public class georaeVo2  {
 	public void setG_num(String g_num) {
 		this.g_num = g_num;
 	}
-	
+	public String getW_num() {
+		return w_num;
+	}
+	public void setW_num(String w_num) {
+		this.w_num = w_num;
+	}
 
 	@Override
 	public String toString() {
-		return "georaeVo [g_code=" + g_code + ", u_name=" + u_name + ", mid_name=" + mid_name + ", gdate=" + gdate
+		return "georaeVo2 [g_code=" + g_code + ", u_name=" + u_name + ", mid_name=" + mid_name + ", gdate=" + gdate
 				+ ", g_start=" + g_start + ", g_end=" + g_end + ", wsido=" + wsido + ", wgugun=" + wgugun + ", g_name="
-				+ g_name + ", m_message=" + m_message + ", g_message=" + g_message + ", g_check=" + g_check
-				+ ", messnum=" + messnum + ", uid=" + uid + ", mread=" + mread + ", m_date=" + m_date + ", title="
-				+ title + "]";
+				+ g_name + ", m_message=" + m_message + ", g_num=" + g_num + ", w_num=" + w_num + ", g_message="
+				+ g_message + ", g_check=" + g_check + ", messnum=" + messnum + ", uid=" + uid + ", mread=" + mread
+				+ ", m_date=" + m_date + ", title=" + title + "]";
 	}
-
+	
 
 	
 			
