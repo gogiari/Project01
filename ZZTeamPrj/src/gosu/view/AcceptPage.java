@@ -289,11 +289,11 @@ public class AcceptPage extends JFrame{
 			
 		
 		//String   passwd    =  this.txtPwd.getPassword().toString(); // char [] -> String
-		String   uname   =  this.textField_1.getText();
-		String   midname =  this.textField_2.getText();
+		String   uname   =   this.textField_1.getText();
+		String   midname =   this.textField_2.getText();
 		String   gdate   =   this.textField_3.getText();
 		String   sdate   =   this.textField_4.getText();
-		String   gcheck  =  this.textField_5.getText();
+		String   gcheck  =   this.textField_5.getText();
 		String   price   =   this.textField_6.getText();
 		String   u_id    =   this.textField.getText();
 		

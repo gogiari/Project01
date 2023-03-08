@@ -46,6 +46,7 @@ public class MainView extends JFrame implements ActionListener{
 	ResDetail resdet;
 	PaymentCompletePage pmcPage = null;
 	Edit edit = null;
+
 	
 	String sel;
 	String val;
@@ -197,7 +198,7 @@ public class MainView extends JFrame implements ActionListener{
 					pCenterList.setVisible(true);
 			}
 		});
-		
+		   
 		btnMsg.addActionListener(new ActionListener() {
 			
 			@Override
@@ -489,10 +490,15 @@ public class MainView extends JFrame implements ActionListener{
 						tradeGosu = new GearaeGosu(sel, uid, mainview);
 					if(val.equals("거래수락"))
 						acPage = new AcceptPage(sel, mainview);
+
 					
 					if(val.equals("결제완료"))
 						pmcPage = new PaymentCompletePage(sel, mainview);
 					
+
+					if(val.equals("결제완료"))
+						pmcPage = new PaymentCompletePage(sel, mainview);
+
 
 				}
 			}

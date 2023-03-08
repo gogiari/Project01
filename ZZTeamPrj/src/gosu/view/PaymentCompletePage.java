@@ -30,6 +30,7 @@ public class PaymentCompletePage extends JFrame{
 	
 	MainView mainview = null;
 	PaymentPage    paymentPage        = null;
+
 	private JTextField txtGr;
 	/**
 	 * Launch the application.
@@ -46,7 +47,7 @@ public class PaymentCompletePage extends JFrame{
 			}
 		});
 	}
-
+   
 	/**
 	 * Create the application.
 	 */
@@ -54,16 +55,14 @@ public class PaymentCompletePage extends JFrame{
 		initialize();
 	}
 
-	public PaymentCompletePage( String sel, MainView mainview  ) {
-		this();
-		this.mainview = mainview;
-		
-		// 넘어온 아이디를 txtId 에 넣고 find 버튼 클릭하면
-		txtGr.setText( sel );
-		btnFind.doClick();
-	}
-	
 
+
+	public PaymentCompletePage(String sel, MainView mainview) {
+		  this();
+	      this.mainview = mainview;
+	      txtGr.setText(sel);
+	      btnFind.doClick();
+}
 	/**
 	 * Initialize the contents of the frame.
 	 */
