@@ -1,14 +1,10 @@
 package gosu.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -18,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -27,8 +24,8 @@ import javax.swing.border.LineBorder;
 
 import com.Design;
 
-import model.Dao;
-import model.Vo;
+import gosu.data.Dao;
+import gosu.data.Vo;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -49,6 +46,7 @@ public class res extends JFrame implements ActionListener {
 	JComboBox<String> sidoR, gugunR;
 	
 	private JLabel lblcheck;
+	JButton btnButton;
 
 	SidoComboBoxModel SidoCom = new SidoComboBoxModel();
 	GugunComboBoxModel GugunCom;
@@ -69,6 +67,7 @@ public class res extends JFrame implements ActionListener {
 	private JLabel lblcheck_3;
 	private JLabel lblcheck_4;
 	private JLabel lblcheck_5;
+	private JList list_1;
 
 	public res(Edit edit, String getWnum) {
 		this(uid);
@@ -94,17 +93,10 @@ public class res extends JFrame implements ActionListener {
 
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public res(String uid) {
 		this.uid = uid;
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(null);
-
-		// comDesign(JFrame frame, JLabel label, JComboBox combobox, JTextField textf,
-		// JButton button){};
-		// new LineBorder(Color.black, 1, true);
 
 		// panel_1 로고---------------------------------------------------------
 		panel_1 = new JPanel();
@@ -296,7 +288,32 @@ public class res extends JFrame implements ActionListener {
 		lblcheck_3.setForeground(new Color(128, 64, 64));
 		lblcheck_3.setBounds(388, 328, 112, 15);
 		panel_3.add(lblcheck_3);
-		comboBox6.setSelectedIndex(0);
+		
+		btnButton = new JButton("완료날짜 보기");
+		btnButton.setBackground(new Color(128, 128, 192));
+		btnButton.setBounds(274, 191, 112, 22);
+		panel_3.add(btnButton);
+		
+//		list_1 = new JList();
+//		list_1.setBounds(398, 194, 140, 138);
+//		panel_3.add(list_1);
+		String[] names = {"김철수", "김영희", "김숙자", "김자몽"};
+		
+		
+		btnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				list_1 = new JList();
+				list_1.setBounds(33, 194, 172, 138);
+				panel_3.add(list_1);
+				
+				//getDataCheck(uid);
+				
+				
+//				int cb = comboBox1.getSelectedIndex() + 1;
+//				Vector<String> list = getDataMidList(cb);
+//				comboBox2.setModel(new DefaultComboBoxModel(list));
+			}
+		});
 
 		// panel_4
 		// -----------------------------------------------------------------------
@@ -327,8 +344,6 @@ public class res extends JFrame implements ActionListener {
 		sidoR.setToolTipText("\uC2DC");
 		sidoR.setBackground(new Color(255, 255, 255));
 
-		//GugunCom = new GugunComboBoxModel(sidoR);
-		//gugunR = new JComboBox<String>(GugunCom);
 		gugunR = new JComboBox<String>();
 		gugunR.setForeground(new Color(128, 128, 128));
 		gugunR.setBounds(187, 141, 125, 26);
@@ -377,7 +392,7 @@ public class res extends JFrame implements ActionListener {
 		
 		lblcheck_5 = new JLabel("앞에부터 선택해주세요");
 		lblcheck_5.setForeground(new Color(128, 64, 64));
-		lblcheck_5.setBounds(225, 108, 112, 15);
+		lblcheck_5.setBounds(225, 108, 145, 15);
 		panel_4.add(lblcheck_5);
 
 		// panel_5
@@ -448,15 +463,12 @@ public class res extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				SidoCom = new SidoComboBoxModel();
 				String cb = (String) sidoR.getSelectedItem();
-				//Vector<String> list = getDataGu(cb);
-				//gugunR.setModel(new DefaultComboBoxModel(list));
 
 				GugunCom = new GugunComboBoxModel(cb);
 				gugunR.setModel(GugunCom);
 			}
 		});
 		
-
 		// -----------------------------------------------------------------
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(1200, 800);
@@ -481,17 +493,14 @@ public class res extends JFrame implements ActionListener {
 		return exlist;
 	}
 	
-//	private Vector<String> getDataSi() {
-//		Dao dao = new Dao();
-//		Vector<String> exlist = dao.getExSi();
-//		return exlist;
-//	}
-
-//	private Vector<String> getDataGu(String si) {
-//		Dao dao = new Dao();
-//		Vector<String> exlist = dao.getExGu(String.valueOf(si));
-//		return exlist;
-//	}
+	private Vector<String> getDataCheck(String uid) {
+		Dao dao = new Dao();
+		Vector<String> getDaCheck = dao.getDataCheck(uid);
+		
+		
+		
+		return getDaCheck;
+	}
 	
 	// --------------------------------------------------------------------------
 	private void addGosu(String uid) {
@@ -523,7 +532,7 @@ public class res extends JFrame implements ActionListener {
 		Vo vo = getViewData();
 		
 		int aftcnt = 0 ;
-		if(addCheck()) {
+		if(addCheck(uid)) {
 			aftcnt = dao.insertGWORK(vo, uid );			
 		}else {
 			JOptionPane.showMessageDialog(
@@ -538,9 +547,10 @@ public class res extends JFrame implements ActionListener {
 		}
 	}
 	
-	private boolean addCheck() {
+	private boolean addCheck(String uid) {
 		int cnt = 0;
-
+		Dao Dao = new Dao();
+		
 		if( this.comboBox1.getSelectedIndex() <= 0 ) {
 			lblcheck.setText("대분류를 선택해주세요"); 
 		}else {lblcheck.setText("대분류를 먼저 선택해주세요"); cnt += 1;}
@@ -550,11 +560,24 @@ public class res extends JFrame implements ActionListener {
 			lblcheck_1.setText("중분류를 선택해주세요"); 
 		}else {lblcheck_1.setText("");cnt += 1;}
 
-//		if( UtilDateModel inputModel.setSelected(true) && model2.getYear() < 0 ) {
-//			cnt = 3;
-//			lblcheck_2.setText("날짜 선택해주세요"); 
-//		}
 //		System.out.println(model1.getMonth());
+		String mod1 = model1.getYear() + "-" + (model1.getMonth() + 1) + "-" + model1.getDay();
+		String mod2 = model2.getYear() + "-" + (model2.getMonth() + 1) + "-" + model2.getDay();
+		
+//		Vector<String> dao = Dao.getDataCheck(uid);
+//		String sdate = dao.get(0);
+//		String edate = dao.get(1);
+//		
+//		if(  !sdate.equals(mod1) || !edate.equals(mod2) ) {
+//			cnt += 1;
+//		}
+//		model1 = new UtilDateModel();
+//		datePanel1 = new JDatePanelImpl(model1);
+//		datePicker1 = new JDatePickerImpl(datePanel1);
+//		datePicker1.getJFormattedTextField().setBackground(new Color(255, 255, 255));
+//		datePicker1.getJFormattedTextField().setForeground(new Color(0, 0, 0));
+//		datePicker1.setBounds(310, 229, 190, 26);
+//		panel_3.add(datePicker1);
 		
 		if( comboBox5.getSelectedIndex() <= 0  || comboBox6.getSelectedIndex() <= 0 ) {
 			lblcheck_3.setText("시간 선택해주세요"); 
@@ -625,8 +648,7 @@ public class res extends JFrame implements ActionListener {
 
 		this.comboBox1.setSelectedItem(combo1);
 		this.comboBox2.setSelectedItem(combo2);
-//		this.model1.setValue(mod1);
-//		this.model1.setValue(mod2);
+
 		this.comboBox5.setSelectedItem(combo5);
 		this.comboBox6.setSelectedItem(combo6);
 		this.textField1.setText(textf);

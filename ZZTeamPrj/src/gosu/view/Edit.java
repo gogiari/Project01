@@ -1,11 +1,10 @@
 package gosu.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -17,9 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import model.Dao;
-import model.Vo;
-import java.awt.Color;
+import gosu.data.Dao;
 
 public class Edit extends JFrame implements ActionListener{
 

@@ -25,8 +25,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.Design;
 
-import model.Dao;
-import model.Vo;
+import gosu.data.Dao;
+import gosu.data.Vo;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -66,12 +66,6 @@ public class ResDetail extends JFrame implements ActionListener{
 		this.mainview = mainview;
 		this.uid = uid;
 		this.sel = sel;
-		System.out.println(sel);
-
-		
-		// comDesign(JFrame frame, JLabel label, JComboBox combobox, JTextField textf,
-		// JButton button){};
-		// new LineBorder(Color.black, 1, true);
 
 		// panel_G1 로고---------------------------------------------------------
 		panel_G1 = new JPanel();
@@ -451,7 +445,6 @@ public class ResDetail extends JFrame implements ActionListener{
 
 	private Vector<String> getDataMidList(int index) {
 		String bigCom = String.valueOf(index + 1);
-		System.out.println(bigCom);
 		Dao dao = new Dao();
 		Vector<String> exlist = dao.getExList2(String.valueOf(index));
 		return exlist;
@@ -506,7 +499,6 @@ public class ResDetail extends JFrame implements ActionListener{
 
 		dateEnd = combo6;
 		dateEnd = mod2 + " " + dateEnd.replace("오전", " ").replace("오후", " ").replace("시", ":").replace("분", " ").trim();
-		System.out.println(dateEnd + "dfd");
 		vo = new Vo(uid, combo1, combo2, mod1, mod2, combo5, combo6, textf, combo3, combo4, texta, dateStr, dateEnd  );
 		return vo;
 	}
@@ -514,7 +506,7 @@ public class ResDetail extends JFrame implements ActionListener{
 	private void getMainDataDetail(String getSel) {
 		Dao dao = new Dao();
 		Vector<String> list = dao.getMainDataDetail(getSel);
-		Vector<String> list2 = dao.getMainDataDetail2(getSel);
+		//Vector<String> list2 = dao.getMainDataDetail2(getSel);
 //		System.out.println(getSel);
 //		System.out.println("dfd" + list2);
 		String stDateAll = list.get(2);
@@ -543,8 +535,7 @@ public class ResDetail extends JFrame implements ActionListener{
 		String texta = list.get(7);
 		String userid = list.get(8);
 		String username = list.get(9);
-		//String gscore = list2.get(0);
-		//평균값 String username = list.get(9);
+		String avg = list.get(20);
 
 		this.comboBoxG1.setSelectedItem(combo1);
 		this.comboBoxG2.setSelectedItem(combo2);
@@ -558,7 +549,7 @@ public class ResDetail extends JFrame implements ActionListener{
 		this.labG5_3.setText(userid);
 		this.labG5_1.setText(username);
 		
-		//this.labG5_5.setText(gscore);
+		this.labG5_5.setText(avg);
 	}
 	
 	private void getDate(String inputDate, UtilDateModel inputModel ) {

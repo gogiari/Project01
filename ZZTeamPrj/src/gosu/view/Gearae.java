@@ -18,10 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import gosu.data.Vo;
 import gosu.data.georaeVo;
 import gosu.data.georaeVo2;
 import gosu.data.gosuDao;
-import model.Vo;
 
 
 public class Gearae extends JFrame {	
