@@ -29,16 +29,13 @@ public class Edit extends JFrame implements ActionListener{
 	JTable        jTable;
 	JScrollPane   pane;
 	String uid;
-
+	
 	private JTable table;
 	
 	public Edit(String uid) {
 		initEdit(uid);
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public Edit(res res, String uid) {
 		initEdit(uid);
 		this.res = res;
@@ -105,9 +102,6 @@ public class Edit extends JFrame implements ActionListener{
 				});
 			}
 		});
-		
-		 
-		 
 		 
 		Dimension frameSize = this.getSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
@@ -121,7 +115,7 @@ public class Edit extends JFrame implements ActionListener{
 		int row = table.getSelectedRow();
 		
 		TableModel data = table.getModel();
-		String tableTime = (String)data.getValueAt(row,2);
+		String Wnum = (String)data.getValueAt(row,0);
 		
 		
 		int choice = JOptionPane.showConfirmDialog(
@@ -134,34 +128,8 @@ public class Edit extends JFrame implements ActionListener{
 		String msg = "";
 
 		if(choice == 0) { //ok 클릭
-			String tableTime1 = tableTime;
 			
-			int text1 = Integer.parseInt(tableTime.substring(5,6));
-			System.out.println("테스트1" + text1);
-			int text2 = Integer.parseInt(tableTime.substring(8,9));
-			System.out.println("테스트2" + text2);
-			
-			tableTime1 = tableTime1.substring(0,16);		
-			
-			String[] date = tableTime1.split("-");
-			String dateY = date[0];
-			String dateM = date[1];
-			String dateD = date[2];
-			String time = tableTime1.substring(11,16);
-			
-			if( (text1 == 0) || (text2 == 0) ) {
-				if(text1 == 0) {
-					dateM = dateM.substring(0,2).replace("0", "");
-				}
-				if(text2 == 0) {
-					 dateD =  dateD.substring(0,2).replace("0", "");
-				}
-				tableTime1 = dateY + "-" + dateM + "-" + dateD + " " + time;
-			}else {
-				tableTime1 = dateY + "-" + dateM + "-" + dateD + " " + time;				
-			}
-			
-			int aftcnt = dao.removePrvGoList(uid, tableTime1);
+			int aftcnt = dao.removePrvGoList(Wnum);
 			if(aftcnt > 0) { 
 				msg = "삭제 되었습니다";
 				this.dispose();
@@ -183,8 +151,6 @@ public class Edit extends JFrame implements ActionListener{
 //		jTableRefresh();
 	}
 
-	
-
 	//-----------------------------------------------------------------
 	private Vector<? extends Vector> getDataList(String uid) {
 		Dao dao = new Dao();
@@ -193,29 +159,30 @@ public class Edit extends JFrame implements ActionListener{
 	}
 
 	private Vector<String> getColumnList() {
-		Vector<String>  cols = new Vector<>(); 
+		Vector<String> cols = new Vector<>(); 
 		cols.add("아이디");
 		cols.add("이름");
 		cols.add("직업");
 		cols.add("성별");
+		cols.add("성별");
+		cols.add("성별");
 		return  cols;
 	}
 	
-//	public void jTableRefresh() {
-//		
-//		jTable.setModel(
-//			new DefaultTableModel(  getDataList(uid),  getColumnList()  ) {
-//
-//				@Override
-//				public boolean isCellEditable(int row, int column) {					
-//					return false;
-//				}
-//				
-//			}
-//		);  
-//		
-//		jTable.repaint(); 
-//	}
+	public void jTableRefresh() {
+		
+		jTable.setModel(
+			new DefaultTableModel(  getDataList(uid),  getColumnList()  ) {
+
+				@Override
+				public boolean isCellEditable(int row, int column) {					
+					return false;
+				}
+			}
+		);  
+		
+		table.repaint(); 
+	}
 	
 	
 	public void Refresh() {
@@ -235,7 +202,6 @@ public class Edit extends JFrame implements ActionListener{
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
-
 		});
 	}
 	
@@ -246,8 +212,8 @@ public class Edit extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
 		TableModel data = table.getModel();
-		String tableTime = (String)data.getValueAt(row,2);
+		String Wnum = (String)data.getValueAt(row,0);
 		
-		res = new res( this, tableTime );
+		res = new res( this, Wnum );
 	}
 }
