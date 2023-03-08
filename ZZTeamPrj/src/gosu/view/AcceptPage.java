@@ -309,11 +309,11 @@ public class AcceptPage extends JFrame{
 
 	private void setViewData(gosuVo2 vo2) {
 		String   georae_code    =  vo2.getGeorae_code();
-		String   u_name          =  vo2.getU_name();
+		String   u_name         =  vo2.getU_name();
 		String   midname        =  vo2.getMid_name();
 		String   gdate          =  vo2.getG_date();     // "회사원", ...
-		String   sdate          =  vo2.getSdate();  // "남", "여", ""  
-		String   gcheck         =  vo2.getG_check();
+		String   sdate          =  vo2.getSdate();    // "남", "여", ""  
+		String   loction        =  vo2.getLoction();
 		String   price          =  vo2.getPrice();
 		String   u_id           =  vo2.getU_id();
 				
@@ -322,7 +322,7 @@ public class AcceptPage extends JFrame{
 		this.textField_2.setText( midname );
 		this.textField_3.setText( gdate );
 		this.textField_4.setText( sdate );
-		this.textField_5.setText( gcheck );
+		this.textField_5.setText( loction );
 		this.textField_6.setText( price );
 		this.textField.setText(u_id);
 			
