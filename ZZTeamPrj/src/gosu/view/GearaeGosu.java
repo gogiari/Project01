@@ -57,7 +57,7 @@ public class GearaeGosu extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("거래요청서가 도착했습니다");
 		setVisible(true);
-		setSize(800, 580);
+		setSize(800, 626);
 		setLocation(600, 200);	
 		txtgcode.setText(sel);
 
@@ -76,105 +76,78 @@ public class GearaeGosu extends JFrame {
 	    Pane  = new JPanel();
 	    Pane.setBackground(new Color(135, 206, 250));
 	    
-		setContentPane(Pane);		
-		Pane.setLayout(null);		
+		setContentPane(Pane);
+		Pane.setLayout(null);
 
 		// 제목
 		lbltitle = new JLabel("거래요청서가 도착했습니다");
+		lbltitle.setBounds(210, 25, 500, 34);
 		lbltitle.setForeground(Color.WHITE);
 		lbltitle.setFont(new Font("D2Coding", Font.PLAIN, 30));
-		lbltitle.setBounds(210, 25, 500, 34);
 		Pane.add(lbltitle);
 		
 		// 거래번호
 		lblgnum = new JLabel("거래번호");
+		lblgnum.setBounds(30, 100, 200, 20);
 		lblgnum.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		lblgnum.setForeground(SystemColor.textHighlight);
 		lblgnum.setBackground(SystemColor.text);
-		lblgnum.setBounds(30, 100, 200, 20);
 		Pane.add(lblgnum);
+		
 		txtgcode = new JTextField("거래번호불러오기");
-		txtgcode.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtgcode.setBounds(200, 95, 560, 30);
+		txtgcode.setFont(new Font("D2Coding", Font.PLAIN, 17));
+		txtgcode.setEditable(false);
 		Pane.add(txtgcode);
 		
 		
 		// 거래요청자 
 		lblusername = new JLabel("거래요청자 ID");
+		lblusername.setBounds(30, 145, 200, 20);
 		lblusername.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		lblusername.setForeground(SystemColor.textHighlight);
 		lblusername.setBackground(SystemColor.text);
-		lblusername.setBounds(30, 145, 200, 20);
 		Pane.add(lblusername);
 		txtuname = new JTextField("이름불러오기");
-		txtuname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtuname.setBounds(200, 140, 200, 30);
+		txtuname.setEditable(false);
+		txtuname.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtuname);
 		
 		// 업무내용(중분류)
 		lblwork = new JLabel("업무 내용");
+		lblwork.setBounds(30, 195, 200, 20);
 		lblwork.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		lblwork.setForeground(SystemColor.textHighlight);
-		lblwork.setBounds(30, 195, 200, 20);
 		lblwork.setBackground(SystemColor.text);
 		Pane.add(lblwork);
 		txtwo = new JTextField("업무내용불러오기");
-		txtwo.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		txtwo.setBounds(200, 190, 200, 30);
+		txtwo.setEditable(false);
+		txtwo.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtwo);
 				
 		// 날짜
 		lbldate = new JLabel("날짜");
+		lbldate.setBounds(30, 255, 200, 20);
 		lbldate.setForeground(SystemColor.textHighlight);
 		lbldate.setBackground(SystemColor.text);
-		lbldate.setBounds(30, 255, 200, 20);
 		lbldate.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lbldate);
 		txtda = new JTextField("업무날짜불러오기");
 		txtda.setBounds(200, 250, 200, 30);
+		txtda.setEditable(false);
 		txtda.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtda);
 		
 		
 		// 업무가능 시작시간 
 		lblstarttime = new JLabel("시작시간");
+		lblstarttime.setBounds(30, 315, 90, 20);
 		lblstarttime.setForeground(SystemColor.textHighlight);
 		lblstarttime.setBackground(SystemColor.text);
-		lblstarttime.setBounds(30, 315, 200, 20);
 		lblstarttime.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblstarttime);		
-		txtstart = new JTextField("시작 불러오기");
-		txtstart.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		txtstart.setBounds(120, 310, 80, 30);
-		Pane.add(txtstart);
-
-		// 업무가능 종료시간
-		lblendtime = new JLabel("종료시간");
-		lblendtime.setForeground(SystemColor.textHighlight);
-		lblendtime.setBackground(SystemColor.text);
-		lblendtime.setBounds(230, 315, 200, 20);
-		lblendtime.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		Pane.add(lblendtime);		
-		txtend = new JTextField("종료 불러오기");
-		txtend.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		txtend.setBounds(320, 310, 80, 30);
-		Pane.add(txtend);
-		
-		// 업무 가능 위치
-		lbllocation = new JLabel("위치");
-		lbllocation.setForeground(SystemColor.textHighlight);
-		lbllocation.setBackground(SystemColor.text);
-		lbllocation.setBounds(30, 375, 200, 20);
-		lbllocation.setFont(new Font("D2Coding", Font.PLAIN, 20));
-		Pane.add(lbllocation);
-		txtlsido = new JTextField("시도");
-		txtlsido.setBounds(200, 370, 90, 30);
-		txtlsido.setFont(new Font("D2Coding", Font.PLAIN, 17));
-		Pane.add(txtlsido);
-		txtlgugun = new JTextField("구군");
-		txtlgugun.setBounds(310, 370, 90, 30);
-		txtlgugun.setFont(new Font("D2Coding", Font.PLAIN, 17));
-		Pane.add(txtlgugun);
 		
 		/*
 		// 고수이름
@@ -192,46 +165,47 @@ public class GearaeGosu extends JFrame {
 				
 		// 추가 메시지
 		lblmessage = new JLabel("거래요청 메시지");
+		lblmessage.setBounds(450, 195, 200, 20);
 		lblmessage.setForeground(SystemColor.textHighlight);
 		lblmessage.setBackground(SystemColor.text);
-		lblmessage.setBounds(450, 195, 200, 20);
 		lblmessage.setFont(new Font("D2Coding", Font.PLAIN, 20));
 		Pane.add(lblmessage);
 		txtm_message = new JTextField("거래요청 메시지 불러오기");
 		txtm_message.setBounds(450, 225, 310, 65);
+		txtm_message.setEditable(false);
 		txtm_message.setFont(new Font("D2Coding", Font.PLAIN, 17));
 		Pane.add(txtm_message);
 		
         // 답장
         lblreply = new JLabel("답장");
+        lblreply.setBounds(450, 315, 200, 20);
         lblreply.setForeground(SystemColor.textHighlight);
         lblreply.setBackground(SystemColor.text);
-        lblreply.setBounds(450, 315, 200, 20);
         lblreply.setFont(new Font("D2Coding", Font.PLAIN, 20));
         Pane.add(lblreply);
         txtg_message = new JTextField();
-        txtg_message.setBounds(450, 345, 310, 65);
+        txtg_message.setBounds(450, 345, 310, 124);
         txtg_message.setFont(new Font("D2Coding", Font.PLAIN, 17));
         Pane.add(txtg_message);
 		
 		// 버튼
 		btn1             = new JButton("수락하기");
+		btn1.setBounds(252, 527, 100, 50);
 		btn1.setForeground(new Color(30, 144, 255));
 		btn1.setBackground(new Color(240, 248, 255));
 		btn1.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		btn1.setBounds(250, 469, 100, 50);
 		
 		btn2             = new JButton("반송하기");
+		btn2.setBounds(451, 527, 100, 50);
 		btn2.setForeground(new Color(30, 144, 255));
 		btn2.setBackground(new Color(240, 248, 255));
 		btn2.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		btn2.setBounds(450, 469, 100, 50);
 		
 		btn3             = new JButton("조회");
+		btn3.setBounds(10, 10, 100, 30);
 		btn3.setForeground(new Color(30, 144, 255));
 		btn3.setBackground(new Color(240, 248, 255));
 		btn3.setFont(new Font("D2Coding", Font.PLAIN, 15));
-		btn3.setBounds(10, 10, 100, 30);
 		
 		
 		this.txtgcode.addKeyListener( new KeyListener() {
@@ -300,10 +274,46 @@ public class GearaeGosu extends JFrame {
 		
 		
 		JPanel panel = new JPanel();
+		panel.setBounds(10, 74, 760, 426);
 	    panel.setBackground(SystemColor.inactiveCaptionBorder);
-		//panel.setBackground(new Color(102, 204, 255));
-		panel.setBounds(10, 74, 760, 371);
 		Pane.add(panel);
+		panel.setLayout(null);
+		txtlgugun = new JTextField("구군");
+		txtlgugun.setBounds(300, 365, 90, 30);
+		panel.add(txtlgugun);
+		txtlgugun.setEditable(false);
+		txtlgugun.setFont(new Font("D2Coding", Font.PLAIN, 17));
+		txtlsido = new JTextField("시도");
+		txtlsido.setBounds(188, 365, 90, 30);
+		panel.add(txtlsido);
+		txtlsido.setFont(new Font("D2Coding", Font.PLAIN, 17));
+		txtlsido.setEditable(false);
+		
+		// 업무 가능 위치
+		lbllocation = new JLabel("위치");
+		lbllocation.setBounds(23, 369, 200, 20);
+		panel.add(lbllocation);
+		lbllocation.setForeground(SystemColor.textHighlight);
+		lbllocation.setBackground(SystemColor.text);
+		lbllocation.setFont(new Font("D2Coding", Font.PLAIN, 20));
+		
+				// 업무가능 종료시간
+				lblendtime = new JLabel("종료시간");
+				lblendtime.setBounds(23, 307, 200, 20);
+				panel.add(lblendtime);
+				lblendtime.setForeground(SystemColor.textHighlight);
+				lblendtime.setBackground(SystemColor.text);
+				lblendtime.setFont(new Font("D2Coding", Font.PLAIN, 20));
+				txtstart = new JTextField("시작 불러오기");
+				txtstart.setBounds(188, 238, 202, 30);
+				panel.add(txtstart);
+				txtstart.setEditable(false);
+				txtstart.setFont(new Font("D2Coding", Font.PLAIN, 15));
+				txtend = new JTextField("종료 불러오기");
+				txtend.setBounds(188, 303, 202, 30);
+				panel.add(txtend);
+				txtend.setEditable(false);
+				txtend.setFont(new Font("D2Coding", Font.PLAIN, 15));
 
 
 	}

@@ -58,7 +58,7 @@ public class gosuDao {
 			pstmt1.setString(6, u_gender);
 			pstmt1.setString(7, u_sido);
 			pstmt1.setString(8, u_gugun);
-			pstmt2.setString(1, u_id);
+		//	pstmt2.setString(1, u_id);
 
 			aftcnt = pstmt1.executeUpdate();
 		//	aftcnt = pstmt2.executeUpdate();
@@ -67,9 +67,9 @@ public class gosuDao {
 		}
 		try {
 			if (pstmt1 != null)
-				if (pstmt2 != null)
+			//	if (pstmt2 != null)
 				pstmt1.close();
-			pstmt2.close();
+			// pstmt2.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
