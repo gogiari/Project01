@@ -1,8 +1,10 @@
 package gosu.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -474,8 +476,10 @@ public class res extends JFrame implements ActionListener {
 		setSize(1200, 800);
 		setVisible(true);
 		
-		this.setLocation(700,240);
+		Dimension frameSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+		this.setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2); 
 	}
 
 	// ---------------------------------------------------------------------
@@ -501,7 +505,7 @@ public class res extends JFrame implements ActionListener {
 		
 		return getDaCheck;
 	}
-	
+
 	// --------------------------------------------------------------------------
 	private void addGosu(String uid) {
 		Dao dao = new Dao();
@@ -619,6 +623,7 @@ public class res extends JFrame implements ActionListener {
 				if(aftcnt > 0) { 
 					msg =  " 수정되었습니다";
 					this.dispose();
+					edit = new Edit(this,uid);
 				}else {
 					msg = "수정 되지 않았습니다";
 				}

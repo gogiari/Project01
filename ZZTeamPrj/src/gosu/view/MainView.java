@@ -46,6 +46,7 @@ public class MainView extends JFrame implements ActionListener{
 	ResDetail resdet;
 	PaymentCompletePage pmcPage = null;
 	Edit edit = null;
+	res res = null;
 
 	
 	String sel;
@@ -389,7 +390,7 @@ public class MainView extends JFrame implements ActionListener{
 					if(val.equals("거래수락"))
 						acPage = new AcceptPage(sel, mainview);
 					if(val.equals("업무대기중"))
-						new Edit(uid);
+						new Edit(res, uid);
 
 				}
 			}
@@ -776,7 +777,7 @@ public class MainView extends JFrame implements ActionListener{
 				if(val.equals("거래수락"))
 					acPage = new AcceptPage(sel, mainview);
 				if(val.equals("업무대기중"))
-					new Edit(uid);
+					new Edit(res, uid);
 			}
 			
 			break;
