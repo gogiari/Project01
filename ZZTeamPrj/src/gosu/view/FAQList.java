@@ -32,6 +32,7 @@ public class FAQList extends JFrame implements MouseListener{
 	private JFrame frame;
 	JButton       btnInsert,  btnRefresh, btnToExcel,btn1;
 	JPanel        topPane;
+	JPanel        topPane1;
 	JTable        jTable;
 	JScrollPane   pane; 
 	JLabel        JLabel;
@@ -89,8 +90,14 @@ public class FAQList extends JFrame implements MouseListener{
 		pane  = new JScrollPane( jTable );
 		this.add( pane );
 		
+		topPane1      =  new JPanel();
+		
 		btn1 = new JButton("문의 사항 등록");
-		this.add(btn1, BorderLayout.SOUTH);
+		btnRefresh   =  new JButton("새로고침"); 
+		
+		topPane1.add( btn1 );
+		topPane1.add( btnRefresh );
+		this.add(topPane1, BorderLayout.SOUTH);
 		//frame.setVisible(true);
 
 		
@@ -99,6 +106,7 @@ public class FAQList extends JFrame implements MouseListener{
 		setSize(600, 500);
 		setLocation(200, 200);
 		setVisible(true);
+
 	btn1.addActionListener(new ActionListener() {
 		
 		@Override
@@ -115,6 +123,14 @@ public class FAQList extends JFrame implements MouseListener{
 			
 		}
 	});	
+	btnRefresh.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			jTableRefresh();
+			
+		}
+	});
 		
 	}
 	
@@ -187,6 +203,7 @@ public class FAQList extends JFrame implements MouseListener{
 				public boolean isCellEditable(int row, int column) {					
 					return false;
 				}
+				
 				
 			}
 		);  // jtable 새로운 데이터를 지정
