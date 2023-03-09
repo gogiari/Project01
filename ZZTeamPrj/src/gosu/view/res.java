@@ -71,6 +71,7 @@ public class res extends JFrame implements ActionListener {
 	private JLabel lblcheck_5;
 	private JList list_1;
 
+	public res() {};
 	public res(Edit edit, String getWnum) {
 		this(uid);
 		this.Wnum = getWnum;
@@ -278,7 +279,7 @@ public class res extends JFrame implements ActionListener {
 		
 		lblcheck_1 = new JLabel();
 		lblcheck_1.setForeground(new Color(128, 64, 64));
-		lblcheck_1.setBounds(376, 106, 124, 15);
+		lblcheck_1.setBounds(356, 106, 144, 15);
 		panel_3.add(lblcheck_1);
 		
 		lblcheck_2 = new JLabel();
@@ -290,32 +291,6 @@ public class res extends JFrame implements ActionListener {
 		lblcheck_3.setForeground(new Color(128, 64, 64));
 		lblcheck_3.setBounds(388, 328, 112, 15);
 		panel_3.add(lblcheck_3);
-		
-		btnButton = new JButton("완료날짜 보기");
-		btnButton.setBackground(new Color(128, 128, 192));
-		btnButton.setBounds(274, 191, 112, 22);
-		panel_3.add(btnButton);
-		
-//		list_1 = new JList();
-//		list_1.setBounds(398, 194, 140, 138);
-//		panel_3.add(list_1);
-		String[] names = {"김철수", "김영희", "김숙자", "김자몽"};
-		
-		
-		btnButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				list_1 = new JList();
-				list_1.setBounds(33, 194, 172, 138);
-				panel_3.add(list_1);
-				
-				//getDataCheck(uid);
-				
-				
-//				int cb = comboBox1.getSelectedIndex() + 1;
-//				Vector<String> list = getDataMidList(cb);
-//				comboBox2.setModel(new DefaultComboBoxModel(list));
-			}
-		});
 
 		// panel_4
 		// -----------------------------------------------------------------------
@@ -536,77 +511,61 @@ public class res extends JFrame implements ActionListener {
 		Vo vo = getViewData();
 		
 		int aftcnt = 0 ;
-		if(addCheck(uid)) {
+		int i = addCheck(uid).size();
+
+		if(i == 0) {
 			aftcnt = dao.insertGWORK(vo, uid );			
 		}else {
 			JOptionPane.showMessageDialog(
-					null, "입력하지않았습니다.", "미입력", JOptionPane.INFORMATION_MESSAGE);
-			cancelMember();
+					null, addCheck(uid) + "(을)를 입력해주세요!", "미입력", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 		if( aftcnt == 1) {
 			lblNewLabel.setText("등록되었습니다");
+			cancelMember();
 		} else {
 			lblNewLabel.setText("등록 되지 않았습니다");	
 		}
 	}
 	
-	private boolean addCheck(String uid) {
+	private ArrayList<String> addCheck(String uid) {
 		int cnt = 0;
-		Dao Dao = new Dao();
+		ArrayList<String> check = new ArrayList<String>();
 		
 		if( this.comboBox1.getSelectedIndex() <= 0 ) {
 			lblcheck.setText("대분류를 선택해주세요"); 
+			check.add("대분류");
 		}else {lblcheck.setText("대분류를 먼저 선택해주세요"); cnt += 1;}
 		
 		if( this.comboBox2.getSelectedIndex() <= 0 ) {
-			cnt += 1;
-			lblcheck_1.setText("중분류를 선택해주세요"); 
+			lblcheck_1.setText("중분류를 선택해주세요");
+			check.add("중분류");
 		}else {lblcheck_1.setText("");cnt += 1;}
-
-//		System.out.println(model1.getMonth());
-		String mod1 = model1.getYear() + "-" + (model1.getMonth() + 1) + "-" + model1.getDay();
-		String mod2 = model2.getYear() + "-" + (model2.getMonth() + 1) + "-" + model2.getDay();
-		
-//		Vector<String> dao = Dao.getDataCheck(uid);
-//		String sdate = dao.get(0);
-//		String edate = dao.get(1);
-//		
-//		if(  !sdate.equals(mod1) || !edate.equals(mod2) ) {
-//			cnt += 1;
-//		}
-//		model1 = new UtilDateModel();
-//		datePanel1 = new JDatePanelImpl(model1);
-//		datePicker1 = new JDatePickerImpl(datePanel1);
-//		datePicker1.getJFormattedTextField().setBackground(new Color(255, 255, 255));
-//		datePicker1.getJFormattedTextField().setForeground(new Color(0, 0, 0));
-//		datePicker1.setBounds(310, 229, 190, 26);
-//		panel_3.add(datePicker1);
 		
 		if( comboBox5.getSelectedIndex() <= 0  || comboBox6.getSelectedIndex() <= 0 ) {
 			lblcheck_3.setText("시간 선택해주세요"); 
+			check.add("시간");
 		}else {lblcheck_3.setText(""); cnt += 1;}
 		
-		if( textField1.getText() == " ") {
-			lblcheck_4.setText("금액 입력해주세요"); 
-		}else {lblcheck_4.setText(""); cnt += 1;}
+		String text = textField1.getText().trim();
+		
+		if( text.equals("")) {
+			lblcheck_4.setText("금액 입력해주세요");
+			check.add("금액");
+		}else {lblcheck_4.setText(""); }
 		
 		if(  sidoR.getSelectedIndex() <= 0  || gugunR.getSelectedIndex() <= 0   ) {
 			lblcheck_5.setText("위치 선택해주세요"); 
+			check.add("위치");
 		}else {lblcheck_5.setText(""); cnt += 1;}
 		
-		boolean tf = false;
-		if(cnt == 5){ tf= true; }else{tf =false;}
-		System.out.println(cnt);
-		return tf;
+		return check;
 	};
-	
 	
 	//수정
 	private void updateInfo() {
 			Dao Dao = new Dao();
 			Vo vo = getViewData();
-			System.out.println(vo);
 			int aftcnt = 0;
 			
 			int choice = JOptionPane.showConfirmDialog(
@@ -676,21 +635,20 @@ public class res extends JFrame implements ActionListener {
 		String textf = this.textField1.getText();
 		String texta = this.textArea1.getText();
 		String uid = this.uid;
-		System.out.println(uid + "dddddddddfd");
-
+		
 		dateStr = combo5;
 		dateStr = mod1 + " " + dateStr.replace("오전", " ").replace("오후", " ").replace("시", ":").replace("분", " ").trim();
 
 		dateEnd = combo6;
 		dateEnd = mod2 + " " + dateEnd.replace("오전", " ").replace("오후", " ").replace("시", ":").replace("분", " ").trim();
-		System.out.println(dateEnd + "dfd");
+
 		vo = new Vo(uid, combo1, combo2, mod1, mod2, combo5, combo6, textf, combo3, combo4, texta, dateStr, dateEnd );
 		return vo;
 	}
 
 	// 수정조회 및 상세보기-------------------------------------------
 	private void getDataDetail(String getWnum) {
-		System.out.println(getWnum);
+
 		Dao dao = new Dao();
 		Vector<String> list = dao.getDataDetail(getWnum);
 		
@@ -711,13 +669,13 @@ public class res extends JFrame implements ActionListener {
 		
 		//------------
 		String combo1 = list.get(0);
-		System.out.println("함수 확인"+ combo1);
+
 		String combo2 = list.get(1);
-		System.out.println("함수 확인"+ combo2);
+
 
 		String textf = list.get(4);
 		String sido = list.get(5);
-		System.out.println(sido);
+
 		String gugum = list.get(6);
 		String texta = list.get(7);
 
